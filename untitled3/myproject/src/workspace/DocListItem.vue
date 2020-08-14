@@ -5,6 +5,9 @@
       <div class="docs-info" @click="itemClick">
         <p>{{docsItem.title}}</p>
       </div>
+      <div class="docs-time" @click="itemClick">
+        <p>{{docsItem.date}}</p>
+      </div>
       <img class="smallimg1" src="../assets/删除.svg" @click="deleteDoc" />
       <img class="smallimg2" :src="collectedurl" alt @click="collectDoc" />
     </div>
@@ -53,7 +56,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .docs {
   position: relative;
   padding: 10px;
@@ -102,5 +105,16 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 3px;
+}
+.docs-time {
+  font-size: 12px;
+  position: absolute;
+  right: 120px;
+  padding-left: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-align: left;
 }
 </style>

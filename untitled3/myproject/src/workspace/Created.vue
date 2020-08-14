@@ -35,17 +35,20 @@ export default {
         {
           id: '1',
           title: "第111",
-          isCollected: false
+          isCollected: false,
+          date: "2020/8/14 12:00"
         },
         {
           id: '2',
           title: "第二个hhhhh文档",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:00"
         },
         {
           id: '3',
           title: "第三个文dashdkjlashdjkl档",
-          isCollected: false
+          isCollected: false,
+          date: "2020/8/14 12:00"
         }
       ]
     };

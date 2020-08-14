@@ -108,13 +108,16 @@
               </el-timeline>
             </el-card>
             <el-card shadow="hover" id="fixedCard" :class="{'isFixed':fixed}">
-              <p style="font-size: 13px;">喜欢本文？点击
-                <span style="color: #409EFF; margin-right: 2px">复制链接</span>分享给好友：</p>
-              <el-input v-model="short_url" size="small" style="width: 50%;"></el-input>
-              <el-button v-if="short_url" class="copy" size="small" @click="CopyUrl" type="primary" plain>复制链接</el-button>
+                <p style="font-size: 13px;">喜欢本文？点击
+                  <span style="color: #409EFF; margin-right: 2px">复制链接</span>分享给好友：</p>
+                <el-input v-model="short_url" size="small" style="width: 50%;"></el-input>
+                <el-button v-if="short_url" class="copy" size="small" @click="CopyUrl" type="primary" plain>复制链接</el-button>
               <div style="text-align: center">
-                <div style="font-size: 13px;margin-top: 30px; margin-bottom: 10px">您也可以：
-                  <el-button type="primary" size="mini" icon="el-icon-star-off" round="true">收藏本文</el-button>
+                <el-button type="primary" size="mini" icon="el-icon-star-on" round="true" plain v-if="hasCollect" style="margin-top: 20px;">取消收藏</el-button>
+                <div style="font-size: 13px;margin-top: 30px; margin-bottom: 10px" v-else>您也可以：
+                  <div v-if="hasCollect">
+                  </div>
+                    <el-button type="primary" size="mini" icon="el-icon-star-off" round="true">收藏本文</el-button>
                 </div>
               </div>
             </el-card>
@@ -132,6 +135,7 @@
       components: {NavBar},
       data(){
           return{
+            hasCollect: false,
             commentItem: [{
               src: require("../assets/head.jpg"),
               user: 'YuanCZ',
