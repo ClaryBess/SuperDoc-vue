@@ -165,6 +165,11 @@
           autoHeightEnabled:false
         }
       }
+    },
+    methods: {
+      onSubmit: function () {
+        console.log(this.docForm.doc)
+      }
     }
   }
 </script>
