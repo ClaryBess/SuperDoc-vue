@@ -74,7 +74,8 @@
   .title p{
     float: left;
     font-size: 30px;
-    color: #333333;
+    color: #3369e7;
+    font-weight: bold;
   }
   h3{
     font-size: 30px;

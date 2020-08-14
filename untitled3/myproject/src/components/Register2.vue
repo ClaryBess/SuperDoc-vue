@@ -175,7 +175,8 @@
   .title p{
     float: left;
     font-size: 30px;
-    color: #333333;
+    color: #3369e7;
+    font-weight: bold;
   }
   .step{
     margin-top: 100px;
