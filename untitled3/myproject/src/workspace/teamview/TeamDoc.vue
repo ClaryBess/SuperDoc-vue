@@ -34,31 +34,37 @@
         // team的id
         id: null,
         Docs: [
-          {
-            id: "1",
-            title: "第111",
-          },
-          {
-            id: "2",
-            title: "第二个hhhhh文档",
-          },
-          {
-            id: "3",
-            title: "第三个文dashdkjlashdjkl档",
-          },
-          {
-            id: "4",
-            title: "四sssssssssssssssssssssssssssssss",
-          },
-          {
-            id: "5",
-            title: "第五wwuwuwuwuwwwwwwwwwwwwwwwwwwwwwwwwwwwwww个文档",
-          },
-          {
-            id: "6",
-            title: "第六",
-          },
-        ],
+        {
+          id: "1",
+          title: "第111",
+          isCollected: true
+        },
+        {
+          id: "2",
+          title: "第二个hhhhh文档",
+          isCollected: false
+        },
+        {
+          id: "3",
+          title: "第三个文dashdkjlashdjkl档",
+          isCollected: true
+        },
+        {
+          id: "4",
+          title: "四少时诵诗书所所所所所所所所所所所所所所所",
+          isCollected: false
+        },
+        {
+          id: "5",
+          title: "第五wwuwuwuwuwwwwwwwwwwwwww个文档",
+          isCollected: false
+        },
+        {
+          id: "6",
+          title: "第六",
+          isCollected: false
+        },
+      ],
       };
     },
     created() {

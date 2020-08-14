@@ -53,16 +53,15 @@
           >我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力</div>
         </el-card>
         <div style="width: 880px">
-          <el-card style="width: 260px; height: 180px" class="team-box-card" shadow="always">
+          <el-card style="width: 440px; height: 180px" class="team-box-card" shadow="always">
             <div slot="header" class="clearfix">
               <span style="font-size: 17px">
                 <strong>创建者</strong>
               </span>
             </div>
             <div class="leader-item">
-              <!-- :member=传入的团队成员 -->
-              <!-- <member-list :members="teamMembers"></member-list> -->
-              <member-list :members="teamMembers.id=1"></member-list>
+              <!-- <member-list :members="teamMembers.id=1"></member-list> -->
+              <MemberListItem :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem>
               <h2>{{id}}</h2>
             </div>
           </el-card>
@@ -121,10 +120,11 @@ import TeamSideBar1 from "./TeamSideBar1";
 import DocList from "../DocList";
 import MemberList from "./MemberList";
 import RightBar from "../RightBar";
+import MemberListItem from "./MemberListItem";
 
 export default {
   name: "TeamView1",
-  components: { NavBar, TeamSideBar1, DocList, MemberList, RightBar },
+  components: { NavBar, TeamSideBar1, DocList, MemberList, RightBar,MemberListItem },
   data() {
     return {
       select: "",
@@ -133,32 +133,6 @@ export default {
       headUrl: require("@/assets/head.jpg"),
       // team的id
       id: null,
-      Docs: [
-        {
-          id: "1",
-          title: "第111",
-        },
-        {
-          id: "2",
-          title: "第二个hhhhh文档",
-        },
-        {
-          id: "3",
-          title: "第三个文dashdkjlashdjkl档",
-        },
-        {
-          id: "4",
-          title: "四少时诵诗书所所所所所所所所所所所所所所所",
-        },
-        {
-          id: "5",
-          title: "第五wwuwuwuwuwwwwwwwwwwwwww个文档",
-        },
-        {
-          id: "6",
-          title: "第六",
-        },
-      ],
       teamMembers: [
         {
           id: "1",
