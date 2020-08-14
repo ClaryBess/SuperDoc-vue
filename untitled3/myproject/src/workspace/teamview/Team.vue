@@ -10,7 +10,8 @@
         <SideBar currentindex="4"></SideBar>
       </el-aside>
       <el-main style="width: 80%">
-        <div class="newteam"><el-button type="text" @click="dialogFormVisible = true">创建团队</el-button></div>
+        <!-- <div class="newteam"><el-button type="text" @click="dialogFormVisible = true">创建团队</el-button></div> -->
+        <el-button class="newteam" type="text" @click="dialogFormVisible = true">创建团队</el-button>
         <el-dialog title="创建团队" :visible.sync="dialogFormVisible" >
           <el-form :model="form" :rules="rules" ref="form" class="form" >
 
@@ -18,7 +19,7 @@
               <el-input placeholder="请输入2-10个字符" v-model="form.name" ></el-input>
             </el-form-item>
 
-            <el-form-item class="item" label=" 团队简介：":label-width="formLabelWidth">
+            <el-form-item class="item" label=" 团队简介：" :label-width="formLabelWidth">
               <el-input
                 type="textarea"
                 :rows="4"
@@ -151,9 +152,12 @@ export default {
     color: #7093ff;
   }
   .newteam{
-    width: 120px;
+    /* width: 120px;
     float: right;
-    margin-top:27px;
+    margin-top:27px; */
+    position: absolute;
+  right:17%;
+  height: 15%;
   }
   .form{
     margin-left: 3%;
