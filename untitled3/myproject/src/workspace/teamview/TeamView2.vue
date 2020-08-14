@@ -22,7 +22,7 @@
           >我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力</div>
         </el-card>
         <div style="width: 880px">
-          <el-card style="width: 260px; height: 180px" class="box-card" shadow="always">
+          <el-card style="width: 440px; height: 180px" class="box-card" shadow="always">
             <div slot="header" class="clearfix">
               <span style="font-size: 17px">
                 <strong>创建者</strong>
@@ -31,8 +31,7 @@
             <div class="leader-item">
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
-              <member-list :members="teamMembers.id=1"></member-list>
-              <h2>{{id}}</h2>
+              <MemberListItem :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem>
             </div>
           </el-card>
           <el-card class="box-card" shadow="always">
@@ -62,9 +61,11 @@
   import DocList from "../DocList";
   import MemberList from "./MemberList";
   import RightBar from "../RightBar";
+  import MemberListItem from "./MemberListItem";
+
   export default {
     name: "TeamView2",
-    components: { NavBar, TeamSideBar2, DocList, MemberList,RightBar },
+    components: { NavBar, TeamSideBar2, DocList, MemberList,RightBar,MemberListItem },
     data() {
       return {
         headUrl: require("@/assets/head.jpg"),
