@@ -14,9 +14,9 @@
               <p>你可以使用“模板”功能来快速创建文档</p>
             </div>
             <div style="margin-top: 40px;">
-              <el-form :model="docForm" label-width="80px">
+              <el-form :model="docForm" label-width="80px" :rules="rule" ref="docForm">
                 <el-row>
-                  <el-form-item label="文档标题">
+                  <el-form-item label="文档标题" prop="title">
                     <el-input v-model="docForm.title"></el-input>
                   </el-form-item>
                 </el-row>
@@ -32,7 +32,7 @@
                   <vue-ueditor-wrap v-model="docForm.doc" :config="ueConfig"></vue-ueditor-wrap>
                 </div>
                 <el-form-item class="button-row">
-                  <el-button type="primary" @click="onSubmit" >提交</el-button>
+                  <el-button type="primary" @click="onSubmit('docForm')" >提交</el-button>
                   <el-button style="margin-left: 30px">取消</el-button>
                 </el-form-item>
               </el-form>
@@ -59,6 +59,12 @@
             title: "这里写旧标题",
             doc: "",
             privilege: ['可查看']
+          },
+          rule:{
+            title: [
+              { required: true, message: '请输入标题', trigger: ['blur','change']},
+              { min: 1, max: 25, message: '标题长度在25字以内', trigger: ['blur','change']}
+            ]
           },
           ueConfig: {
             toolbars: [
@@ -163,6 +169,18 @@
             enableAutoSave: true,
             autoHeightEnabled: false
           }
+        }
+      },
+      methods: {
+        onSubmit(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              alert('submit!');
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
         }
       },
       mounted () {
