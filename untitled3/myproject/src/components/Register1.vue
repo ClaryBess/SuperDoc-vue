@@ -33,24 +33,29 @@
                   :rules="[
                             { message: '请输入邮箱地址', trigger: 'blur' },
                             { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-                          ]"
-                >
+                          ]">
                   <el-input placeholder="请输入邮箱" v-model="ruleForm.email"></el-input>
                 </el-form-item>
+
                 <el-form-item label="密码" prop="pass">
-                  <el-input placeholder="长度需大于5位，且包含数字、大、小写、符号中的至少2种" type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                  <el-input placeholder="长度需大于5位，且包含数字、大、小写、符号中的至少2种"
+                            type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
                 </el-form-item>
+
                 <el-form-item label="确认密码" prop="checkPass">
-                  <el-input placeholder="请再次输入密码" type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                  <el-input placeholder="请再次输入密码"
+                            type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
                 </el-form-item>
+
                 <el-form-item label="用户名" prop="username">
                   <el-input placeholder="请输入2-10个字符" v-model="ruleForm.username"></el-input>
                 </el-form-item>
+
                 <el-form-item>
-                  <el-button style="margin-left: 60px; margin-top: 30px" type="primary" @click="submitForm('ruleForm')">
+                  <el-button class="btn" type="primary" @click="submitForm('ruleForm')">
                     完成
                   </el-button>
-                  <el-button style="margin-left: 60px; margin-top: 30px"  @click="resetForm('ruleForm')">
+                  <el-button class="btn" @click="resetForm('ruleForm')">
                     重置
                   </el-button>
                 </el-form-item>
@@ -68,6 +73,7 @@
     import NavBar from "./NavBar";
     import NavBarOrigin from "./NavBarOrigin";
     import axios from "axios";
+
     export default {
       name: "Register1",
       components: {NavBar, NavBarOrigin},
@@ -153,6 +159,7 @@
             return '#409eff';
           }
         },
+
         submitForm(formName) {
           var _this=this
           console.log(axios);
@@ -189,6 +196,7 @@
               console.log(error)
             })
         },
+
         resetForm(formName) {
           this.$refs[formName].resetFields();
         }
@@ -230,6 +238,11 @@
     margin-left: 20%;
     margin-right: 30%;
     width: 510px;
+  }
+
+  .btn{
+    margin-left: 60px;
+    margin-top: 30px
   }
 
 </style>
