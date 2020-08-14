@@ -10,8 +10,10 @@
       <div class="main">
         <el-main>
           <el-card class="box-card">
+
+            <!-- 标题 -->
             <div  class="title">
-              <p style="margin-left: 50px">注册新账号</p>
+              <p>注册新账号</p>
             </div>
             <!-- 进度条 -->
             <div class="step">
@@ -46,9 +48,11 @@
                 </el-form-item>
                 <el-form-item>
                   <el-button style="margin-left: 60px; margin-top: 30px" type="primary" @click="submitForm('ruleForm')">
-                      完成
-                    </el-button>
-                  <el-button style="margin-left: 60px; margin-top: 30px"  @click="resetForm('ruleForm')">重置</el-button>
+                    完成
+                  </el-button>
+                  <el-button style="margin-left: 60px; margin-top: 30px"  @click="resetForm('ruleForm')">
+                    重置
+                  </el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -191,6 +195,7 @@
       }
     }
 </script>
+
 <style scoped>
   #color{
     height: auto;
@@ -201,23 +206,28 @@
     width: 70%;
     margin: 2% auto;
   }
+
   .title{
     width: 100%;
   }
+
   .title p{
     float: left;
     font-size: 30px;
     color: #3369e7;
     font-weight: bold;
+    margin-left: 50px;
   }
+
   .step{
     margin-top: 100px;
     margin-left: 5%;
     margin-right: 5%;
   }
+
   .regform{
     margin-top: 44px;
-    margin-left: 22%;
+    margin-left: 20%;
     margin-right: 30%;
     width: 510px;
   }

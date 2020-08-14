@@ -9,7 +9,7 @@
       <el-card class="box-card">
       <el-main>
         <div  class="title">
-          <p style="margin-left: 50px">注册新账号</p>
+          <p>注册新账号</p>
         </div>
         <div class="step">
           <el-progress :percentage="percentage" :color="customColorMethod"></el-progress><br/><br/>
@@ -52,7 +52,7 @@
         if (percentage < 100) {
           return '#909399';
         } else {
-          return '#409eff';
+          return '#3369e7';
         }
       }
     }
@@ -61,7 +61,7 @@
 
 <style scoped>
   #color{
-    height: 800px;
+    height: auto;
     background-color: #f1f8fa;
   }
   .main{
@@ -76,6 +76,7 @@
     font-size: 30px;
     color: #3369e7;
     font-weight: bold;
+    margin-left: 50px;
   }
   h3{
     font-size: 30px;
@@ -89,7 +90,7 @@
   }
   .regform{
     margin-top: 70px;
-    margin-left: 43%;
+    margin-left: 42%;
     margin-right: 30%;
   }
 </style>
