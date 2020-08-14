@@ -8,7 +8,7 @@ import Homepage from "../components/Homepage";
 import HomepageEdit from "../components/HomepageEdit";
 import Welcome from "../components/Welcome";
 
-import WorkSpace from "../workspace/WorkSpace";
+// import WorkSpace from "../workspace/WorkSpace";
 import Recently from "../workspace/Recently";
 import Favourite from "../workspace/Favourite";
 import Created from "../workspace/Created";
@@ -64,7 +64,7 @@ const routes = [
   {
     path: '/workspace',
     name: 'workspace',
-    component: WorkSpace
+    component: Recently
   },
   {
     path: '/recently',

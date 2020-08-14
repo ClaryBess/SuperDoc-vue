@@ -7,10 +7,11 @@
     </el-header>
     <el-container>
       <el-aside width="15%">
-      <SideBar></SideBar>
+        <SideBar></SideBar>
       </el-aside>
       <el-main style="width: 80% text-align: center">
         <h2 class="h2color">欢迎来到您的个人工作台</h2>
+        <img class="img2" src="../assets/work.jpg" alt />
       </el-main>
     </el-container>
   </el-container>
@@ -32,7 +33,13 @@ export default {
 </script>
 
 <style>
-  .h2color {
-    color: #7093FF;
-  }
+.h2color {
+  color: #7093ff;
+}
+.img2 {
+  z-index: 999;
+  width: 40%;
+  margin-left: 20%;
+  position: relative;
+}
 </style>

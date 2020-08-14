@@ -35,32 +35,38 @@ export default {
         {
           id: '1',
           title: "第111",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 21:00"
         },
         {
           id: '2',
           title: "第二个hhhhh文档",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 11:00"
         },
         {
           id: '3',
           title: "第三个文dashdkjlashdjkl档",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:22"
         },
         {
           id: '4',
           title: "四ssssswwwwwwwwwwwwwwwss",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:22"
         },
         {
           id: '5',
           title: "第五wwuwuwuwuwuwwwwwwww个文档",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:00"
         },
         {
           id: '6',
           title: "第六",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:00"
         }
       ]
     };

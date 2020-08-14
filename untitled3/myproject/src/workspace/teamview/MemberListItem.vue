@@ -44,7 +44,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .docs {
   position: relative;
   padding: 5px;

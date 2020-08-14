@@ -35,7 +35,8 @@ export default {
         {
           id: "1",
           title: "第111",
-          isCollected: true
+          isCollected: true,
+          date: "2020/8/14 12:00"
         }
       ],
     };
