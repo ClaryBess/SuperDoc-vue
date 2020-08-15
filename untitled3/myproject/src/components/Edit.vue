@@ -50,6 +50,7 @@
   import UEditor from "./UEditor";
   import NavBar from "./NavBar";
   import VueUeditorWrap from "vue-ueditor-wrap";
+  import axios from "axios";
   export default {
     name: "Edit",
     components: {UEditor, NavBar, VueUeditorWrap},
@@ -176,7 +177,45 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            var _this=this
+            console.log(axios);
+            var pri = 0;
+            for(var i = 0; i < this.docForm.privilege.length; i++){
+              if(this.docForm.privilege[i] === '可查看'){
+                pri += 1000;
+              }
+              else if(this.docForm.privilege[i] === '可编辑'){
+                pri += 100;
+              }
+              else if(this.docForm.privilege[i] === '可评论'){
+                pri += 10;
+              }
+              else if(this.docForm.privilege[i] === '可分享'){
+                pri += 1;
+              }
+            }
+            axios.post("http://127.0.0.1:8081/doc",{
+              //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
+              //UserID
+              Title: this.docForm.title,
+              Content: this.docForm.doc,
+              Privilege: pri,
+              IsTeam: 0
+            })
+              .then(function (response) {
+                // console.log(response.data.status)
+                if(response.data.status === 200){
+                  //alert("恭喜你，注册成功")
+                  //   _this.$message({
+                  //   message: '恭喜你，注册成功',
+                  //   type: 'success'
+                  // })
+                  _this.$router.push('view')
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           } else {
             console.log('error submit!!');
             return false;

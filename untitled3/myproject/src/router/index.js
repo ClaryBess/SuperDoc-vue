@@ -148,7 +148,7 @@ const routes = [
     component: Change
   },
   {
-    path: '/editTeam',
+    path: '/editTeam/:tid',
     name: 'editTeam',
     component: EditTeamDoc
   },

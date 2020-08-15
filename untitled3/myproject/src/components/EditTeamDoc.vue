@@ -26,7 +26,7 @@
                     <el-form-item label="查看" prop="viewP">
                       <el-select v-model="docForm.viewP" placeholder="请选择">
                         <el-option label="不公开" value="0"></el-option>
-                        <el-option label="仅团队" value="1"></el-option>
+                        <el-option label="仅团队" value="2"></el-option>
                         <el-option label="所有人" value="1"></el-option>
                       </el-select>
                     </el-form-item>
@@ -35,7 +35,7 @@
                     <el-form-item label="评论" prop="commentP">
                       <el-select v-model="docForm.commentP" placeholder="请选择">
                         <el-option label="不公开" value="0"></el-option>
-                        <el-option label="仅团队" value="1"></el-option>
+                        <el-option label="仅团队" value="2"></el-option>
                         <el-option label="所有人" value="1"></el-option>
                       </el-select>
                     </el-form-item>
@@ -44,7 +44,7 @@
                     <el-form-item label="编辑" prop="editP">
                       <el-select v-model="docForm.editP" placeholder="请选择">
                         <el-option label="不公开" value="0"></el-option>
-                        <el-option label="仅团队" value="1"></el-option>
+                        <el-option label="仅团队" value="2"></el-option>
                         <el-option label="所有人" value="1"></el-option>
                       </el-select>
                     </el-form-item>
@@ -53,7 +53,7 @@
                     <el-form-item label="分享" prop="shareP">
                       <el-select v-model="docForm.shareP" placeholder="请选择">
                         <el-option label="不公开" value="0"></el-option>
-                        <el-option label="仅团队" value="1"></el-option>
+                        <el-option label="仅团队" value="2"></el-option>
                         <el-option label="所有人" value="1"></el-option>
                       </el-select>
                     </el-form-item>
@@ -81,6 +81,7 @@
   import UEditor from "./UEditor";
   import NavBar from "./NavBar";
   import VueUeditorWrap from "vue-ueditor-wrap";
+  import axios from "axios";
   export default {
     name: "EditTeamDoc",
     components: {UEditor, NavBar, VueUeditorWrap},
@@ -220,9 +221,33 @@
     },
     methods: {
       onSubmit(formName) {
+        console.log(this.$route.params.tid)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            var _this=this
+            console.log(axios);
+            axios.post("http://127.0.0.1:8081/doc",{
+              //UserID
+              Title: this.docForm.title,
+              Content: this.docForm.doc,
+              Privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
+              IsTeam: 1,
+              Team: this.$route.params.tid
+            })
+              .then(function (response) {
+                // console.log(response.data.status)
+                if(response.data.status === 200){
+                  //alert("恭喜你，注册成功")
+                  //   _this.$message({
+                  //   message: '恭喜你，注册成功',
+                  //   type: 'success'
+                  // })
+                  _this.$router.push('view')
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           } else {
             console.log('error submit!!');
             return false;
