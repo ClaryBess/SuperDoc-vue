@@ -11,6 +11,9 @@
         <router-link to="/message">消息</router-link>
         <!-- <a href="#">消息</a> -->
       </li>
+      <li>
+        <router-link to="/team">团队</router-link>
+      </li>
     </ul>
 
     <div :class="search">
