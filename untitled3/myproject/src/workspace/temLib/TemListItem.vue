@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .goods-item {
   padding: 10px;
   position: relative;
