@@ -83,7 +83,10 @@
 
   export default {
     name: "Register2",
-    components: {NavBar, NavBarOrigin},
+    components: {
+      NavBar,
+      NavBarOrigin
+    },
     data() {
       var checkBirth = (rule, value, callback) => {
         if (value == '') {

@@ -1,16 +1,23 @@
 // 创建者的页面
 <template>
   <el-container>
+    <!-- 头部 -->
     <el-header>
       <div>
-        <nav-bar :headSrc="headUrl"></nav-bar>
+        <nav-bar :headSrc="headUrl">
+        </nav-bar>
       </div>
     </el-header>
+    <!-- 内容 -->
     <el-container>
+      <!-- 左栏 -->
       <el-aside width="15%">
-        <team-side-bar1></team-side-bar1>
+        <team-side-bar1>
+        </team-side-bar1>
       </el-aside>
+      <!-- 中间 -->
       <el-main style="width: 80%">
+        <!-- 团队简介 -->
         <el-card class="team-box-card" shadow="always">
           <div slot="header" class="clearfix">
             <span style="font-size: 17px">
@@ -52,6 +59,7 @@
             class="text item"
           >我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力</div>
         </el-card>
+        <!-- 团队成员 -->
         <div style="width: 880px">
           <el-card style="width: 440px; height: 180px" class="team-box-card" shadow="always">
             <div slot="header" class="clearfix">
@@ -108,9 +116,13 @@
           </el-card>
         </div>
       </el-main>
-      <right-bar></right-bar>
+      <!-- 右栏 -->
+      <right-bar>
+      </right-bar>
     </el-container>
-    <el-backtop right="80"></el-backtop>
+    <!-- 回到顶部 -->
+    <el-backtop right="80">
+    </el-backtop>
   </el-container>
 </template>
 
@@ -124,7 +136,14 @@ import MemberListItem from "./MemberListItem";
 
 export default {
   name: "TeamView1",
-  components: { NavBar, TeamSideBar1, DocList, MemberList, RightBar,MemberListItem },
+  components: {
+    NavBar,
+    TeamSideBar1,
+    DocList,
+    MemberList,
+    RightBar,
+    MemberListItem
+  },
   data() {
     return {
       select: "",
@@ -221,53 +240,67 @@ export default {
 .text {
   font-size: 14px;
 }
+
 .item {
   margin: 15px 13px;
 }
+
 .leader-item {
   margin-left: 18px;
   margin-bottom: 1px;
 }
+
 .member-item {
   margin-left: 18px;
   margin-bottom: 1px;
 }
+
 .clearfix:before,
+
 .clearfix:after {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both;
 }
+
 .team-box-card {
   margin-top: 50px;
   margin-left: 50px;
   margin-bottom: 10px;
   width: 880px;
 }
+
 .demo-drawer__content {
   width: 85%;
   margin: auto;
 }
+
 .drawer-item {
   margin-bottom: 30px;
   margin-top: 10px;
   font-weight: bold;
 }
+
 .drawer-item-menber {
   margin-bottom: 50px;
   margin-top: 15px;
   font-weight: bold;
 }
+
 .demo-drawer__footer {
   margin-bottom: 20px;
   margin-left: 27%;
 }
+
 .el-select .el-input {
   width: 120px;
 }
+
 .input-with-select .el-input-group__prepend {
   background-color: #fff;
 }
+
 </style>
