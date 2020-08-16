@@ -31,7 +31,7 @@
             <div class="leader-item">
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
-              <MemberListItem :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem>
+              <MemberListItem2 :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem2>
             </div>
           </el-card>
           <el-card class="box-card" shadow="always">
@@ -43,7 +43,7 @@
             <div class="member-item">
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
-              <member-list :members="teamMembers"></member-list>
+              <member-list2 :members="teamMembers"></member-list2>
               <h2>{{id}}</h2>
             </div>
           </el-card>
@@ -59,13 +59,13 @@
   import NavBar from "@/components/NavBar";
   import TeamSideBar2 from "./TeamSideBar2";
   import DocList from "../DocList";
-  import MemberList from "./MemberList";
+  import MemberList2 from "./MemberList2";
   import RightBar from "../RightBar";
-  import MemberListItem from "./MemberListItem";
+  import MemberListItem2 from "./MemberListItem2";
 
   export default {
     name: "TeamView2",
-    components: { NavBar, TeamSideBar2, DocList, MemberList,RightBar,MemberListItem },
+    components: { NavBar, TeamSideBar2, DocList, MemberList2,RightBar,MemberListItem2 },
     data() {
       return {
         headUrl: require("@/assets/head.jpg"),
