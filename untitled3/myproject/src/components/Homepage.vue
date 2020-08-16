@@ -9,7 +9,7 @@
     <div class="main">
       <el-main>
         <div class="info">
-          <el-form :model="ruleForm"label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
 
             <el-card class="box-card" >
               <!-- 卡片头部 -->

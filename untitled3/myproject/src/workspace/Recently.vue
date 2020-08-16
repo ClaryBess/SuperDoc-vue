@@ -42,14 +42,7 @@ export default {
       ],
     };
   },
-  computed: {
-    // showDocs() {
-    //   return 浏览的文档列表
-    // }
-    userid() {
-      return window.sessionStorage.getItem('userid')
-    }
-  },
+  
 };
 </script>
 
