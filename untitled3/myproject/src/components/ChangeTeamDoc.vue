@@ -216,7 +216,8 @@
           initialFrameWidth: "100%",
           // 上传文件接口
           enableAutoSave: true,
-          autoHeightEnabled:false
+          autoHeightEnabled:false,
+          serverUrl: "http://127.0.0.1:8081"
         }
       }
     },
