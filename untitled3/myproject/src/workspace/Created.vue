@@ -37,7 +37,7 @@ import RightBar from "./RightBar";
 
 export default {
   name: "Created",
-  components: { NavBar, SideBar,DocList,RightBar,TemList  },
+  components: {NavBar, SideBar,DocList,RightBar,TemList},
   data() {
     return {
       headUrl: require("../assets/head.jpg"),
@@ -67,23 +67,11 @@ export default {
           date: "2020/8/14 12:00"
         },
         {
-          id: '3',
-          title: "第三个文dashdkjlashdjkl档",
-          isCollected: false,
-          date: "2020/8/14 12:00"
-        },
-        {
           id: '2',
           title: "第二个hhhhh文档",
           isCollected: true,
           date: "2020/8/14 12:00"
         },
-        {
-          id: '3',
-          title: "第三个文dashdkjlashdjkl档",
-          isCollected: false,
-          date: "2020/8/14 12:00"
-        }
       ],
       showMenu:false,
       showList:true,

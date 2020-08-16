@@ -4,11 +4,11 @@
       <div style="float: right">
       <el-dropdown >
         <span class="el-dropdown-link">
-         <i class="el-icon-arrow-down el-icon--right"></i>
+         <i class="el-icon-setting el-icon--right"></i>
         </span>
-        <el-dropdown-menu style="" slot="dropdown">
-          <el-dropdown-item>收藏</el-dropdown-item>
-          <el-dropdown-item divided>删除</el-dropdown-item>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item ><el-button type="text" @click="fav">收藏</el-button></el-dropdown-item>
+          <el-dropdown-item divided><el-button type="text" @click="dlt">删除</el-button></el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       </div>
@@ -42,9 +42,42 @@
       },
     },
     methods: {
-      //点击进入模板预览界面
       itemClick() {
         this.$router.push("/detail/" + this.TemItem.id);
+      },
+      fav() {
+        this.$confirm('此操作将收藏该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'info'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '收藏成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消收藏'
+          });
+        });
+      },
+      dlt() {
+        this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
     },
   };
@@ -53,28 +86,28 @@
 <style scoped>
   .el-dropdown-link {
     cursor: pointer;
-    color: #409EFF;
+    color: #3778ff;
   }
   .el-icon-arrow-down {
     font-size: 8px;
   }
   .goods-item {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-right: 20px;
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
   }
 
   .mainImg {
     width: 70px;
     border-radius: 20px;
-    margin-left: 26%;
+    margin-left: 30%;
     margin-top: 8px;
   }
 
   .goods-info {
-    font-size: 14px;
+    font-size: 13px;
     position: relative;
     margin-top: 5px;
     left: 0;
@@ -84,7 +117,7 @@
   }
 
   .goods-info p {
-    font-size: 17px;
+    font-size: 18px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

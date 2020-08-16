@@ -16,8 +16,9 @@
               <div slot="header" class="clearfix">
                 <p>
                   <strong>个人空间</strong>
+                  <el-button class="btn" type="text" @click="itemClick">返回个人空间</el-button>
                   <el-button class="btn" type="text" @click="resetForm('ruleForm')">重置</el-button>
-                  <el-button class="btn" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
+                  <el-button class="btn" style="margin-right: -11px" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
                 </p>
               </div>
               <!-- 卡片内容 -->
@@ -166,6 +167,10 @@
       };
     },
     methods: {
+      itemClick() {
+        this.$router.push("homepage")
+      },
+
       fetchUser(){
         this.userL=JSON.parse(sessionStorage.getItem("userL"))
       },
@@ -198,6 +203,7 @@
             console.log(error)
           })
       },
+
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -275,14 +281,15 @@
   }
 
   .card-main{
-    margin-left: 18%;
+    margin-left: 20%;
     margin-top: 5%;
   }
 
   .btn{
     float: right;
     font-size: 16px;
-    padding: 17px;
+    margin-right: -7px;
+    padding: 15px;
   }
 
 </style>
