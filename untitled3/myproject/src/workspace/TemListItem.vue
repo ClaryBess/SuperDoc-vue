@@ -1,11 +1,27 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <el-card class="box-card" shadow="always">
+      <div style="float: right">
+      <el-dropdown >
+        <span class="el-dropdown-link">
+         <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu style="" slot="dropdown">
+          <el-dropdown-item>收藏</el-dropdown-item>
+          <el-dropdown-item divided>删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      </div>
       <!-- <img :src="TemItem.img" alt=""> -->
-      <img :src=TemItem.picUrl alt />
+      <img class="mainImg" src="../assets/文档.svg" />
+
       <div class="goods-info">
         <p>{{TemItem.title}}</p>
       </div>
+      <div class="goods-info">
+        {{TemItem.date}}
+      </div>
+
     </el-card>
   </div>
 </template>
@@ -14,7 +30,8 @@
   export default {
     name: "TemListItem",
     data() {
-      return {};
+      return {
+      };
     },
     props: {
       TemItem: {
@@ -34,24 +51,32 @@
 </script>
 
 <style scoped>
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 8px;
+  }
   .goods-item {
-    padding:25px;
+    margin-top: 40px;
+    margin-right: 20px;
     position: relative;
-    width: 28%;
+    width: 200px;
+    height: 200px;
   }
 
-  .goods-item img {
-    width: 265px;
+  .mainImg {
+    width: 70px;
     border-radius: 20px;
-    padding: 5px;
-    margin-left: 2%;
+    margin-left: 26%;
     margin-top: 8px;
   }
 
   .goods-info {
-    font-size: 18px;
+    font-size: 14px;
     position: relative;
-    bottom: 7px;
+    margin-top: 5px;
     left: 0;
     right: 0;
     overflow: hidden;
@@ -59,9 +84,10 @@
   }
 
   .goods-info p {
+    font-size: 17px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-bottom: 0px;
+    margin-bottom: 2px;
   }
 </style>

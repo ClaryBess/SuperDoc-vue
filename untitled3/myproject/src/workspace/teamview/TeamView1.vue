@@ -16,22 +16,24 @@
         </team-side-bar1>
       </el-aside>
       <!-- 中间 -->
-      <el-main style="width: 80%">
+      <el-main class="main">
         <!-- 团队简介 -->
         <el-card class="team-box-card" shadow="always">
           <div slot="header" class="clearfix">
-            <span style="font-size: 17px">
+            <span >
               <strong>团队简介</strong>
             </span>
+            <!-- 修改简介 -->
             <el-popover
               placement="bottom"
               width="490"
               trigger="click"
               :before-close="handleClose"
               :visible.sync="dialog"
-              style=" box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.9)"
+              class="pop"
             >
               <div class="demo-drawer__content">
+
                 <el-form :model="form">
                   <el-form-item label=" 请修改团队简介：" class="drawer-item">
                     <el-input
@@ -43,48 +45,61 @@
                     ></el-input>
                   </el-form-item>
                 </el-form>
+
                 <div class="demo-drawer__footer">
-                  <el-button @click="cancelForm" style="margin-right: 30px">取 消</el-button>
+                  <el-button @click="cancelForm" style="margin-right: 30px">
+                    取 消
+                  </el-button>
                   <el-button
                     type="primary"
                     @click="handleClose"
                     :loading="loading"
-                  >{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+                  >
+                    {{ loading ? '提交中 ...' : '确 定' }}
+                  </el-button>
                 </div>
+
               </div>
               <el-button style="float: right; padding: 3px 0" type="text" slot="reference">修改简介</el-button>
             </el-popover>
           </div>
-          <div
-            class="text item"
-          >我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力</div>
+
+          <div class="text item">
+            我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力。
+          </div>
         </el-card>
         <!-- 团队成员 -->
         <div style="width: 880px">
+          <!-- Leader -->
           <el-card style="width: 440px; height: 180px" class="team-box-card" shadow="always">
             <div slot="header" class="clearfix">
-              <span style="font-size: 17px">
+              <span>
                 <strong>创建者</strong>
               </span>
             </div>
             <div class="leader-item">
               <!-- <member-list :members="teamMembers.id=1"></member-list> -->
-              <MemberListItem :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem>
+              <MemberListItem :memberItem="teamMembers[0]">
+                <h2 slot="deleteIcon"></h2>
+              </MemberListItem>
               <h2>{{id}}</h2>
             </div>
           </el-card>
+          <!-- Member -->
           <el-card class="team-box-card" shadow="always">
             <div slot="header" class="clearfix">
-              <span style="font-size: 17px">
+
+              <span>
                 <strong>成员</strong>
               </span>
+              <!-- 添加成员 -->
               <el-popover
                 placement="top"
                 width="500"
                 trigger="click"
                 :before-close="handleClose"
                 :visible.sync="dialog"
-                style=" box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.9)"
+                class="pop"
               >
                 <div class="demo-drawer__content">
                   <el-form :model="formmember">
@@ -104,8 +119,11 @@
                     </el-form-item>
                   </el-form>
                 </div>
-                <el-button style="float: right; padding: 3px 0" type="text" slot="reference">添加成员</el-button>
+                <el-button style="float: right; padding: 3px 0" type="text" slot="reference">
+                  添加成员
+                </el-button>
               </el-popover>
+
             </div>
             <div class="member-item">
               <!-- :member=传入的团队成员 -->
@@ -210,6 +228,7 @@ export default {
         })
         .catch((_) => {});
     },
+
     handleClose(done) {
       if (this.loading) {
         return;
@@ -227,6 +246,7 @@ export default {
         })
         .catch((_) => {});
     },
+
     cancelForm() {
       this.loading = false;
       this.dialog = false;
@@ -237,70 +257,82 @@ export default {
 </script>
 
 <style scoped>
-.text {
-  font-size: 14px;
-}
+  span{
+    font-size: 17px;
+  }
 
-.item {
-  margin: 15px 13px;
-}
+  .main{
+    width: 80%;
+  }
 
-.leader-item {
-  margin-left: 18px;
-  margin-bottom: 1px;
-}
+  .pop{
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.9);
+  }
 
-.member-item {
-  margin-left: 18px;
-  margin-bottom: 1px;
-}
+  .text {
+    font-size: 14px;
+  }
 
-.clearfix:before,
+  .item {
+    margin: 15px 13px;
+  }
 
-.clearfix:after {
-  display: table;
-  content: "";
-}
+  .leader-item {
+    margin-left: 18px;
+    margin-bottom: 1px;
+  }
 
-.clearfix:after {
-  clear: both;
-}
+  .member-item {
+    margin-left: 18px;
+    margin-bottom: 1px;
+  }
 
-.team-box-card {
-  margin-top: 50px;
-  margin-left: 50px;
-  margin-bottom: 10px;
-  width: 880px;
-}
+  .clearfix:before,
 
-.demo-drawer__content {
-  width: 85%;
-  margin: auto;
-}
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
 
-.drawer-item {
-  margin-bottom: 30px;
-  margin-top: 10px;
-  font-weight: bold;
-}
+  .clearfix:after {
+    clear: both;
+  }
 
-.drawer-item-menber {
-  margin-bottom: 50px;
-  margin-top: 15px;
-  font-weight: bold;
-}
+  .team-box-card {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-bottom: 10px;
+    width: 880px;
+  }
 
-.demo-drawer__footer {
-  margin-bottom: 20px;
-  margin-left: 27%;
-}
+  .demo-drawer__content {
+    width: 85%;
+    margin: auto;
+  }
 
-.el-select .el-input {
-  width: 120px;
-}
+  .drawer-item {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
 
-.input-with-select .el-input-group__prepend {
-  background-color: #fff;
-}
+  .drawer-item-menber {
+    margin-bottom: 50px;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .demo-drawer__footer {
+    margin-bottom: 20px;
+    margin-left: 27%;
+  }
+
+  .el-select .el-input {
+    width: 120px;
+  }
+
+  .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+  }
 
 </style>
