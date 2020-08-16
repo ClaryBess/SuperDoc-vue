@@ -10,10 +10,19 @@
         <SideBar currentindex="5"></SideBar>
       </el-aside>
       <el-main style="width: 80%">
-        <delete-all class="all-delete"></delete-all>
+
+        <el-button class="switch"  type="text" @click="toMenu">
+          <i class="el-icon-menu"></i>
+        </el-button>
+        <el-button class="switch" style="margin-right: -5px" type="text" @click="toList">
+          <i class="el-icon-s-unfold"></i>
+        </el-button>
+        <delete-all class="switch"></delete-all>
+
         <h2 class="h2color">回收站</h2>
         <!-- <doc-list :docs="recycleDocs"></doc-list> -->
-        <delete-list :docs="Docs"></delete-list>
+        <delete-list  v-show="showList" :docs="Docs"></delete-list>
+        <menu-list v-show="showMenu" :menus='Docs' style="width: 100%;"></menu-list>
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -26,6 +35,7 @@ import SideBar from "./SideBar";
 import DeleteList from "./DeleteList";
 import RightBar from "./RightBar";
 import DeleteAll from "./DeleteAll";
+import MenuList from "./MenuList";
 
 export default {
   name: "Recycle",
@@ -35,6 +45,7 @@ export default {
     DeleteList,
     RightBar,
     DeleteAll,
+    MenuList
   },
   data() {
     return {
@@ -153,17 +164,32 @@ export default {
           title: "sisisi",
         },
       ],
+
+      showMenu:false,
+      showList:true,
     };
   },
+
+  methods:{
+    toMenu:function () {
+      this.showMenu = true;
+      this.showList = false;
+    },
+    toList:function () {
+      this.showList = true;
+      this.showMenu = false;
+    },
+  }
 };
 </script>
-<style>
+<style scoped>
 .h2color {
   color: #7093ff;
 }
-.all-delete {
-  position: absolute;
-  right:17%;
-  height: 15%;
+.switch{
+  width: 40px;
+  float: right;
+  margin-top:35px;
+  margin-right: 40px;
 }
 </style>

@@ -16,8 +16,9 @@
               <div slot="header" class="clearfix">
                 <p>
                   <strong>个人空间</strong>
+                  <el-button class="btn" type="text" @click="itemClick">返回个人空间</el-button>
                   <el-button class="btn" type="text" @click="resetForm('ruleForm')">重置</el-button>
-                  <el-button class="btn" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
+                  <el-button class="btn" style="margin-right: -7px" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
                 </p>
               </div>
               <!-- 卡片内容 -->
@@ -164,6 +165,10 @@
       };
     },
     methods: {
+      itemClick() {
+        this.$router.push("homepage")
+      },
+
       submitForm(formName) {
         this.$refs[formName].validate(
           (valid) => {

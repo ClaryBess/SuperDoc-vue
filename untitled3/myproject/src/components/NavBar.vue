@@ -23,7 +23,7 @@
     <div class="right">
       <ul class="rightNav">
         <li class="dropdown">
-          <router-link to="HomePage">
+          <router-link to="/homepage">
               <img :src='headSrc' class="userhead" />
           </router-link>
         </li>
