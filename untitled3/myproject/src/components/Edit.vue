@@ -14,9 +14,9 @@
               <p>你可以使用“模板”功能来快速创建文档</p>
             </div>
             <div style="margin-top: 40px;">
-              <el-form :model="docForm" label-width="80px">
+              <el-form :model="docForm" label-width="80px" :rules="rule" ref="docForm">
                 <el-row>
-                  <el-form-item label="文档标题">
+                  <el-form-item label="文档标题" prop="title">
                     <el-input v-model="docForm.title"></el-input>
                   </el-form-item>
                 </el-row>
@@ -33,7 +33,7 @@
                 </div>
 
                 <el-form-item class="button-row">
-                  <el-button type="primary" @click="onSubmit" >提交</el-button>
+                  <el-button type="primary" @click="onSubmit('docForm')" >提交</el-button>
                   <el-button style="margin-left: 30px">取消</el-button>
                 </el-form-item>
               </el-form>
@@ -50,6 +50,7 @@
   import UEditor from "./UEditor";
   import NavBar from "./NavBar";
   import VueUeditorWrap from "vue-ueditor-wrap";
+  import axios from "axios";
   export default {
     name: "Edit",
     components: {UEditor, NavBar, VueUeditorWrap},
@@ -60,6 +61,12 @@
           title: "",
           doc: "我是默认内容咿呀咿呀咿",
           privilege: []
+        },
+        rule:{
+          title: [
+            { required: true, message: '请输入标题', trigger: ['blur','change']},
+            { min: 1, max: 25, message: '标题长度在25字以内', trigger: ['blur','change']}
+          ]
         },
         ueConfig:{
           toolbars: [
@@ -167,8 +174,53 @@
       }
     },
     methods: {
-      onSubmit: function () {
-        console.log(this.docForm.doc)
+      onSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            var _this=this
+            console.log(axios);
+            var pri = 0;
+            for(var i = 0; i < this.docForm.privilege.length; i++){
+              if(this.docForm.privilege[i] === '可查看'){
+                pri += 1000;
+              }
+              else if(this.docForm.privilege[i] === '可编辑'){
+                pri += 100;
+              }
+              else if(this.docForm.privilege[i] === '可评论'){
+                pri += 10;
+              }
+              else if(this.docForm.privilege[i] === '可分享'){
+                pri += 1;
+              }
+            }
+            axios.post("http://127.0.0.1:8081/doc",{
+              //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
+              //UserID
+              Title: this.docForm.title,
+              Content: this.docForm.doc,
+              Privilege: pri,
+              IsTeam: 0
+            })
+              .then(function (response) {
+                // console.log(response.data.status)
+                if(response.data.status === 200){
+                  //alert("恭喜你，注册成功")
+                  //   _this.$message({
+                  //   message: '恭喜你，注册成功',
+                  //   type: 'success'
+                  // })
+                  _this.$router.push('view')
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     }
   }

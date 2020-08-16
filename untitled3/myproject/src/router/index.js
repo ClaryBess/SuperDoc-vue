@@ -143,17 +143,17 @@ const routes = [
     component: Message
   },
   {
-    path: '/change',
+    path: '/change/:id',
     name: 'change',
     component: Change
   },
   {
-    path: '/editTeam',
+    path: '/editTeam/:tid',
     name: 'editTeam',
     component: EditTeamDoc
   },
   {
-    path: '/changeTeam',
+    path: '/changeTeam/:id',
     name: 'changeTeam',
     component: ChangeTeamDoc
   },

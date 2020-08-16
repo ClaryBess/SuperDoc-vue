@@ -138,7 +138,7 @@
           profile: '',
           pass: '',
           checkPass: '',
-          radio1: '男',
+          sex: '男',
           birth: '',
           fileList: [
             {
@@ -201,6 +201,7 @@
       handleExceed(files, fileList) {
         this.$message.warning(`只能选择一个头像`);
       },
+
     }
   }
 </script>
