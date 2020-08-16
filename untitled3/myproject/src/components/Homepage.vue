@@ -30,19 +30,19 @@
                 </el-form-item>
 
                 <el-form-item  label="用户名" prop="username">
-                  <span>酒醉的蝴蝶</span>
+                  <span>{{userL.userName}}</span>
                 </el-form-item>
 
                 <el-form-item label="邮箱" prop="email">
-                  <span>12345678@qq.com</span>
+                  <span>{{userL.email}}</span>
                 </el-form-item>
 
                 <el-form-item label="性别" prop="sex">
-                  <span>男</span>
+                  <span>{{userL.gender}}</span>
                 </el-form-item>
 
                 <el-form-item label="生日" prop="birth">
-                  <span>1999-09-09</span>
+                  <span>{{userL.birthday}}</span>
                 </el-form-item>
 
               </div>
@@ -64,6 +64,12 @@
       submitForm(formName) {
             this.$router.push('HomepageEdit')
       },
+      fetchUser(){
+        this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      }
+    },
+    created() {
+      this.fetchUser()
     }
   }
 </script>
