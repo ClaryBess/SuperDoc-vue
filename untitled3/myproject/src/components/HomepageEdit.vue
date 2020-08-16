@@ -76,6 +76,8 @@
 
 <script>
   import NavBar from "./NavBar";
+  import axios from "axios";
+
   export default {
     name: "HomepageEdit",
     components: {NavBar},
@@ -164,18 +166,38 @@
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate(
-          (valid) => {
-            if (valid) {
-              this.$router.push('Register3')
-            } else {
-              // console.log('error submit!!');
-              return false;
-            }
-        });
+      fetchUser(){
+        this.userL=JSON.parse(sessionStorage.getItem("userL"))
       },
+      submitForm(formName) {
+        var _this=this
+        console.log(this.picture_url);
 
+        axios.post("http://127.0.0.1:8081/user/edit",{
+          userID:this.userL.userID,
+          userName:this.ruleForm.username,
+          email:this.ruleForm.email,
+          password:this.ruleForm.pass,
+          birthday:this.ruleForm.birth,
+          gender:this.ruleForm.sex,
+          profileUrl:this.picture_url //图片地址
+        }).then(function (response) {
+          // console.log(response.data.status)
+          if(response.data.status === 200){
+            sessionStorage.setItem('userL', JSON.stringify(response.data.data))
+            _this.$router.push('Homepage')
+          }
+          else {
+            _this.$message({
+              message: '修改失败',
+              type: 'error'
+            })
+          }
+        })
+          .catch(function (error) {
+            console.log(error)
+          })
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
@@ -201,7 +223,9 @@
       handleExceed(files, fileList) {
         this.$message.warning(`只能选择一个头像`);
       },
-
+    },
+    created() {
+      this.fetchUser()
     }
   }
 </script>
