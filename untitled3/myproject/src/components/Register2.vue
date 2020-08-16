@@ -83,7 +83,10 @@
 
   export default {
     name: "Register2",
-    components: {NavBar, NavBarOrigin},
+    components: {
+      NavBar,
+      NavBarOrigin
+    },
     data() {
       var checkBirth = (rule, value, callback) => {
         if (value == '') {
@@ -129,19 +132,25 @@
           return '#409eff';
         }
       },
-
+      fetchUser(){
+        this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      },
       submitForm(formName) {
         var _this=this
         console.log(this.picture_url);
 
         axios.post("http://127.0.0.1:8081/user/register2",{
-          password:this.ruleForm.pass,
+          userID:this.userL.userID,
+          userName:this.userL.username,
+          email:this.userL.email,
+          password:this.userL.pass,
           birthday:this.ruleForm.birth,
           gender:this.ruleForm.sex,
           profileUrl:this.picture_url //图片地址
         }).then(function (response) {
           // console.log(response.data.status)
           if(response.data.status === 200){
+            sessionStorage.setItem('userL', JSON.stringify(response.data.data))
             _this.$router.push('Register3')
           }
           else {
@@ -180,8 +189,10 @@
 
       handleExceed(files, fileList) {
         this.$message.warning(`当前限制选择 1 个文件`);
-      },
-
+      }
+    },
+    created() {
+      this.fetchUser()
     }
   }
 </script>
