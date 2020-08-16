@@ -293,7 +293,10 @@
       }
     }
 
-  }
+  },
+    created() {
+      this.getDoc();
+    }
   }
 </script>
 
