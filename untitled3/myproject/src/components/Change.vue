@@ -49,6 +49,7 @@
   import UEditor from "./UEditor";
   import NavBar from "./NavBar";
   import VueUeditorWrap from "vue-ueditor-wrap";
+  import axios from "axios";
     export default {
       name: "Change",
       components: {UEditor, NavBar, VueUeditorWrap},
@@ -167,7 +168,8 @@
             initialFrameWidth: "100%",
             // 上传文件接口
             enableAutoSave: true,
-            autoHeightEnabled: false
+            autoHeightEnabled: false,
+            serverUrl: "http://127.0.0.1:8081"
           }
         }
       },
@@ -175,12 +177,80 @@
         onSubmit(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              alert('submit!');
+              var _this=this
+              console.log(axios);
+              var pri = 0;
+              for(var i = 0; i < this.docForm.privilege.length; i++){
+                if(this.docForm.privilege[i] === '可查看'){
+                  pri += 1000;
+                }
+                else if(this.docForm.privilege[i] === '可编辑'){
+                  pri += 100;
+                }
+                else if(this.docForm.privilege[i] === '可评论'){
+                  pri += 10;
+                }
+                else if(this.docForm.privilege[i] === '可分享'){
+                  pri += 1;
+                }
+              }
+              this.userL=JSON.parse(sessionStorage.getItem("userL"))
+              axios.post("http://127.0.0.1:8081/doc",{
+                //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
+                DocID: this.$route.params.id,
+                UserID: this.userL.UserID,
+                Title: this.docForm.title,
+                Content: this.docForm.doc,
+                Privilege: pri,
+                Editable: 0
+              })
+                .then(function (response) {
+                  // console.log(response.data.status)
+                  if(response.data.status === 200){
+                    //alert("编辑文档成功")
+                    _this.$message({
+                      message: '编辑文档成功',
+                      type: 'success'
+                    })
+                    _this.$router.push('/detail/' + response.data.data)
+                  }
+                })
+                .catch(function (error) {
+                  console.log(error)
+                })
             } else {
               console.log('error submit!!');
               return false;
             }
           });
+        },
+        getDoc: function () {
+          console.log(axios);
+          this.axios.get("http://127.0.0.1:8081/doc", {
+            params: {
+              DocID: this.$route.params.id
+            }
+          })
+            .then(function (response) {
+              var docL = response.data.data;
+              this.docForm.title = docL.Title;
+              this.docForm.doc = docL.Content;
+              if(docL.Privilege/1000 === 1){
+                this.docForm.privilege.push('可查看');
+              }
+              if((docL.Privilege%1000)/100 === 1){
+                this.docForm.privilege.push('可编辑');
+              }
+              if((docL.Privilege%100)/10 === 1){
+                this.docForm.privilege.push('可评论');
+              }
+              if(docL.Privilege%10 === 1){
+                this.docForm.privilege.push('可分享');
+              }
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
         }
       },
       mounted () {
@@ -197,6 +267,9 @@
             window.onbeforeunload = null
           }
         }
+      },
+      created() {
+        this.getDoc();
       }
     }
 </script>
