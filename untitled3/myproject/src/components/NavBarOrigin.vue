@@ -78,10 +78,10 @@
             // console.log(response.data.status)
             if(response.data.status === 200){
               //alert("恭喜你，登录成功")
-              //   _this.$message({
-              //   message: '恭喜你，登录成功',
-              //   type: 'success'
-              // })
+                _this.$message({
+                message: '恭喜你，登录成功'+JSON.stringify(response.data.data),
+                type: 'success'
+              })
               sessionStorage.setItem('userL', JSON.stringify(response.data.data))
               _this.$router.push('WorkSpace')
             }else {

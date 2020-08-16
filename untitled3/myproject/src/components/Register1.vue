@@ -182,7 +182,7 @@
                 sessionStorage.setItem('userL', JSON.stringify(response.data.data))
                 _this.$router.push('Register2')
               }
-              else if(response.data.status==500){
+              else if(response.data.status===500){
                 _this.$message({
                   message: '该邮箱已注册，请更换一个',
                   type: 'error'
