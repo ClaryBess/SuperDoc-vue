@@ -50,7 +50,10 @@
 
   export default {
     name: "Register3",
-    components: {NavBar, NavBarOrigin},
+    components: {
+      NavBar,
+      NavBarOrigin
+    },
     data() {
       return {
         customColor: '#409eff',

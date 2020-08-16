@@ -93,7 +93,10 @@
 
   export default {
     name: "Welcome",
-    components: {NavBar, NavBarOrigin},
+    components: {
+      NavBar,
+      NavBarOrigin
+    },
     data(){
       return{
         headUrl: require('../assets/head.jpg'),

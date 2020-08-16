@@ -76,7 +76,10 @@
 
     export default {
       name: "Register1",
-      components: {NavBar, NavBarOrigin},
+      components: {
+        NavBar,
+        NavBarOrigin
+      },
       data() {
         var regUpper = /[A-Z]/;
         var regLower = /[a-z]/;

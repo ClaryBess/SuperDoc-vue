@@ -12,6 +12,7 @@
       <el-aside width="15%">
         <SideBar currentindex="4"></SideBar>
       </el-aside>
+      <!-- 中间 -->
       <el-main style="width: 80%">
         <!-- 创建团队 -->
         <el-button class="newteam" type="text" @click="dialogFormVisible = true">
@@ -72,7 +73,12 @@ import RightBar from "../RightBar";
 
 export default {
   name: "Team",
-  components: { NavBar, SideBar, TeamsList,RightBar },
+  components: {
+    NavBar,
+    SideBar,
+    TeamsList,
+    RightBar
+  },
   data() {
     var checkName = (rule, value, callback) => {
       if (value == '') {
