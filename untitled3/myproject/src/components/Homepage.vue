@@ -116,7 +116,7 @@
   }
 
   .card-main{
-    margin-left: 20%;
+    margin-left: 25%;
     margin-top: 5%
   }
 

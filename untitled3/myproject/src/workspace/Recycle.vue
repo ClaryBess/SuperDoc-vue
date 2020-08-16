@@ -22,7 +22,7 @@
         <h2 class="h2color">回收站</h2>
         <!-- <doc-list :docs="recycleDocs"></doc-list> -->
         <delete-list  v-show="showList" :docs="Docs"></delete-list>
-        <menu-list v-show="showMenu" :menus='Docs' style="width: 100%;"></menu-list>
+        <menu-list v-show="showMenu" :menus='Docs' style="width: 100%"></menu-list>
       </el-main>
       <right-bar></right-bar>
     </el-container>

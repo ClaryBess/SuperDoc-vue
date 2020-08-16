@@ -16,7 +16,7 @@
      <img class="mainImg" src="../assets/文档.svg" />
 
      <div class="goods-info">
-       <p>{{docsItem.title}}</p>
+       <p>{{MenuItem.title}}</p>
      </div>
 
    </el-card>
@@ -32,7 +32,7 @@ export default {
     }
   },
   props: {
-    docsItem: {
+    MenuItem: {
         type: Object,
         default() {
           return {}

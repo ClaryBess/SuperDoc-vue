@@ -37,7 +37,13 @@ import TemList from "./TemList";
 
 export default {
   name: "Recently",
-  components: { NavBar, SideBar, DocList,RightBar,TemList },
+  components: {
+    NavBar,
+    SideBar,
+    DocList,
+    RightBar,
+    TemList
+  },
   data() {
     return {
       headUrl: require("../assets/head.jpg"),

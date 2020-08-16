@@ -18,7 +18,7 @@
                   <strong>个人空间</strong>
                   <el-button class="btn" type="text" @click="itemClick">返回个人空间</el-button>
                   <el-button class="btn" type="text" @click="resetForm('ruleForm')">重置</el-button>
-                  <el-button class="btn" style="margin-right: -7px" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
+                  <el-button class="btn" style="margin-right: -11px" type="text" @click="submitForm('ruleForm')">保存修改</el-button>
                 </p>
               </div>
               <!-- 卡片内容 -->
@@ -77,6 +77,8 @@
 
 <script>
   import NavBar from "./NavBar";
+  import axios from "axios";
+
   export default {
     name: "HomepageEdit",
     components: {NavBar},
@@ -169,16 +171,37 @@
         this.$router.push("homepage")
       },
 
+      fetchUser(){
+        this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      },
       submitForm(formName) {
-        this.$refs[formName].validate(
-          (valid) => {
-            if (valid) {
-              this.$router.push('Register3')
-            } else {
-              // console.log('error submit!!');
-              return false;
-            }
-        });
+        var _this=this
+        console.log(this.picture_url);
+
+        axios.post("http://127.0.0.1:8081/user/edit",{
+          userID:this.userL.userID,
+          userName:this.ruleForm.username,
+          email:this.ruleForm.email,
+          password:this.ruleForm.pass,
+          birthday:this.ruleForm.birth,
+          gender:this.ruleForm.sex,
+          profileUrl:this.picture_url //图片地址
+        }).then(function (response) {
+          // console.log(response.data.status)
+          if(response.data.status === 200){
+            sessionStorage.setItem('userL', JSON.stringify(response.data.data))
+            _this.$router.push('Homepage')
+          }
+          else {
+            _this.$message({
+              message: '修改失败',
+              type: 'error'
+            })
+          }
+        })
+          .catch(function (error) {
+            console.log(error)
+          })
       },
 
       resetForm(formName) {
@@ -206,7 +229,9 @@
       handleExceed(files, fileList) {
         this.$message.warning(`只能选择一个头像`);
       },
-
+    },
+    created() {
+      this.fetchUser()
     }
   }
 </script>
@@ -256,14 +281,15 @@
   }
 
   .card-main{
-    margin-left: 18%;
+    margin-left: 20%;
     margin-top: 5%;
   }
 
   .btn{
     float: right;
     font-size: 16px;
-    padding: 17px;
+    margin-right: -7px;
+    padding: 15px;
   }
 
 </style>
