@@ -9,21 +9,15 @@
         <p>{{docsItem.date}}</p>
       </div>
       <slot name="deleteIcon">
-        <img class="smallimg1" src="../assets/删除.svg" @click="deleteDoc" />
+        <img class="smallimg" src="../assets/删除.svg" @click="deleteDoc" />
       </slot>
-      <!-- <slot name="collectedIcon">
-        <img class="smallimg2" :src="collectedurl" alt @click="collectDoc" />
-      </slot> -->
     </div>
   </div>
 </template>
 
 <script>
-// import img1 from "../assets/收藏.svg";
-// import img2 from "../assets/收藏 (1).svg";
-
 export default {
-  name: "DocListItem",
+  name: "RecentlyListItem",
   data() {
     return {};
   },
@@ -35,22 +29,10 @@ export default {
       },
     },
   },
-  // computed: {
-  //   collectedurl: function () {
-  //     if (this.docsItem.isCollected == false) {
-  //       return img1;
-  //     } else {
-  //       return img2;
-  //     }
-  //   },
-  // },
   methods: {
     itemClick() {
       this.$router.push("/detail/" + this.docsItem.id);
     },
-    // collectDoc() {
-    //   this.docsItem.isCollected = !this.docsItem.isCollected;
-    // },
     deleteDoc() {
       alert("删除文件");
     },
@@ -76,20 +58,13 @@ export default {
   padding: 10px;
 }
 
-.smallimg1 {
+.smallimg {
   position: absolute;
   right: 30px;
   width: 30px;
   padding-top: 20px;
   padding-right: 10px;
 }
-/* .smallimg2 {
-  position: absolute;
-  right: 80px;
-  width: 30px;
-  padding-top: 20px;
-  padding-right: 10px;
-} */
 
 .docs-info {
   font-size: 16px;
