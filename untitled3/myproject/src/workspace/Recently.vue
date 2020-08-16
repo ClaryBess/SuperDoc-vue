@@ -10,6 +10,7 @@
         <SideBar currentindex="1"></SideBar>
       </el-aside>
       <el-main style="width: 80%">
+        {{userid}}
         <h2 class="h2color">最近浏览的文档</h2>
         <!-- <doc-list :docs="Docs"></doc-list> -->
         <doc-list :docs="Docs"></doc-list>
@@ -45,6 +46,9 @@ export default {
     // showDocs() {
     //   return 浏览的文档列表
     // }
+    userid() {
+      return window.sessionStorage.getItem('userid')
+    }
   },
 };
 </script>
