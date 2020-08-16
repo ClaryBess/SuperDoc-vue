@@ -215,7 +215,8 @@
           initialFrameWidth: "100%",
           // 上传文件接口
           enableAutoSave: true,
-          autoHeightEnabled:false
+          autoHeightEnabled:false,
+          serverUrl: "http://127.0.0.1:8081"
         }
       }
     },
@@ -227,7 +228,7 @@
             var _this=this
             console.log(axios);
             axios.post("http://127.0.0.1:8081/doc",{
-              //UserID
+              UserID: this.userL.UserID,
               Title: this.docForm.title,
               Content: this.docForm.doc,
               Privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
@@ -237,12 +238,12 @@
               .then(function (response) {
                 // console.log(response.data.status)
                 if(response.data.status === 200){
-                  //alert("恭喜你，注册成功")
-                  //   _this.$message({
-                  //   message: '恭喜你，注册成功',
-                  //   type: 'success'
-                  // })
-                  _this.$router.push('view')
+                  //alert("新建文档成功")
+                  _this.$message({
+                    message: '新建文档成功',
+                    type: 'success'
+                  })
+                  _this.$router.push('/detail/' + response.data.data)
                 }
               })
               .catch(function (error) {
