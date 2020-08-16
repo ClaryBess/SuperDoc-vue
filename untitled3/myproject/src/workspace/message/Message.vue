@@ -37,34 +37,38 @@ export default {
           id: "1",
           content: "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
           isRead: true,
-          type: 'invitation'
+          type: "invitation",
+          date: "2020/1/1 01:11",
         },
         {
           id: "2",
           content: "不许笑",
           isRead: false,
-          type: 'invitation'
+          type: "invitation",
+          date: '2020/1/1 11:11'
         },
         {
           id: "3",
           content: "wwwwwww",
           isRead: false,
-          type: 'common'
+          type: "common",
+          date: '2020/1/1 21:22'
         },
         {
           id: "4",
           content: "要加入我们嘛！",
           isRead: true,
-          type: 'invitation'
+          type: "invitation",
+          date: '2020/1/1 01:11'
         },
       ],
       NowMess: [],
-      UnReadMess: []
+      UnReadMess: [],
     };
   },
-  created: function() {
-    this.NowMess=this.AllMess
-    this.UnReadMess=this.AllMess.filter(this.checkRead)
+  created: function () {
+    this.NowMess = this.AllMess;
+    this.UnReadMess = this.AllMess.filter(this.checkRead);
   },
   methods: {
     checkRead(mes) {
@@ -72,12 +76,12 @@ export default {
     },
     handleUnReadMes() {
       // 切换未读消息
-      this.NowMess=this.UnReadMess
+      this.NowMess = this.UnReadMess;
     },
     handleAllMes() {
       //切换全部消息
-      this.NowMess=this.AllMess
-    }
+      this.NowMess = this.AllMess;
+    },
   },
 };
 </script>

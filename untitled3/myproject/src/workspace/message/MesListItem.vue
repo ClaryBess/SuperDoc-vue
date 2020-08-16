@@ -5,6 +5,9 @@
       <div class="mes-info" @click="itemClick">
         <p>{{ mesItem.content }}</p>
       </div>
+      <div class="mes-time" @click="itemClick">
+        <p>{{mesItem.date}}</p>
+      </div>
       <img class="messmallimg" src="@/assets/删除.svg" @click="deleteMes" />
     </div>
   </div>
@@ -96,5 +99,16 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 3px;
+}
+.mes-time {
+  font-size: 12px;
+  position: absolute;
+  right: 70px;
+  padding-left: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  overflow: hidden;
+  text-align: left;
 }
 </style>
