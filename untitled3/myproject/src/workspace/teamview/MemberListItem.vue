@@ -1,16 +1,12 @@
 <template>
   <div class="docs">
-    <div class="docs-item">
+    <div class="docs-item" @click="itemClick">
       <!-- 展示图片为成员头像 -->
       <!-- <img class="docimg" :src="memberItem.url" @click="itemClick"> -->
-      <img class="docimg" src="@/assets/head.jpg" @click="itemClick" />
-      <div class="docs-info" @click="itemClick">
+      <img class="docimg" src="@/assets/head.jpg"/>
+      <div class="docs-info">
         <p>{{memberItem.name}}</p>
       </div>
-      <slot name="deleteIcon">
-        <img class="smallimg2" src="@/assets/删除.svg" @click="deleteMem" />
-      </slot>
-      <img class="smallimg1" src="@/assets/管理.svg" @click="manageAuth" />
     </div>
   </div>
 </template>
@@ -65,7 +61,7 @@ export default {
   padding: 10px;
   border-radius: 25px;
 }
-
+/* 
 .smallimg1 {
   position: absolute;
   right: 10px;
@@ -79,7 +75,7 @@ export default {
   width: 30px;
   padding-top: 20px;
   padding-right: 10px;
-}
+} */
 
 .docs-info {
   font-size: 16px;
