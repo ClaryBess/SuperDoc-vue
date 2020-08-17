@@ -227,6 +227,7 @@
           if (valid) {
             var _this=this
             console.log(axios);
+            this.userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
               docID: this.$route.params.id,
               userID: this.userL.userID,
