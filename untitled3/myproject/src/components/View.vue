@@ -251,10 +251,10 @@
           })
         },
         getCollect(){
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/collected", {
             docID: this.$route.params.id,
-            userID: this.userL.userID
+            userID: userL.userID
           })
           .then(function (response) {
             if(response.data.status === 200 && response.data.msg === "collected"){
@@ -271,9 +271,9 @@
         CancelCollect(){
           var _this=this
           console.log(axios);
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/deleteCollect",{
-            userID: this.userL.userID,
+            userID: userL.userID,
             docID: this.$route.params.id
           })
             .then(function (response) {
@@ -294,9 +294,9 @@
         addCollect(){
           var _this=this
           console.log(axios);
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/insertCollect",{
-            userID: this.userL.userID,
+            userID: userL.userID,
             docID: this.$route.params.id
           })
             .then(function (response) {
@@ -327,17 +327,17 @@
                   this.commentItem[i].time = list[i].time;
                   //这里还要加一个获得头像src和获得
                   var _this=this
-                  console.log(axios);
-                  axios.post("http://127.0.0.1:8081/get",{
+                  axios.post("http://127.0.0.1:8081/user/getName/",{
                     userID: list[i].userID
                   })
                     .then(function (response) {
-                      // console.log(response.data.status)
-                      if(response.data.status === 200){
-                        //alert("新建文档成功")
-                        _this.commentItem[i].src = response.data.data.profileUrl;
-                        _this.commentItem[i].user = response.data.data.userName;
-                      }
+                      _this.commentItem[i].user = response.data
+                    })
+                  axios.post("http://127.0.0.1:8081/user/getPro/",{
+                    userID: list[i].userID
+                  })
+                    .then(function (response) {
+                      _this.commentItem[i].src = response.data
                     })
                     .catch(function (error) {
                       console.log(error)
@@ -353,9 +353,9 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
               var _this=this
-              this.userL=JSON.parse(sessionStorage.getItem("userL"))
+              var userL=JSON.parse(sessionStorage.getItem("userL"))
               axios.post("http://127.0.0.1:8081/comment",{
-                userID: this.userL.userID,
+                userID: userL.userID,
                 docID: this.$route.params.id,
                 content: this.Form.content
               })
@@ -388,20 +388,17 @@
                 this.content = docL.content;
                 if(docL.isTeam === 1){
                   this.isTeam = true;
-                  this.TeamName = docL.Team;
+                  this.TeamName = docL.team;
                 }
                 else if(docL.isTeam === 0){
                   this.isTeam = false;
                 }
-                //这里获得作者用户名、团队ID
-                axios.post("http://127.0.0.1:8081/get",{
+                //这里获得作者用户名
+                axios.post("http://127.0.0.1:8081/user/getName/",{
                   userID: docL.userID
                 })
                   .then(function (response) {
-                    // console.log(response.data.status)
-                    if(response.data.status === 200){
-                      this.Author = response.data.data.userName;
-                    }
+                      this.Author = response.data;
                   })
               }
             })
@@ -410,9 +407,9 @@
             });
         },
         getPri(){
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -420,7 +417,7 @@
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -428,7 +425,7 @@
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -474,8 +471,8 @@
         this.getPri();
         this.getCollectNum();
         this.getEdit();
-        this.userL=JSON.parse(sessionStorage.getItem("userL"))
-        this.$data.short_url = this.userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
+        var userL=JSON.parse(sessionStorage.getItem("userL"))
+        this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
       }
     }
 </script>
