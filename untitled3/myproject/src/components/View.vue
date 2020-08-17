@@ -251,10 +251,10 @@
           })
         },
         getCollect(){
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/collected", {
             docID: this.$route.params.id,
-            userID: this.userL.userID
+            userID: userL.userID
           })
           .then(function (response) {
             if(response.data.status === 200 && response.data.msg === "collected"){
@@ -271,9 +271,9 @@
         CancelCollect(){
           var _this=this
           console.log(axios);
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/deleteCollect",{
-            userID: this.userL.userID,
+            userID: userL.userID,
             docID: this.$route.params.id
           })
             .then(function (response) {
@@ -294,9 +294,9 @@
         addCollect(){
           var _this=this
           console.log(axios);
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/insertCollect",{
-            userID: this.userL.userID,
+            userID: userL.userID,
             docID: this.$route.params.id
           })
             .then(function (response) {
@@ -353,9 +353,9 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
               var _this=this
-              this.userL=JSON.parse(sessionStorage.getItem("userL"))
+              var userL=JSON.parse(sessionStorage.getItem("userL"))
               axios.post("http://127.0.0.1:8081/comment",{
-                userID: this.userL.userID,
+                userID: userL.userID,
                 docID: this.$route.params.id,
                 content: this.Form.content
               })
@@ -410,9 +410,9 @@
             });
         },
         getPri(){
-          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
           this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -420,7 +420,7 @@
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -428,7 +428,7 @@
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, {
-            userID: this.userL.userID
+            userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -474,8 +474,8 @@
         this.getPri();
         this.getCollectNum();
         this.getEdit();
-        this.userL=JSON.parse(sessionStorage.getItem("userL"))
-        this.$data.short_url = this.userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
+        var userL=JSON.parse(sessionStorage.getItem("userL"))
+        this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
       }
     }
 </script>

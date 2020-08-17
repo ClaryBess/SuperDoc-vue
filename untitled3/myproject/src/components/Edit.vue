@@ -195,10 +195,10 @@
                 pri += 1;
               }
             }
-            this.userL=JSON.parse(sessionStorage.getItem("userL"))
+            var userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
-              userID: this.userL.userID,
+              userID: userL.userID,
               title: this.docForm.title,
               content: this.docForm.doc,
               privilege: pri,

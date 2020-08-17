@@ -227,10 +227,10 @@
           if (valid) {
             var _this=this
             console.log(axios);
-            this.userL=JSON.parse(sessionStorage.getItem("userL"))
+            var userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
               docID: this.$route.params.id,
-              userID: this.userL.userID,
+              userID: userL.userID,
               title: this.docForm.title,
               content: this.docForm.doc,
               privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
