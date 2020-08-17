@@ -19,7 +19,7 @@
 
         <h2 class="h2color">最近浏览的文档</h2>
         <!-- <doc-list :docs="Docs"></doc-list> -->
-        <doc-list v-show="showList" :docs="Docs"></doc-list>
+        <doc-list v-show="showList" :docs="Docs" :currentview="1"></doc-list>
         <tem-list v-show="showMenu" :tems="Docs"></tem-list>
       </el-main>
       <right-bar></right-bar>
@@ -82,7 +82,10 @@ export default {
         // .post("http://127.0.0.1:8081/browse/getBrowse", this.userL.userID)
         .post("http://127.0.0.1:8081/browse/getBrowse", 1)
         .then(function (response) {
+          var docL = response.data.data;
           console.log(response.data);
+          this.Docs = response.data;
+          console.log(this.Docs);
         })
         .catch(function (error) {
           console.log(error);
