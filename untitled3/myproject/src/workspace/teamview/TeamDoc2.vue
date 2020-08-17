@@ -22,7 +22,7 @@
         <!-- <doc-list :docs="teamDocs"></doc-list> -->
         <doc-list v-show="showList" :docs="Docs" style="margin-top: 50px; margin-left: 25px"></doc-list>
         <h2>{{id}}</h2>
-        <tem-list v-show="showMenu" :tems='Docs' style="width: 100%;"></tem-list>
+        <doc-list2 v-show="showMenu" :tems='Docs' style="width: 100%;"></doc-list2>
 
       </el-main>
       <right-bar></right-bar>
@@ -35,11 +35,11 @@ import NavBar from "@/components/NavBar";
 import TeamSideBar2 from "./TeamSideBar2";
 import DocList from "../DocList";
 import RightBar from "../RightBar";
-import TemList from "../TemList";
+import DocList2 from "../DocList2"
 
 export default {
   name: "TeamDoc2",
-  components: { NavBar, TeamSideBar2, DocList, RightBar,TemList  },
+  components: { NavBar, TeamSideBar2, DocList, RightBar,DocList2  },
   data() {
     return {
       headUrl: require("@/assets/head.jpg"),

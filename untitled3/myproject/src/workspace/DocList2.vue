@@ -1,26 +1,25 @@
 <template>
   <div class="docs">
-    <menu-list-item v-for="item in menus" 
-    :menu-item="item" 
-    :key="item.id"
+    <doc-list-item2 v-for="item in tems" 
+    :tem-item="item" 
+    :key="item.docID"
     :currentview="currentview"
-    :userID="userID"
-    >
-    </menu-list-item>
+    :userID="userID">
+    </doc-list-item2>
   </div>
 </template>
 
 <script>
-  import MenuListItem from "./MenuListItem";
+  import DocListItem2 from "./DocListItem2";
 
   export default {
-    name: "MenuList",
+    name: "DocList2",
     components: {
-      MenuListItem
+      DocListItem2
     },
     props: {
-      //文档数组
-      menus: {
+      //从外部获取的模板数组
+      tems: {
         type: Array,
         default() {
           return []
