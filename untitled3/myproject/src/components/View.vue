@@ -130,6 +130,7 @@
     export default {
         name: "View",
       components: {NavBar},
+      inject:['reload'],
       data(){
           return{
             EditP: true,
@@ -185,13 +186,6 @@
         //对整个页面滚轮进行监听，每发生一次滚轮事件，执行一次方法
         window.addEventListener('scroll',this.initHeight);
 
-        //对浏览器窗口大小触发事件进行监听
-        window.onresize = () =>{
-          //宽度借用,赋值
-          this.colWidth = document.getElementById("colWidth").offsetWidth;
-          this.offsetWidth = this.colWidth-15;
-          document.getElementById("fixedCard").style.width = this.offsetWidth+'px'
-        }
 
         // DOM异步更新 对未来更新后的视图进行操作 在更新后执行
         this.$nextTick(()=>{
@@ -270,7 +264,6 @@
         },
         CancelCollect(){
           var _this=this
-          console.log(axios);
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/deleteCollect",{
             userID: userL.userID,
@@ -284,7 +277,7 @@
                   message: '取消收藏成功',
                   type: 'success'
                 })
-                _this.$router.go(0)
+                _this.reload();
               }
             })
             .catch(function (error) {
@@ -293,7 +286,6 @@
         },
         addCollect(){
           var _this=this
-          console.log(axios);
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/insertCollect",{
             userID: userL.userID,
@@ -307,7 +299,7 @@
                   message: '收藏成功',
                   type: 'success'
                 })
-                _this.$router.go(0)
+                _this.reload();
               }
             })
             .catch(function (error) {
@@ -367,7 +359,7 @@
                       message: '评论成功',
                       type: 'success'
                     })
-                    _this.$router.go(0)
+                    _this.reload();
                   }
                 })
                 .catch(function (error) {
@@ -380,26 +372,28 @@
           });
         },
         getDoc(){
+          var _this=this;
           this.axios.post("http://127.0.0.1:8081/doc/get/" + this.$route.params.id)
             .then(function (response) {
+              console.log(response.data.status);
               if(response.data.status === 200){
-                var docL = response.data.data;
-                this.title = docL.title;
-                this.content = docL.content;
+                var docL = JSON.parse(JSON.stringify(response.data.data));
+                console.log(docL.title);
+                _this.title = docL.title;
+                _this.content = docL.content;
                 if(docL.isTeam === 1){
-                  this.isTeam = true;
-                  this.TeamName = docL.team;
+                  _this.isTeam = true;
+                  _this.TeamName = docL.team;
                 }
                 else if(docL.isTeam === 0){
-                  this.isTeam = false;
+                  _this.isTeam = false;
                 }
                 //这里获得作者用户名
-                axios.post("http://127.0.0.1:8081/user/getName/",{
-                  userID: docL.userID
-                })
+                axios.post("http://127.0.0.1:8081/user/getName/" + docL.userID)
                   .then(function (response) {
-                      this.Author = response.data;
+                      _this.Author = response.data;
                   })
+
               }
             })
             .catch(function (error) { // 请求失败处理
@@ -465,12 +459,12 @@
         }
     },
       created() {
-        this.getCollect();
-        this.getCommentList();
         this.getDoc();
-        this.getPri();
-        this.getCollectNum();
-        this.getEdit();
+        //this.getCollect();
+        //this.getCommentList();
+        //this.getPri();
+        //this.getCollectNum();
+        //this.getEdit();
         var userL=JSON.parse(sessionStorage.getItem("userL"))
         this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
       }

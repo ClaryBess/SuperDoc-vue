@@ -59,7 +59,7 @@
           docForm: {
             title: "这里写旧标题",
             doc: "",
-            privilege: ['可查看']
+            privilege: ['可查看','可编辑']
           },
           rule:{
             title: [
@@ -224,25 +224,26 @@
           });
         },
         getDoc: function () {
+          var _this=this;
           this.axios.post("http://127.0.0.1:8081/doc/get/" + this.$route.params.id)
             .then(function (response) {
               if(response.data.status === 200){
-                var docL = response.data.data;
-                this.docForm.title = docL.title;
-                this.docForm.doc = docL.content;
-                while(this.docForm.privilege.length > 0)
-                  this.docForm.privilege.pop();
-                if(docL.privilege/1000 === 1){
-                  this.docForm.privilege.push('可查看');
+                var docL = JSON.parse(JSON.stringify(response.data.data));
+                _this.docForm.title = docL.title;
+                _this.docForm.doc = docL.content;
+                while(_this.docForm.privilege.length > 0)
+                  _this.docForm.privilege.pop();
+                if(docL.privilege/1000 > 0){
+                  _this.docForm.privilege.push('可查看');
                 }
-                if((docL.privilege%1000)/100 === 1){
-                  this.docForm.privilege.push('可编辑');
+                if((docL.privilege%1000)/100 > 0){
+                  _this.docForm.privilege.push('可编辑');
                 }
-                if((docL.privilege%100)/10 === 1){
-                  this.docForm.privilege.push('可评论');
+                if((docL.privilege%100)/10 > 0){
+                  _this.docForm.privilege.push('可评论');
                 }
-                if(docL.privilege%10 === 1){
-                  this.docForm.privilege.push('可分享');
+                if(docL.privilege%10 > 0){
+                  _this.docForm.privilege.push('可分享');
                 }
               }
             })

@@ -257,16 +257,17 @@
         });
       },
       getDoc: function () {
+        var _this=this;
         this.axios.post("http://127.0.0.1:8081/doc/get/" + this.$route.params.id)
           .then(function (response) {
             if(response.data.status === 200){
-              var docL = response.data.data;
-              this.docForm.title = docL.title;
-              this.docForm.doc = docL.content;
-              this.docForm.viewP = docL.privilege/1000;
-              this.docForm.editP = (docL.privilege%1000)/100;
-              this.docForm.commentP = (docL.privilege%100)/10;
-              this.docForm.shareP = docL.privilege%10;
+              var docL = JSON.parse(JSON.stringify(response.data.data));
+              _this.docForm.title = docL.title;
+              _this.docForm.doc = docL.content;
+              _this.docForm.viewP = docL.privilege/1000;
+              _this.docForm.editP = (docL.privilege%1000)/100;
+              _this.docForm.commentP = (docL.privilege%100)/10;
+              _this.docForm.shareP = docL.privilege%10;
             }
           })
           .catch(function (error) { // 请求失败处理
