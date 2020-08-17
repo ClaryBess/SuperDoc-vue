@@ -327,17 +327,17 @@
                   this.commentItem[i].time = list[i].time;
                   //这里还要加一个获得头像src和获得
                   var _this=this
-                  console.log(axios);
-                  axios.post("http://127.0.0.1:8081/get",{
+                  axios.post("http://127.0.0.1:8081/user/getName/",{
                     userID: list[i].userID
                   })
                     .then(function (response) {
-                      // console.log(response.data.status)
-                      if(response.data.status === 200){
-                        //alert("新建文档成功")
-                        _this.commentItem[i].src = response.data.data.profileUrl;
-                        _this.commentItem[i].user = response.data.data.userName;
-                      }
+                      _this.commentItem[i].user = response.data
+                    })
+                  axios.post("http://127.0.0.1:8081/user/getPro/",{
+                    userID: list[i].userID
+                  })
+                    .then(function (response) {
+                      _this.commentItem[i].src = response.data
                     })
                     .catch(function (error) {
                       console.log(error)
@@ -388,20 +388,17 @@
                 this.content = docL.content;
                 if(docL.isTeam === 1){
                   this.isTeam = true;
-                  this.TeamName = docL.Team;
+                  this.TeamName = docL.team;
                 }
                 else if(docL.isTeam === 0){
                   this.isTeam = false;
                 }
-                //这里获得作者用户名、团队ID
-                axios.post("http://127.0.0.1:8081/get",{
+                //这里获得作者用户名
+                axios.post("http://127.0.0.1:8081/user/getName/",{
                   userID: docL.userID
                 })
                   .then(function (response) {
-                    // console.log(response.data.status)
-                    if(response.data.status === 200){
-                      this.Author = response.data.data.userName;
-                    }
+                      this.Author = response.data;
                   })
               }
             })

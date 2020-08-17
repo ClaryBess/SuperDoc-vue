@@ -222,7 +222,6 @@
     },
     methods: {
       onSubmit(formName) {
-        console.log(this.$route.params.tid)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var _this=this

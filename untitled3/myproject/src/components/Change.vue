@@ -178,7 +178,6 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
               var _this=this
-              console.log(axios);
               var pri = 0;
               for(var i = 0; i < this.docForm.privilege.length; i++){
                 if(this.docForm.privilege[i] === '可查看'){
@@ -225,7 +224,6 @@
           });
         },
         getDoc: function () {
-          console.log(axios);
           this.axios.post("http://127.0.0.1:8081/doc/get/" + this.$route.params.id)
             .then(function (response) {
               if(response.data.status === 200){
