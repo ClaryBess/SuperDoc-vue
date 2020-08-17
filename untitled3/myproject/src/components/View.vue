@@ -124,10 +124,11 @@
 </template>
 
 <script>
-    import NavBar from "./NavBar";
-    import axios from "axios";
+  import NavBar from "./NavBar";
+  import axios from "axios";
+  import QS from 'qs';
 
-    export default {
+  export default {
         name: "View",
       components: {NavBar},
       inject:['reload'],
@@ -311,23 +312,21 @@
           var _this = this
           axios.post("http://127.0.0.1:8081/comment/commentList/" + this.$route.params.id)
             .then(function (response) {
+              console.log('commentList');
               var list = response.data.data;
+              console.log(JSON.stringify(list));
               _this.CommentNum = list.length;
               while(_this.commentItem.length > 0)
-                _this.commentItem.pop();
+                  _this.commentItem.pop();
               for(var i = 0; i < list.length; i ++){
                 _this.commentItem[i].content = list[i].content;
                 _this.commentItem[i].time = list[i].time;
                 //这里还要加一个获得头像src和获得
-                axios.post("http://127.0.0.1:8081/user/getName/",{
-                  userID: list[i].userID
-                })
+                axios.post("http://127.0.0.1:8081/user/getName/" + list[i].userID)
                   .then(function (response) {
                     _this.commentItem[i].user = response.data
                   })
-                axios.post("http://127.0.0.1:8081/user/getPro/",{
-                  userID: list[i].userID
-                })
+                axios.post("http://127.0.0.1:8081/user/getPro/" + list[i].userID)
                   .then(function (response) {
                     _this.commentItem[i].src = response.data
                   })
@@ -345,7 +344,7 @@
             if (valid) {
               var _this=this
               var userL=JSON.parse(sessionStorage.getItem("userL"))
-              axios.post("http://127.0.0.1:8081/comment",{
+              axios.post("http://127.0.0.1:8081/comment/add",{
                 userID: userL.userID,
                 docID: this.$route.params.id,
                 content: this.Form.content
@@ -359,6 +358,12 @@
                       type: 'success'
                     })
                     _this.reload();
+                  }
+                  else if(response.data.status === 500){
+                    _this.$message({
+                      message: '该邮箱已注册，请更换一个',
+                      type: 'error'
+                    })
                   }
                 })
                 .catch(function (error) {
@@ -402,16 +407,17 @@
         getPri(){
           var _this=this;
           var userL=JSON.parse(sessionStorage.getItem("userL"))
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, {
-            userID: userL.userID
-          })
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, QS.stringify(userL.userID))
             .then(function (response) {
               if(response.data.status === 200){
                 _this.EditP = response.data.data;
+                console.log('edit:' + response.data.data);
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, {
-            userID: userL.userID
+            params:{
+              userID: userL.userID
+            }
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -419,7 +425,9 @@
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, {
-            userID: userL.userID
+            params:{
+              userID: userL.userID
+            }
           })
             .then(function (response) {
               if(response.data.status === 200){
@@ -431,13 +439,11 @@
             });
         },
         getCollectNum(){
-          var _this=this
-          axios.post("http://127.0.0.1:8081/collect/collectNum", {
-            docID: this.$route.params.id
-          })
+          var _this=this;
+          axios.post("http://127.0.0.1:8081/collect/collectNum", this.$route.params.id)
             .then(function (response) {
-              _this.CollectNum = response.data;
-              console.log( 'collect:' + response.data);
+                _this.CollectNum = response.data;
+                console.log( 'collect:' + response.data);
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -463,7 +469,7 @@
       created() {
         this.getDoc();
         this.getCollect();
-        //this.getCommentList();
+        this.getCommentList();
         //this.getPri();
         this.getCollectNum();
         //this.getEdit();
