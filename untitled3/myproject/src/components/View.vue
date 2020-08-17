@@ -14,16 +14,16 @@
             </el-card>
             <el-card style="margin-top: 20px" shadow="hover">
               <div>
-                <el-form>
+                <el-form :model="Form" :rules="rule" ref="Form">
                   <el-row>
                     <el-col span="2"><img :src="headSrc" class="commentHead"> </el-col>
                     <el-col span="22">
-                      <el-form-item>
+                      <el-form-item prop="content">
                         <el-input
                           type="textarea"
                           :autosize="{ minRows: 3}"
                           placeholder="请输入内容"
-                          v-model="comment" class="te"  @click.native="show3 = true">
+                          v-model="Form.content" class="te"  @click.native="show3 = true">
                         </el-input>
                       </el-form-item></el-col>
                   </el-row>
@@ -31,7 +31,9 @@
                     <div v-show="show3">
                       <el-row>
                         <el-col span="24">
-                          <el-button type="primary" style="float: right" size="small" icon="el-icon-edit" round>提交</el-button>
+                          <el-form-item>
+                            <el-button type="primary" @click="onSubmit('Form')" style="float: right" size="small" icon="el-icon-edit" round>提交</el-button>
+                          </el-form-item>
                         </el-col>
                       </el-row>
                     </div>
@@ -70,19 +72,19 @@
           </div>
           <div class="right-col">
             <el-card shadow="hover" class="up-card">
-              <el-row>
+              <el-row v-if="isTeam">
                 <div style="float: left"><i class="iconfont iconCustomermanagement"></i>团队：</div>
-                <div style="color: #409EFF;float: left">Aligay</div>
+                <div style="color: #409EFF;float: left">{{TeamName}}</div>
               </el-row>
               <el-row>
                 <div style="float: left"><i class="iconfont iconpin"></i>作者：</div>
-                <div style="color: #409EFF;float: left">xxyshh</div>
+                <div style="color: #409EFF;float: left">{{Author}}</div>
               </el-row>
               <el-row><div style="float: left"><i class="iconfont iconcomments"></i>评论数：</div>
-                <div style="color: #409EFF;float: left">2</div>
+                <div style="color: #409EFF;float: left">{{CommentNum}}</div>
               </el-row>
               <el-row><div style="float: left"><i class="iconfont iconfavorites"></i>收藏数：</div>
-                <div style="color: #409EFF;float: left">10</div>
+                <div style="color: #409EFF;float: left">{{CollectNum}}</div>
               </el-row>
             </el-card>
             <el-card shadow="hover" style="margin-top: 20px; margin-bottom: 20px">
@@ -106,11 +108,9 @@
                 <el-input v-model="short_url" size="small" style="width: 50%;"></el-input>
                 <el-button v-if="short_url" class="copy" size="small" @click="CopyUrl" type="primary" plain>复制链接</el-button>
               <div style="text-align: center">
-                <el-button type="primary" size="mini" icon="el-icon-star-on" round="true" plain v-if="hasCollect" style="margin-top: 20px;">取消收藏</el-button>
+                <el-button type="primary" size="mini" icon="el-icon-star-on" round="true" plain v-if="hasCollect" style="margin-top: 20px;" @click="CancelCollect">取消收藏</el-button>
                 <div style="font-size: 13px;margin-top: 30px; margin-bottom: 10px" v-else>您也可以：
-                  <div v-if="hasCollect">
-                  </div>
-                    <el-button type="primary" size="mini" icon="el-icon-star-off" round="true">收藏本文</el-button>
+                    <el-button type="primary" size="mini" icon="el-icon-star-off" round="true" @click="addCollect">收藏本文</el-button>
                 </div>
               </div>
             </el-card>
@@ -130,8 +130,13 @@
       components: {NavBar},
       data(){
           return{
+            isTeam: false,
+            TeamName: 'Aligay',
+            Author: 'lzmshh',
+            CollectNum: 10,
+            CommentNum: 2,
             content: '<h1>123</h1>',
-            hasCollect: false,
+            hasCollect: true,
             commentItem: [{
               src: require("../assets/head.jpg"),
               user: 'YuanCZ',
@@ -144,7 +149,14 @@
               time: '2020-8-14'
               }],
             show3: false,
-            comment: '',
+            Form: [{
+              content: ''
+            }],
+            rule:{
+              content: [
+                { required: true, message: '请输入评论', trigger: ['blur']}
+              ]
+            },
             activities: [{
               content: 'wsy',
               timestamp: '2020-04-15'
@@ -235,22 +247,85 @@
               console.log(error);
             });
         },
-        getCommentList(){
-          axios.post("http://127.0.0.1:8081/comment", {
-            docID: this.$route.params.id,
+        CancelCollect(){
+          var _this=this
+          console.log(axios);
+          axios.post("http://127.0.0.1:8081/collect/deleteCollect",{
+            userID: this.userL.userID,
+            docID: this.$route.params.id
           })
+            .then(function (response) {
+              // console.log(response.data.status)
+              if(response.data.status === 200){
+                //alert("新建文档成功")
+                _this.$message({
+                  message: '取消收藏成功',
+                  type: 'success'
+                })
+                _this.$router.go(0)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        },
+        addCollect(){
+          var _this=this
+          console.log(axios);
+          axios.post("http://127.0.0.1:8081/collect/insertCollect",{
+            userID: this.userL.userID,
+            docID: this.$route.params.id
+          })
+            .then(function (response) {
+              // console.log(response.data.status)
+              if(response.data.status === 200){
+                //alert("新建文档成功")
+                _this.$message({
+                  message: '收藏成功',
+                  type: 'success'
+                })
+                _this.$router.go(0)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        },
+        getCommentList(){
+          axios.post("http://127.0.0.1:8081/comment/" + this.$route.params.id)
             .then(function (response) {
               if(response.data.status === 200){
                 var list = response.data.data;
+                this.CommentNum = list.length;
+                while(this.commentItem.length > 0)
+                  this.commentItem.pop();
+                for(var i = 0; i < list.length; i ++){
+                  this.commentItem[i].content = list[i].content;
+                  this.commentItem[i].time = list[i].time;
+                  //这里还要加一个获得头像src和获得
+                }
               }
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
             });
+        },
+        onSubmit(formName) {
+          this.$refs[formName].validate((valid) => {
+            if (valid) {
+              var _this=this
+              console.log(axios);
+              //写上传评论
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
         }
     },
       created() {
           //this.getCollect();
+        //this.getCommentList();
       }
     }
 </script>
