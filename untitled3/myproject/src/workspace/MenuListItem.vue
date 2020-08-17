@@ -24,9 +24,11 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name: "MenuListItem",
+  inject: ["reload"],
   data() {
     return{
     }
@@ -41,41 +43,137 @@ export default {
     },
   methods: {
     itemClick() {
-      this.$router.push('/detail/' + this.docsItem.docid)
+       // let data = {
+      //   DocID: this.docsItem.docID,
+      //   UserID: this.UserID,
+      // };
+      let data = {
+        DocID: 1,
+        UserID: 1,
+      };
+      axios
+        .post("http://127.0.0.1:8081/browse/insertBrowse", data)
+        .then((res) => {
+          var docL = res.data;
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      this.$router.push("/detail/" + this.docsItem.docID);
     },
     back() {
-      this.$confirm('此操作将恢复该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'info'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '恢复成功!'
+     const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "此操作将恢复该文件, 是否继续?"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              // let data = {
+              //   DocID: this.docsItem.docID,
+              //   UserID: this.UserID,
+              // };
+              let data = {
+                DocID: 1,
+                UserID: 1,
+              };
+              axios
+                .post("http://127.0.0.1:8081/recycle/recover", data)
+                .then((res) => {
+                  var docL = res.data;
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              done();
+              this.reload();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+              }, 300);
+            }, 1000);
+          } else {
+            done();
+          }
+        },
+      })
+        .then((action) => {
+          this.$message({
+            type: "info",
+            message: "已成功恢复",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消恢复",
+          });
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消恢复'
-        });
-      });
     },
     dlt() {
-      this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "此操作将彻底删除该文件, 是否继续?"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              // let data = {
+              //   DocID: this.docsItem.docID,
+              //   UserID: this.UserID,
+              // };
+              let data = {
+                DocID: 1,
+                UserID: 1,
+              };
+              axios
+                .post("http://127.0.0.1:8081/recycle/delete", data)
+                .then((res) => {
+                  var docL = res.data;
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              done();
+              this.reload();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+              }, 300);
+            }, 1000);
+          } else {
+            done();
+            this.reload();
+          }
+        },
+      })
+        .then((action) => {
+          this.$message({
+            type: "info",
+            message: "已成功删除",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
         });
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
     },
     }
 };

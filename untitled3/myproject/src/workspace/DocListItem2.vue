@@ -29,6 +29,7 @@
 import axios from "axios";
 export default {
   name: "DocListItem2",
+  inject:['reload'],
   data() {
     return {};
   },
@@ -147,6 +148,7 @@ export default {
             console.log(err);
           });
       }
+      this.reload();
     },
     open() {
       const h = this.$createElement;
