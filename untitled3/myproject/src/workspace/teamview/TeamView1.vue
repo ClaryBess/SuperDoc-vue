@@ -112,7 +112,7 @@
                         <el-button
                           slot="append"
                           type="primary"
-                          @click="submitForm('formmember')"
+                          @click="submitFormMember('formmember')"
                           icon="el-icon-search"
                         ></el-button>
                       </el-input>
@@ -208,25 +208,58 @@ export default {
   },
   created() {
     //获取团队id
-    this.id = this.$route.params.id;
+    this.fetchUser();
   },
   methods: {
+
+    fetchUser() {
+      this.userL = JSON.parse(sessionStorage.getItem("userL"));
+    },
     submitForm(formName) {
-      if (this.loading) {
-        return;
-      }
-      this.$confirm("确定提交吗？")
-        .then((_) => {
-          this.loading = true;
-          this.timer = setTimeout(() => {
-            done();
-            // 动画关闭需要一定的时间
-            setTimeout(() => {
-              this.loading = false;
-            }, 400);
-          }, 2000);
+      var _this = this;
+
+      axios
+        .post("http://127.0.0.1:8081/#", {
+          userID: this.userL.userID,
+          name: this.form.name,
         })
-        .catch((_) => {});
+        .then(function (response) {
+          // console.log(response.data.status)
+          if (response.data.status === 200) {
+            sessionStorage.setItem("userL", JSON.stringify(response.data.data));
+          } else {
+            _this.$message({
+              message: "修改失败",
+              type: "error",
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    submitFormMember(formName) {
+      var _this = this;
+
+      axios
+        .post("http://127.0.0.1:8081/#", {
+          userID: this.userL.userID,
+          memberId: this.formmember.input3,
+        })
+        .then(function (response) {
+          // console.log(response.data.status)
+          if (response.data.status === 200) {
+            sessionStorage.setItem("userL", JSON.stringify(response.data.data));
+          } else {
+            _this.$message({
+              message: "修改失败",
+              type: "error",
+            });
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     handleClose(done) {

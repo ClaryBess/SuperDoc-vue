@@ -215,34 +215,35 @@
           initialFrameWidth: "100%",
           // 上传文件接口
           enableAutoSave: true,
-          autoHeightEnabled:false
+          autoHeightEnabled:false,
+          serverUrl: "http://127.0.0.1:8081"
         }
       }
     },
     methods: {
       onSubmit(formName) {
-        console.log(this.$route.params.tid)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var _this=this
             console.log(axios);
+            var userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
-              //UserID
-              Title: this.docForm.title,
-              Content: this.docForm.doc,
-              Privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
-              IsTeam: 1,
-              Team: this.$route.params.tid
+              userID: userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
+              isTeam: 1,
+              team: this.$route.params.tid
             })
               .then(function (response) {
                 // console.log(response.data.status)
                 if(response.data.status === 200){
-                  //alert("恭喜你，注册成功")
-                  //   _this.$message({
-                  //   message: '恭喜你，注册成功',
-                  //   type: 'success'
-                  // })
-                  _this.$router.push('view')
+                  //alert("新建文档成功")
+                  _this.$message({
+                    message: '新建文档成功',
+                    type: 'success'
+                  })
+                  _this.$router.push('/detail/' + response.data.data)
                 }
               })
               .catch(function (error) {

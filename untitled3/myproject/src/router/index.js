@@ -10,7 +10,7 @@ import Welcome from "../components/Welcome";
 
 // import WorkSpace from "../workspace/WorkSpace";
 import Recently from "../workspace/Recently";
-import Favourite from "../workspace/Favourite";
+import Collect from "../workspace/Collect";
 import Created from "../workspace/Created";
 import Team from "../workspace/teamview/Team";
 import Recycle from "../workspace/Recycle";
@@ -72,9 +72,9 @@ const routes = [
     component: Recently
   },
   {
-    path: '/favourite',
-    name: 'favourite',
-    component: Favourite
+    path: '/collect',
+    name: 'collect',
+    component: Collect
   },
   {
     path: '/created',

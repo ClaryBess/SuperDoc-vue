@@ -81,11 +81,13 @@
   import UEditor from "./UEditor";
   import NavBar from "./NavBar";
   import VueUeditorWrap from "vue-ueditor-wrap";
+  import axios from "axios";
   export default {
     name: "EditTeamDoc",
     components: {UEditor, NavBar, VueUeditorWrap},
     data(){
       return{
+        dialogVisible: false,
         headUrl: require('../assets/head.jpg'),
         docForm:{
           title: "",
@@ -214,7 +216,8 @@
           initialFrameWidth: "100%",
           // 上传文件接口
           enableAutoSave: true,
-          autoHeightEnabled:false
+          autoHeightEnabled:false,
+          serverUrl: "http://127.0.0.1:8081"
         }
       }
     },
@@ -222,29 +225,77 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            var _this=this
+            console.log(axios);
+            var userL=JSON.parse(sessionStorage.getItem("userL"))
+            axios.post("http://127.0.0.1:8081/doc",{
+              docID: this.$route.params.id,
+              userID: userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
+              editable: 0
+            })
+              .then(function (response) {
+                // console.log(response.data.status)
+                if(response.data.status === 200){
+                  //alert("编辑文档成功")
+                  _this.$message({
+                    message: '编辑文档成功',
+                    type: 'success'
+                  })
+                  _this.$router.push('/detail/' + response.data.data)
+                }
+              })
+              .catch(function (error) {
+                console.log(error)
+              })
           } else {
             console.log('error submit!!');
             return false;
           }
         });
+      },
+      getDoc: function () {
+        var _this=this;
+        this.axios.post("http://127.0.0.1:8081/doc/get/" + this.$route.params.id)
+          .then(function (response) {
+            if(response.data.status === 200){
+              var docL = JSON.parse(JSON.stringify(response.data.data));
+              _this.docForm.title = docL.title;
+              _this.docForm.doc = docL.content;
+              _this.docForm.viewP = docL.privilege/1000;
+              _this.docForm.editP = (docL.privilege%1000)/100;
+              _this.docForm.commentP = (docL.privilege%100)/10;
+              _this.docForm.shareP = docL.privilege%10;
+            }
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
       }
     },
   mounted () {
-    console.log(this.$route.name);
+
     let _this = this
-    window.onbeforeunload = function (e) {
+    window.onbeforeunload = function () {
       if (_this.$route.name == 'changeTeam') {
         e = e || window.event;
+        // 兼容IE8和Firefox 4之前的版本
         if (e) {
-          e.returnValue = '关闭提示1111'
+          e.returnValue = '关闭提示';
         }
-        return '关闭提示222'
+        // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+        return '关闭提示';
       } else {
         window.onbeforeunload = null
       }
     }
-  }
+
+  },
+    created() {
+      this.getDoc();
+    }
   }
 </script>
 

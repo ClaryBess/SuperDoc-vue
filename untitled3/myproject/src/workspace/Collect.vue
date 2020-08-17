@@ -20,8 +20,19 @@
 
         <h2 class="h2color">收藏的文档</h2>
         <!-- 此处传入的是收藏的文档数组 -->
-        <doc-list v-show="showList" :docs="Docs"></doc-list>
-        <tem-list v-show="showMenu" :tems='Docs'></tem-list>
+        <doc-list v-show="showList" 
+        :docs="Docs" 
+        :currentview=2
+        :userID="userID"
+        ></doc-list>
+         <doc-list2 v-show="showMenu" 
+        :tems="Docs"
+        :currentview=1
+        :userID="userID"
+        ></doc-list2>
+        <div v-show="this.isNULL">
+          <h1>您还没有收藏的文档呢~~~</h1>
+        </div>
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -32,55 +43,21 @@
 import NavBar from "../components/NavBar";
 import SideBar from "./SideBar";
 import DocList from "./DocList";
+import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import TemList from "./TemList";
+import axios from "axios";
 
 export default {
-  name: "Favourite",
-  components: { NavBar, SideBar, DocList,RightBar,TemList },
+  name: "Collect",
+  components: { NavBar, SideBar, DocList,RightBar,DocList2 },
   data() {
     return {
       headUrl: require("../assets/head.jpg"),
-      Docs: [
-        {
-          id: '1',
-          title: "第111",
-          isCollected: true,
-          date: "2020/8/14 21:00"
-        },
-        {
-          id: '2',
-          title: "第二个hhhhh文档",
-          isCollected: true,
-          date: "2020/8/14 11:00"
-        },
-        {
-          id: '3',
-          title: "第三个文dashdkjlashdjkl档",
-          isCollected: true,
-          date: "2020/8/14 12:22"
-        },
-        {
-          id: '4',
-          title: "四ssssswwwwwwwwwwwwwwwss",
-          isCollected: true,
-          date: "2020/8/14 12:22"
-        },
-        {
-          id: '5',
-          title: "第五wwuwuwuwuwuwwwwwwww个文档",
-          isCollected: true,
-          date: "2020/8/14 12:00"
-        },
-        {
-          id: '6',
-          title: "第六",
-          isCollected: true,
-          date: "2020/8/14 12:00"
-        }
-      ],
+      Docs: [],
+      userID:1,
       showMenu:false,
       showList:true,
+      isNULL:false
     };
   },
   computed: {
@@ -97,7 +74,34 @@ export default {
       this.showList = true;
       this.showMenu = false;
     },
-  }
+    fetchList() {
+      this.userL = JSON.parse(sessionStorage.getItem("userL"));
+      console.log(this.userL);
+      // this.userID=this.userL.userID;
+      axios
+        // .post("http://127.0.0.1:8081/collect/getCollect", this.userID)
+        .post("http://127.0.0.1:8081/collect/getCollect", 1)
+        .then(res=>{
+          console.log(res)
+          if(res.data == ""){
+            this.isNULL=true;
+          }
+          else{
+            this.isNULL=false
+            var docL = res.data;
+            var _this = this;
+            _this.Docs=docL;
+            console.log(_this.Docs);
+          }
+        })
+        .catch(err=> {
+          console.log(err);
+        });
+    }
+  },
+   created() {
+    this.fetchList();
+  },
 };
 </script>
 

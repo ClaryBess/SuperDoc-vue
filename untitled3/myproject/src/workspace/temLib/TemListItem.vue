@@ -41,10 +41,9 @@
   }
 
   .goods-item img {
-    width: 265px;
+    width: 240px;
     border-radius: 20px;
     padding: 5px;
-    margin-left: 2%;
     margin-top: 8px;
   }
 

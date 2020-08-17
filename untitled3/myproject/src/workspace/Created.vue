@@ -20,8 +20,19 @@
 
         <h2 class="h2color">自己创建的文件</h2>
         <!-- <doc-list :docs="createdDocs"></doc-list> -->
-        <doc-list v-show="showList" :docs="Docs"></doc-list>
-        <tem-list v-show="showMenu" :tems='Docs'></tem-list>
+        <doc-list v-show="showList" 
+        :docs="Docs" 
+        :currentview=3
+        :userID="userID"
+        ></doc-list>
+         <doc-list2 v-show="showMenu" 
+        :tems="Docs"
+        :currentview=1
+        :userID="userID"
+        ></doc-list2>
+        <div v-show="this.isNULL">
+          <h1>您还没有自己创建的文档呢~~~</h1>
+        </div>
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -32,49 +43,21 @@
 import NavBar from "../components/NavBar";
 import SideBar from "./SideBar";
 import DocList from "./DocList";
-import TemList from "./TemList";
+import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
+import axios from "axios";
 
 export default {
   name: "Created",
-  components: {NavBar, SideBar,DocList,RightBar,TemList},
+  components: {NavBar, SideBar,DocList,DocList2,RightBar },
   data() {
     return {
       headUrl: require("../assets/head.jpg"),
-      Docs: [
-        {
-          id: '1',
-          title: "第111",
-          isCollected: false,
-          date: "2020/8/14 12:00"
-        },
-        {
-          id: '2',
-          title: "第二个hhhhh文档",
-          isCollected: true,
-          date: "2020/8/14 12:00"
-        },
-        {
-          id: '3',
-          title: "第三个文dashdkjlashdjkl档",
-          isCollected: false,
-          date: "2020/8/14 12:00"
-        },
-        {
-          id: '2',
-          title: "第二个hhhhh文档",
-          isCollected: true,
-          date: "2020/8/14 12:00"
-        },
-        {
-          id: '2',
-          title: "第二个hhhhh文档",
-          isCollected: true,
-          date: "2020/8/14 12:00"
-        },
-      ],
+      Docs: [],
+      userID:1,
       showMenu:false,
       showList:true,
+      isNULL:false
     };
   },
   methods:{
@@ -86,7 +69,34 @@ export default {
       this.showList = true;
       this.showMenu = false;
     },
-  }
+    fetchList() {
+      this.userL = JSON.parse(sessionStorage.getItem("userL"));
+      console.log(this.userL);
+      // this.userID=this.userL.userID;
+      axios
+        .post("http://127.0.0.1:8081/created/getDocument", this.userID)
+        .then(res=>{
+          console.log(res)
+          if(res.data == ""){
+            this.isNULL=true;
+          }
+          else{
+            this.isNULL=false
+            var docL = res.data;
+            var _this = this;
+            _this.Docs=docL;
+            console.log(_this.Docs);
+          }
+        })
+        .catch(err=> {
+          console.log(err);
+        });
+    }
+  },
+  created() {
+    this.fetchList();
+  },
+
 };
 </script>
 

@@ -18,7 +18,11 @@ Vue.use(ElementUI);
 Vue.use(SliderVerificationCode);
 Vue.use(VueParticles)
 Vue.config.productionTip = false;
-Vue.use(axios);
+Vue.prototype.axios = axios;
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+axios.defaults.timeout=10000;
+// Vue.use(axios);
+
 // axios.defaults.headers.post["Content-Type"]='application/json';n
 /* eslint-disable no-new */
 Vue.directive('pin',function(el, binding){

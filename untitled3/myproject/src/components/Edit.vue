@@ -115,7 +115,7 @@
               'fontsize', // 字号
               // 'paragraph', // 段落格式
               'simpleupload', // 单图上传
-              'insertimage', // 多图上传
+              //'insertimage', // 多图上传
               'edittable', // 表格属性
               'edittd', // 单元格属性
               // 'link', // 超链接
@@ -169,7 +169,8 @@
           initialFrameWidth: "100%",
           // 上传文件接口
           enableAutoSave: true,
-          autoHeightEnabled:false
+          autoHeightEnabled:false,
+          serverUrl: "http://127.0.0.1:8081"
         }
       }
     },
@@ -178,8 +179,8 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var _this=this
-            console.log(axios);
             var pri = 0;
+            var userL=JSON.parse(sessionStorage.getItem("userL"))
             for(var i = 0; i < this.docForm.privilege.length; i++){
               if(this.docForm.privilege[i] === '可查看'){
                 pri += 1000;
@@ -196,21 +197,21 @@
             }
             axios.post("http://127.0.0.1:8081/doc",{
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
-              //UserID
-              Title: this.docForm.title,
-              Content: this.docForm.doc,
-              Privilege: pri,
-              IsTeam: 0
+              userID: userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: pri,
+              isTeam: 0
             })
               .then(function (response) {
                 // console.log(response.data.status)
                 if(response.data.status === 200){
-                  //alert("恭喜你，注册成功")
-                  //   _this.$message({
-                  //   message: '恭喜你，注册成功',
-                  //   type: 'success'
-                  // })
-                  _this.$router.push('view')
+                  //alert("新建文档成功")
+                     _this.$message({
+                     message: '新建文档成功',
+                     type: 'success'
+                   })
+                  _this.$router.push('/detail/' + response.data.data)
                 }
               })
               .catch(function (error) {
