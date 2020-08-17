@@ -41,7 +41,7 @@ export default {
     },
   methods: {
     itemClick() {
-      this.$router.push('/detail/' + this.docsItem.id)
+      this.$router.push('/detail/' + this.docsItem.docid)
     },
     back() {
       this.$confirm('此操作将恢复该文件, 是否继续?', '提示', {

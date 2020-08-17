@@ -7,8 +7,8 @@
          <i class="el-icon-setting el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item ><el-button type="text" @click="fav">收藏</el-button></el-dropdown-item>
-          <el-dropdown-item divided><el-button type="text" @click="dlt">删除</el-button></el-dropdown-item>
+          <!-- <el-dropdown-item ><el-button type="text" @click="fav">收藏</el-button></el-dropdown-item> -->
+          <el-dropdown-item divided><el-button type="text" @click="open">删除</el-button></el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       </div>
@@ -19,7 +19,7 @@
         <p>{{TemItem.title}}</p>
       </div>
       <div class="goods-info">
-        {{TemItem.date}}
+        {{TemItem.dateTime}}
       </div>
 
     </el-card>
@@ -28,7 +28,7 @@
 
 <script>
   export default {
-    name: "TemListItem",
+    name: "DocListItem2",
     data() {
       return {
       };
@@ -43,41 +43,64 @@
     },
     methods: {
       itemClick() {
-        this.$router.push("/detail/" + this.TemItem.id);
+        this.$router.push("/detail/" + this.TemItem.docID);
       },
-      fav() {
-        this.$confirm('此操作将收藏该文件, 是否继续?', '提示', {
+      // fav() {
+      //   this.$confirm('此操作将收藏该文件, 是否继续?', '提示', {
+      //     confirmButtonText: '确定',
+      //     cancelButtonText: '取消',
+      //     type: 'info'
+      //   }).then(() => {
+      //     this.$message({
+      //       type: 'success',
+      //       message: '收藏成功!'
+      //     });
+      //   }).catch(() => {
+      //     this.$message({
+      //       type: 'info',
+      //       message: '已取消收藏'
+      //     });
+      //   });
+      // },
+      dlt() {
+        console.log('delete')
+      },
+      open() {
+        const h = this.$createElement;
+        this.$msgbox({
+          title: '提示',
+          message: h('p', null, [
+            h('span', null, '此操作将删除该文件, 是否继续?'),
+          ]),
+          showCancelButton: true,
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'info'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '收藏成功!'
-          });
-        }).catch(() => {
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = '执行中...';
+              setTimeout(() => {
+                this.dlt();
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                }, 300);
+              }, 1000);
+            } else {
+              done();
+            }
+          }
+        }).then(action => {
           this.$message({
             type: 'info',
-            message: '已取消收藏'
-          });
-        });
-      },
-      dlt() {
-        this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
+            message: '已成功删除'
           });
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
           });
-        });
+        })
       },
     },
   };

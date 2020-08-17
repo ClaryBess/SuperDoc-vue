@@ -3,17 +3,17 @@
     <div class="docs-item">
       <img class="docimg" src="../assets/文档.svg" @click="itemClick" />
       <div class="docs-info" @click="itemClick">
-        <p>{{docsItem.title}}</p>
+        <p>{{this.docsItem.title}}</p>
       </div>
       <div class="docs-time" @click="itemClick">
-        <p>{{docsItem.date}}</p>
+        <p>{{this.docsItem.dateTime}}</p>
       </div>
       <slot name="deleteIcon">
-        <img class="smallimg1" src="../assets/删除.svg" @click="deleteDoc" />
+        <img class="smallimg1" src="../assets/删除.svg" @click="open" />
       </slot>
       <!-- <slot name="collectedIcon">
         <img class="smallimg2" :src="collectedurl" alt @click="collectDoc" />
-      </slot> -->
+      </slot>-->
     </div>
   </div>
 </template>
@@ -21,18 +21,30 @@
 <script>
 // import img1 from "../assets/收藏.svg";
 // import img2 from "../assets/收藏 (1).svg";
+import axios from "axios";
 
 export default {
   name: "DocListItem",
   data() {
     return {};
   },
+
   props: {
     docsItem: {
       type: Object,
       default() {
         return {};
       },
+    },
+    //当前界面
+    currentview: {
+      type: Number,
+      default: 0,
+    },
+    //当前用户id
+    userID: {
+      type: Number,
+      default: 0,
     },
   },
   // computed: {
@@ -46,14 +58,110 @@ export default {
   // },
   methods: {
     itemClick() {
-      this.$router.push("/detail/" + this.docsItem.id);
+      // let data = {
+        //   DocID: this.docsItem.docID,
+        //   UserID: this.UserID,
+        // };
+        let data = {
+          "DocID": 1,
+          "UserID": 1,
+        };
+      axios
+          .post("http://127.0.0.1:8081/browse/insertBrowse", data)
+          .then((res) => {
+            var docL = res.data;
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      this.$router.push("/detail/" + this.docsItem.docID);
     },
     // collectDoc() {
     //   this.docsItem.isCollected = !this.docsItem.isCollected;
     // },
+
     deleteDoc() {
-      alert("删除文件");
+      if (this.currentview == 1) {
+        // let data = {
+        //   DocID: this.docsItem.docID,
+        //   UserID: this.UserID,
+        // };
+        let data = {
+          "DocID": 1,
+          "UserID": 1,
+        };
+        console.log(data)
+        axios
+          .post("http://127.0.0.1:8081/browse/deleteBrowse", data)
+          .then((res) => {
+            var docL = res.data;
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      else if (this.currentview == 2) {
+        // let data = {
+        //   DocID: this.docsItem.docID,
+        //   UserID: this.UserID,
+        // };
+        let data = {
+          "DocID": 1,
+          "UserID": 1,
+        };
+        console.log(data)
+        axios
+          .post("http://127.0.0.1:8081/collect/deleteCollect", data)
+          .then((res) => {
+            var docL = res.data;
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
+
+    open() {
+        const h = this.$createElement;
+        this.$msgbox({
+          title: '提示',
+          message: h('p', null, [
+            h('span', null, '此操作将删除该文件, 是否继续?'),
+          ]),
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = '执行中...';
+              setTimeout(() => {
+                this.deleteDoc();
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                }, 300);
+              }, 1000);
+            } else {
+              done();
+            }
+          }
+        }).then(action => {
+          this.$message({
+            type: 'info',
+            message: '已成功删除'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        })
+       
+      },
   },
 };
 </script>

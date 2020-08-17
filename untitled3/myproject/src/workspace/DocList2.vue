@@ -1,17 +1,17 @@
 <template>
   <div class="docs">
-    <tem-list-item v-for="item in tems" :tem-item="item" :key="item.id">
-    </tem-list-item>
+    <doc-list-item2 v-for="item in tems" :tem-item="item" :key="item.id">
+    </doc-list-item2>
   </div>
 </template>
 
 <script>
-  import TemListItem from "./TemListItem";
+  import DocListItem2 from "./DocListItem2";
 
   export default {
-    name: "TemList",
+    name: "DocList2",
     components: {
-      TemListItem
+      DocListItem2
     },
     props: {
       //从外部获取的模板数组
