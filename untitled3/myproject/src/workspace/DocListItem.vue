@@ -141,7 +141,7 @@ export default {
             console.log(err);
           });
       }
-      this.reload()
+      this.reload();
     },
 
     open() {

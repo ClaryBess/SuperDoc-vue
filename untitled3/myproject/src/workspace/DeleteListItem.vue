@@ -16,6 +16,7 @@ import axios from "axios";
 
 export default {
   name: "DeleteListItem",
+  inject: ["reload"],
   data() {
     return {};
   },
@@ -86,12 +87,14 @@ export default {
                   console.log(err);
                 });
               done();
+              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
               }, 300);
             }, 1000);
           } else {
             done();
+            this.reload();
           }
         },
       })
@@ -141,6 +144,7 @@ export default {
                   console.log(err);
                 });
               done();
+              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
               }, 300);
