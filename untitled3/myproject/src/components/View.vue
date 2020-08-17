@@ -123,6 +123,7 @@
 
 <script>
     import NavBar from "./NavBar";
+    import axios from "axios";
 
     export default {
         name: "View",
@@ -217,6 +218,39 @@
             type:'success'
           })
         },
+        getCollect(){
+          axios.post("http://127.0.0.1:8081/collect/collected", {
+            docID: this.$route.params.id,
+            userID: this.userL.userID
+          })
+          .then(function (response) {
+            if(response.data.status === 200 && response.data.msg === "collected"){
+              this.hasCollect = true;
+            }
+            else if(response.data.status === 200 && response.data.msg === "not collected"){
+              this.hasCollect = false;
+            }
+          })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
+        },
+        getCommentList(){
+          axios.post("http://127.0.0.1:8081/comment", {
+            docID: this.$route.params.id,
+          })
+            .then(function (response) {
+              if(response.data.status === 200){
+                var list = response.data.data;
+              }
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
+        }
+    },
+      created() {
+          //this.getCollect();
       }
     }
 </script>

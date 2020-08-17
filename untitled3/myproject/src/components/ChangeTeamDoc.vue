@@ -228,12 +228,12 @@
             var _this=this
             console.log(axios);
             axios.post("http://127.0.0.1:8081/doc",{
-              DocID: this.$route.params.id,
-              UserID: this.userL.UserID,
-              Title: this.docForm.title,
-              Content: this.docForm.doc,
-              Privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
-              Editable: 0
+              docID: this.$route.params.id,
+              userID: this.userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
+              editable: 0
             })
               .then(function (response) {
                 // console.log(response.data.status)
@@ -257,19 +257,17 @@
       },
       getDoc: function () {
         console.log(axios);
-        this.axios.get("http://127.0.0.1:8081/doc", {
-          params: {
-            docID: this.$route.params.id
-          }
-        })
+        this.axios.get("http://127.0.0.1:8081/doc/" + this.$route.params.id)
           .then(function (response) {
-            var docL = response.data.data;
-            this.docForm.title = docL.title;
-            this.docForm.doc = docL.content;
-            this.docForm.viewP = docL.privilege/1000;
-            this.docForm.editP = (docL.privilege%1000)/100;
-            this.docForm.commentP = (docL.privilege%100)/10;
-            this.docForm.shareP = docL.privilege%10;
+            if(response.data.status === 200){
+              var docL = response.data.data;
+              this.docForm.title = docL.title;
+              this.docForm.doc = docL.content;
+              this.docForm.viewP = docL.privilege/1000;
+              this.docForm.editP = (docL.privilege%1000)/100;
+              this.docForm.commentP = (docL.privilege%100)/10;
+              this.docForm.shareP = docL.privilege%10;
+            }
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
