@@ -28,7 +28,7 @@
               <el-form-item class="item" label=" 团队简介：" :label-width="formLabelWidth">
                 <el-input
                   type="textarea"
-                  :rows="4"
+                  :rows="9"
                   class="teaminfo"
                   v-model="form.info"
                   autocomplete="off"
