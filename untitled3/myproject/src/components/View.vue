@@ -245,6 +245,7 @@
           })
         },
         getCollect(){
+          var _this=this
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/collect/collected", {
             docID: this.$route.params.id,
@@ -252,10 +253,10 @@
           })
           .then(function (response) {
             if(response.data.status === 200 && response.data.msg === "collected"){
-              this.hasCollect = true;
+              _this.hasCollect = true;
             }
             else if(response.data.status === 200 && response.data.msg === "not collected"){
-              this.hasCollect = false;
+              _this.hasCollect = false;
             }
           })
             .catch(function (error) { // 请求失败处理
@@ -307,34 +308,32 @@
             })
         },
         getCommentList(){
-          axios.post("http://127.0.0.1:8081/comment/" + this.$route.params.id)
+          var _this = this
+          axios.post("http://127.0.0.1:8081/comment/commentList/" + this.$route.params.id)
             .then(function (response) {
-              if(response.data.status === 200){
-                var list = response.data.data;
-                this.CommentNum = list.length;
-                while(this.commentItem.length > 0)
-                  this.commentItem.pop();
-                for(var i = 0; i < list.length; i ++){
-                  this.commentItem[i].content = list[i].content;
-                  this.commentItem[i].time = list[i].time;
-                  //这里还要加一个获得头像src和获得
-                  var _this=this
-                  axios.post("http://127.0.0.1:8081/user/getName/",{
-                    userID: list[i].userID
+              var list = response.data.data;
+              _this.CommentNum = list.length;
+              while(_this.commentItem.length > 0)
+                _this.commentItem.pop();
+              for(var i = 0; i < list.length; i ++){
+                _this.commentItem[i].content = list[i].content;
+                _this.commentItem[i].time = list[i].time;
+                //这里还要加一个获得头像src和获得
+                axios.post("http://127.0.0.1:8081/user/getName/",{
+                  userID: list[i].userID
+                })
+                  .then(function (response) {
+                    _this.commentItem[i].user = response.data
                   })
-                    .then(function (response) {
-                      _this.commentItem[i].user = response.data
-                    })
-                  axios.post("http://127.0.0.1:8081/user/getPro/",{
-                    userID: list[i].userID
+                axios.post("http://127.0.0.1:8081/user/getPro/",{
+                  userID: list[i].userID
+                })
+                  .then(function (response) {
+                    _this.commentItem[i].src = response.data
                   })
-                    .then(function (response) {
-                      _this.commentItem[i].src = response.data
-                    })
-                    .catch(function (error) {
-                      console.log(error)
-                    })
-                }
+                  .catch(function (error) {
+                    console.log(error)
+                  })
               }
             })
             .catch(function (error) { // 请求失败处理
@@ -401,13 +400,14 @@
             });
         },
         getPri(){
+          var _this=this;
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, {
             userID: userL.userID
           })
             .then(function (response) {
               if(response.data.status === 200){
-                this.EditP = response.data.data;
+                _this.EditP = response.data.data;
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, {
@@ -415,7 +415,7 @@
           })
             .then(function (response) {
               if(response.data.status === 200){
-                this.CommentP = response.data.data;
+                _this.CommentP = response.data.data;
               }
             })
           this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, {
@@ -423,7 +423,7 @@
           })
             .then(function (response) {
               if(response.data.status === 200){
-                this.ShareP = response.data.data;
+                _this.ShareP = response.data.data;
               }
             })
             .catch(function (error) { // 请求失败处理
@@ -431,11 +431,13 @@
             });
         },
         getCollectNum(){
-          axios.post("http://127.0.0.1:8081/collect", {
-            docID: this.$route.params.id,
+          var _this=this
+          axios.post("http://127.0.0.1:8081/collect/collectNum", {
+            docID: this.$route.params.id
           })
             .then(function (response) {
-              this.CollectNum = response.data.data;
+              _this.CollectNum = response.data;
+              console.log( 'collect:' + response.data);
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -460,10 +462,10 @@
     },
       created() {
         this.getDoc();
-        //this.getCollect();
+        this.getCollect();
         //this.getCommentList();
         //this.getPri();
-        //this.getCollectNum();
+        this.getCollectNum();
         //this.getEdit();
         var userL=JSON.parse(sessionStorage.getItem("userL"))
         this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
