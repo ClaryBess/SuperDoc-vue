@@ -228,23 +228,23 @@
           console.log(axios);
           this.axios.get("http://127.0.0.1:8081/doc", {
             params: {
-              DocID: this.$route.params.id
+              docID: this.$route.params.id
             }
           })
             .then(function (response) {
               var docL = response.data.data;
-              this.docForm.title = docL.Title;
-              this.docForm.doc = docL.Content;
-              if(docL.Privilege/1000 === 1){
+              this.docForm.title = docL.title;
+              this.docForm.doc = docL.content;
+              if(docL.privilege/1000 === 1){
                 this.docForm.privilege.push('可查看');
               }
-              if((docL.Privilege%1000)/100 === 1){
+              if((docL.privilege%1000)/100 === 1){
                 this.docForm.privilege.push('可编辑');
               }
-              if((docL.Privilege%100)/10 === 1){
+              if((docL.privilege%100)/10 === 1){
                 this.docForm.privilege.push('可评论');
               }
-              if(docL.Privilege%10 === 1){
+              if(docL.privilege%10 === 1){
                 this.docForm.privilege.push('可分享');
               }
             })

@@ -228,12 +228,12 @@
             var _this=this
             console.log(axios);
             axios.post("http://127.0.0.1:8081/doc",{
-              UserID: this.userL.UserID,
-              Title: this.docForm.title,
-              Content: this.docForm.doc,
-              Privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
-              IsTeam: 1,
-              Team: this.$route.params.tid
+              userID: this.userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
+              isTeam: 1,
+              team: this.$route.params.tid
             })
               .then(function (response) {
                 // console.log(response.data.status)

@@ -198,11 +198,11 @@
             this.userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
-              UserID: this.userL.UserID,
-              Title: this.docForm.title,
-              Content: this.docForm.doc,
-              Privilege: pri,
-              IsTeam: 0
+              userID: this.userL.userID,
+              title: this.docForm.title,
+              content: this.docForm.doc,
+              privilege: pri,
+              ssTeam: 0
             })
               .then(function (response) {
                 // console.log(response.data.status)

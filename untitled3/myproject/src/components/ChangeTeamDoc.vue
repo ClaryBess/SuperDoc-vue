@@ -259,17 +259,17 @@
         console.log(axios);
         this.axios.get("http://127.0.0.1:8081/doc", {
           params: {
-            DocID: this.$route.params.id
+            docID: this.$route.params.id
           }
         })
           .then(function (response) {
             var docL = response.data.data;
-            this.docForm.title = docL.Title;
-            this.docForm.doc = docL.Content;
-            this.docForm.viewP = docL.Privilege/1000;
-            this.docForm.editP = (docL.Privilege%1000)/100;
-            this.docForm.commentP = (docL.Privilege%100)/10;
-            this.docForm.shareP = docL.Privilege%10;
+            this.docForm.title = docL.title;
+            this.docForm.doc = docL.content;
+            this.docForm.viewP = docL.privilege/1000;
+            this.docForm.editP = (docL.privilege%1000)/100;
+            this.docForm.commentP = (docL.privilege%100)/10;
+            this.docForm.shareP = docL.privilege%10;
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
