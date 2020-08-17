@@ -198,8 +198,7 @@
               type: 'error'
             })
           }
-        })
-          .catch(function (error) {
+        }).catch(function (error) {
             console.log(error)
           })
       },
