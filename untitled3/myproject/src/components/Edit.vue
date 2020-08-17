@@ -175,11 +175,13 @@
       }
     },
     methods: {
+      fetchUser(){
+        this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      },
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var _this=this
-            console.log(axios);
             var pri = 0;
             for(var i = 0; i < this.docForm.privilege.length; i++){
               if(this.docForm.privilege[i] === '可查看'){
@@ -195,14 +197,13 @@
                 pri += 1;
               }
             }
-            this.userL=JSON.parse(sessionStorage.getItem("userL"))
             axios.post("http://127.0.0.1:8081/doc",{
               //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
-              userID: this.userL.userID,
+              userID: _this.userL.UserID,
               title: this.docForm.title,
               content: this.docForm.doc,
               privilege: pri,
-              ssTeam: 0
+              isTeam: 0
             })
               .then(function (response) {
                 // console.log(response.data.status)
@@ -224,6 +225,9 @@
           }
         });
       }
+    },
+    created() {
+      this.fetchUser()
     }
   }
 </script>
