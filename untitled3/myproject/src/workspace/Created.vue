@@ -30,6 +30,9 @@
         :currentview=1
         :userID="userID"
         ></doc-list2>
+        <div v-show="this.isNULL">
+          <h1>您还没有自己创建的文档呢~~~</h1>
+        </div>
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -54,6 +57,7 @@ export default {
       userID:1,
       showMenu:false,
       showList:true,
+      isNULL:false
     };
   },
   methods:{
@@ -74,9 +78,10 @@ export default {
         .then(res=>{
           console.log(res)
           if(res.data == ""){
-            alert("您还没有创建过自己的文件呢~~~")
+            this.isNULL=true;
           }
           else{
+            this.isNULL=false
             var docL = res.data;
             var _this = this;
             _this.Docs=docL;

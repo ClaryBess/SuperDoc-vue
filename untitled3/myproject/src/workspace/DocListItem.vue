@@ -25,6 +25,7 @@ import axios from "axios";
 
 export default {
   name: "DocListItem",
+  inject:['reload'],
   data() {
     return {};
   },
@@ -59,22 +60,22 @@ export default {
   methods: {
     itemClick() {
       // let data = {
-        //   DocID: this.docsItem.docID,
-        //   UserID: this.UserID,
-        // };
-        let data = {
-          "DocID": 1,
-          "UserID": 1,
-        };
+      //   DocID: this.docsItem.docID,
+      //   UserID: this.UserID,
+      // };
+      let data = {
+        DocID: 1,
+        UserID: 1,
+      };
       axios
-          .post("http://127.0.0.1:8081/browse/insertBrowse", data)
-          .then((res) => {
-            var docL = res.data;
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        .post("http://127.0.0.1:8081/browse/insertBrowse", data)
+        .then((res) => {
+          var docL = res.data;
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       this.$router.push("/detail/" + this.docsItem.docID);
     },
     // collectDoc() {
@@ -88,10 +89,10 @@ export default {
         //   UserID: this.UserID,
         // };
         let data = {
-          "DocID": 1,
-          "UserID": 1,
+          DocID: 1,
+          UserID: 1,
         };
-        console.log(data)
+        console.log(data);
         axios
           .post("http://127.0.0.1:8081/browse/deleteBrowse", data)
           .then((res) => {
@@ -101,17 +102,16 @@ export default {
           .catch((err) => {
             console.log(err);
           });
-      }
-      else if (this.currentview == 2) {
+      } else if (this.currentview == 2) {
         // let data = {
         //   DocID: this.docsItem.docID,
         //   UserID: this.UserID,
         // };
         let data = {
-          "DocID": 1,
-          "UserID": 1,
+          DocID: 1,
+          UserID: 1,
         };
-        console.log(data)
+        console.log(data);
         axios
           .post("http://127.0.0.1:8081/collect/deleteCollect", data)
           .then((res) => {
@@ -121,47 +121,68 @@ export default {
           .catch((err) => {
             console.log(err);
           });
+      } else if (this.currentview == 3) {
+        // let data = {
+        //   DocID: this.docsItem.docID,
+        //   UserID: this.UserID,
+        // };
+        let data = {
+          DocID: 1,
+          UserID: 1,
+        };
+        console.log(data);
+        axios
+          .post("http://127.0.0.1:8081/created/deleteDocument", data)
+          .then((res) => {
+            var docL = res.data;
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
+      this.reload()
     },
 
     open() {
-        const h = this.$createElement;
-        this.$msgbox({
-          title: '提示',
-          message: h('p', null, [
-            h('span', null, '此操作将删除该文件, 是否继续?'),
-          ]),
-          showCancelButton: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          beforeClose: (action, instance, done) => {
-            if (action === 'confirm') {
-              instance.confirmButtonLoading = true;
-              instance.confirmButtonText = '执行中...';
-              setTimeout(() => {
-                this.deleteDoc();
-                done();
-                setTimeout(() => {
-                  instance.confirmButtonLoading = false;
-                }, 300);
-              }, 1000);
-            } else {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "此操作将删除该文件, 是否继续?"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              this.deleteDoc();
               done();
-            }
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+              }, 300);
+            }, 1000);
+          } else {
+            done();
           }
-        }).then(action => {
+        },
+      })
+        .then((action) => {
           this.$message({
-            type: 'info',
-            message: '已成功删除'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
+            type: "info",
+            message: "已成功删除",
           });
         })
-       
-      },
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
   },
 };
 </script>
