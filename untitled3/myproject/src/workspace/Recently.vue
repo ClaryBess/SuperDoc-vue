@@ -18,18 +18,18 @@
         </el-button>
 
         <h2 class="h2color">最近浏览的文档</h2>
-        <doc-list v-show="showList" 
-        :docs="Docs" 
+        <doc-list v-show="showList"
+        :docs="Docs"
         :currentview=1
         :userID="userID"
         ></doc-list>
-        <doc-list2 v-show="showMenu" 
+        <doc-list2 v-show="showMenu"
         :tems="Docs"
         :currentview=1
         :userID="userID"
         ></doc-list2>
-        <div v-show="this.isNULL">
-          <h1>您还没有浏览过的文档呢~~~</h1>
+        <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
+          <div><img src="../assets/空.png" style=" width: 110px"></div>
         </div>
       </el-main>
       <right-bar></right-bar>
