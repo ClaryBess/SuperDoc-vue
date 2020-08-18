@@ -197,6 +197,6 @@ export default {
   }
 
   .h2color {
-    color: #7093ff;
+    color: #3369e7;
   }
 </style>

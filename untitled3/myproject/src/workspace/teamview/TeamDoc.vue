@@ -102,7 +102,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
   .h2color {
     color: #7093ff;
   }

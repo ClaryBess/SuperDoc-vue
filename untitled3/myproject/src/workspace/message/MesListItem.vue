@@ -6,7 +6,7 @@
         <p>{{ mesItem.content }}</p>
       </div>
       <div class="mes-time" @click="itemClick">
-        <p>{{mesItem.date}}</p>
+        <p>{{mesItem.dateTime}}</p>
       </div>
       <img class="messmallimg" src="@/assets/删除.svg" @click="deleteMes" />
     </div>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "MesListItem",
   data() {
@@ -42,6 +44,7 @@ export default {
             type: "success",
             message: "已成功加入此团队!",
           });
+          // 加入团队的接口操作
         })
         .catch(() => {
           this.$message({
@@ -57,7 +60,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mes {
   position: relative;
   padding: 10px;

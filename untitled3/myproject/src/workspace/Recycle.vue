@@ -101,7 +101,7 @@ export default {
 </script>
 <style scoped>
 .h2color {
-  color: #7093ff;
+  color: #3369e7;
 }
 .switch {
   width: 40px;

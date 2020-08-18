@@ -106,7 +106,7 @@ export default {
 
 <style>
   .h2color {
-    color: #7093FF;
+    color: #3369e7;
   }
   .switch{
     width: 40px;

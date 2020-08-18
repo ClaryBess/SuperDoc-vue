@@ -43,7 +43,7 @@ import SideBar from "./SideBar";
 import DocList from "./DocList";
 import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Recently",
@@ -105,7 +105,7 @@ export default {
 
 <style>
 .h2color {
-  color: #7093ff;
+  color: #3369e7
 }
 .switch {
   width: 40px;
