@@ -30,8 +30,9 @@
         :currentview=3
         :userID="userID"
         ></doc-list2>
-        <div v-show="this.isNULL" class="wu">
-          <h1>您还没有自己创建的文档呢~~~</h1>
+        <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
+          <div><img src="../assets/空.png" style=" width: 110px"></div>
+
         </div>
       </el-main>
       <right-bar></right-bar>
@@ -110,10 +111,6 @@ export default {
     margin-top:27px;
     margin-right: 30px;
   }
-  .wu {
-  position: absolute;
-  left:250px;
-  height: 250px;
-}
+
 
 </style>

@@ -54,6 +54,9 @@
         <h2 class="h2color">加入的团队</h2>
         <!-- <teams-list :teams="joinedteams"></teams-list> -->
         <teams-list :teams="teams"></teams-list>
+        <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
+          <div><img src="../../assets/空.png" style=" width: 110px"></div>
+        </div>
       </el-main>
       <!-- 右栏 -->
       <right-bar></right-bar>
@@ -66,6 +69,7 @@ import NavBar from "@/components/NavBar";
 import SideBar from "../SideBar";
 import TeamsList from "./TeamsList";
 import RightBar from "../RightBar";
+import axios from "axios";
 
 export default {
   name: "Team",
@@ -87,7 +91,6 @@ export default {
           callback();
       }
     };
-
     return {
       headUrl: require("@/assets/head.jpg"),
       teams: [
@@ -116,8 +119,12 @@ export default {
           { validator: checkName, trigger: 'blur' }
         ]
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      isNULL: false,
     };
+  },
+  created() {
+    this.fetchList();
   },
   methods:{
     submitForm(formName) {
@@ -145,6 +152,28 @@ export default {
             return false;
           }
       });
+    },
+
+    fetchList() {
+      this.userL = JSON.parse(sessionStorage.getItem("userL"));
+      console.log(this.userL);
+      this.userID=this.userL.userID;
+      axios.post("http://127.0.0.1:8081/#", this.userID)
+        .then((res) => {
+          console.log(res);
+          if (res.data == "") {
+            this.isNULL = true;
+          } else {
+            this.isNULL = false;
+            var teamL = res.data;
+            var _this = this;
+            _this.teams = teamL;
+            console.log(_this.teams);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
