@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "MenuListItem",
@@ -89,9 +89,9 @@ export default {
                   console.log(err);
                 });
               done();
-              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
+                this.reload();
               }, 300);
             }, 1000);
           } else {
@@ -141,14 +141,13 @@ export default {
                   console.log(err);
                 });
               done();
-              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
+                this.reload();
               }, 300);
             }, 1000);
           } else {
             done();
-            this.reload();
           }
         },
       })

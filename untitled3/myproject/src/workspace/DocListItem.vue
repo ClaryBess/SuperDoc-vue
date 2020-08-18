@@ -21,11 +21,11 @@
 <script>
 // import img1 from "../assets/收藏.svg";
 // import img2 from "../assets/收藏 (1).svg";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "DocListItem",
-  inject:['reload'],
+  inject: ["reload"],
   data() {
     return {};
   },
@@ -80,7 +80,7 @@ export default {
 
     deleteDoc() {
       if (this.currentview == 1) {
-        console.log(this.userID)
+        console.log(this.userID);
         let data = {
           DocID: this.docsItem.docID,
           UserID: this.userID,
@@ -104,11 +104,6 @@ export default {
           DocID: this.docsItem.docID,
           UserID: this.userID,
         };
-        // let data = {
-        //   DocID: 1,
-        //   UserID: 1,
-        // };
-        console.log(data);
         axios
           .post("http://127.0.0.1:8081/collect/deleteCollect", data)
           .then((res) => {
@@ -134,7 +129,6 @@ export default {
             console.log(err);
           });
       }
-      this.reload();
     },
 
     open() {
@@ -156,6 +150,7 @@ export default {
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
+                this.reload();
               }, 300);
             }, 1000);
           } else {

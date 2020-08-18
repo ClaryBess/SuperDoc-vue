@@ -27,7 +27,7 @@
         ></doc-list>
          <doc-list2 v-show="showMenu" 
         :tems="Docs"
-        :currentview=1
+        :currentview=3
         :userID="userID"
         ></doc-list2>
         <div v-show="this.isNULL">
@@ -72,7 +72,7 @@ export default {
     fetchList() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
       console.log(this.userL);
-      // this.userID=this.userL.userID;
+      this.userID=this.userL.userID;
       axios
         .post("http://127.0.0.1:8081/created/getDocument", this.userID)
         .then(res=>{
