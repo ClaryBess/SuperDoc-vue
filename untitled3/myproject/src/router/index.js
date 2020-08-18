@@ -26,6 +26,7 @@ import EditTeamDoc from "../components/EditTeamDoc";
 import ChangeTeamDoc from "../components/ChangeTeamDoc";
 
 import Message from "../workspace/message/Message";
+import UnreadMessage from "../workspace/message/UnreadMessage";
 import NavBarOrigin from "../components/NavBarOrigin";
 
 Vue.use(VueRouter)
@@ -141,6 +142,11 @@ const routes = [
     path: '/message',
     name: 'message',
     component: Message
+  },
+  {
+    path: '/unreadmessage',
+    name: 'unreadmessage',
+    component: UnreadMessage
   },
   {
     path: '/change/:id',
