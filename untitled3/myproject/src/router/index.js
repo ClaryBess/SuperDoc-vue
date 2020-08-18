@@ -110,7 +110,7 @@ const routes = [
   },
   //用于测试成员的团队界面
   {
-    path: '/teammember/:id',
+    path: '/teammember2/:id',
     name: 'teamview2',
     component: TeamView2
   },
