@@ -28,7 +28,12 @@ export default {
     },
   methods: {
       itemClick() {
-        this.$router.push('/team/' + this.teamsItem.id)
+        if(this.teamsItem.id==1){
+          this.$router.push('/teamleader/' + this.teamsItem.id)
+        } else if(this.teamsItem.id==2){
+          this.$router.push('/teammember/' + this.teamsItem.id)
+        }
+
       }
     }
 };

@@ -147,6 +147,7 @@ import DocList from "../DocList";
 import MemberList from "./MemberList";
 import RightBar from "../RightBar";
 import MemberListItem from "./MemberListItem";
+import axios from "axios";
 
 export default {
   name: "TeamView1",
@@ -203,6 +204,7 @@ export default {
   },
   created() {
     //获取团队id
+    this.id = this.$route.params.id;
     this.fetchUser();
   },
   methods: {
@@ -212,7 +214,7 @@ export default {
     submitForm(formName) {
       var _this = this;
       axios
-        .post("http://127.0.0.1:8081/#", {
+        .post("http://127.0.0.1:8081/team/1/update/info", {
           userID: this.userL.userID,
           name: this.form.name,
         })
@@ -231,6 +233,7 @@ export default {
           console.log(error);
         });
     },
+
     submitFormMember(formName) {
       var _this = this;
 
@@ -255,7 +258,108 @@ export default {
         });
     },
 
-    handleClose(done) {
+    onSubmit(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var _this=this
+          var userL=JSON.parse(sessionStorage.getItem("userL"))
+          axios.post("http://127.0.0.1:8081/comment/add",{
+            userID: userL.userID,
+            docID: this.$route.params.id,
+            content: this.Form.content
+          })
+            .then(function (response) {
+              // console.log(response.data.status)
+              if(response.data.status === 200){
+                //alert("新建文档成功")
+                _this.$message({
+                  message: '评论成功',
+                  type: 'success'
+                })
+                _this.reload();
+              }
+              else if(response.data.status === 500){
+                _this.$message({
+                  message: '该邮箱已注册，请更换一个',
+                  type: 'error'
+                })
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+
+    deleteDoc() {
+      if (this.currentview == 1) {
+        console.log(this.userID);
+        let data = {
+          DocID: this.docsItem.docID,
+          UserID: this.userID,
+        };
+        // let data = {
+        //   DocID: 1,
+        //   UserID: 1,
+        // };
+        console.log(data);
+        axios
+          .post("http://127.0.0.1:8081/#", data)
+          .then((res) => {
+            var docL = res.data;
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+
+    handleClose() {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "此操作将删除该文件, 是否继续?"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              this.deleteDoc();
+              done();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+                this.reload();
+              }, 300);
+            }, 1000);
+          } else {
+            done();
+          }
+        },
+      })
+        .then((action) => {
+          this.$message({
+            type: "info",
+            message: "已成功删除",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
+/*    handleClose(done) {
       if (this.loading) {
         return;
       }
@@ -271,7 +375,7 @@ export default {
           }, 2000);
         })
         .catch((_) => {});
-    },
+    },*/
 
     cancelForm() {
       this.loading = false;
