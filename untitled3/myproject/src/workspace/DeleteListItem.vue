@@ -35,13 +35,9 @@ export default {
   },
   methods: {
     itemClick() {
-      // let data = {
-      //   DocID: this.docsItem.docID,
-      //   UserID: this.UserID,
-      // };
       let data = {
-        DocID: 1,
-        UserID: 1,
+        DocID: this.docsItem.docID,
+        UserID: this.userID,
       };
       axios
         .post("http://127.0.0.1:8081/browse/insertBrowse", data)
@@ -69,13 +65,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.docsItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/delete", data)
@@ -87,14 +79,13 @@ export default {
                   console.log(err);
                 });
               done();
-              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
+                this.reload();
               }, 300);
             }, 1000);
           } else {
             done();
-            this.reload();
           }
         },
       })
@@ -126,13 +117,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.docsItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/recover", data)
@@ -144,9 +131,9 @@ export default {
                   console.log(err);
                 });
               done();
-              this.reload();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
+                this.reload();
               }, 300);
             }, 1000);
           } else {

@@ -53,16 +53,16 @@
                 <li v-for="item in commentItem">
                   <div style="width: 100%;float: left">
                     <span style="width: 8.3%; float: left">
-                      <img :src="item.src" class="commentHead">
+                      <img :src="item.profileUrl" class="commentHead">
                     </span>
                     <span style="float: left" class="commentName">
-                      {{item.user}}
+                      {{item.userName}}
                     </span>
                   </div>
                   <p class="commentText">{{item.content}}</p>
                   <div style="width: 100%" class="commentTime">
                     <div style="margin-left: 8.3%">
-                      <p>{{item.time}}</p>
+                      <p>{{item.dateTime}}</p>
                     </div>
                   </div>
                   <el-divider></el-divider>
@@ -96,9 +96,9 @@
                 <el-timeline-item
                   v-for="(activity, index) in activities"
                   :key="index"
-                  :timestamp="activity.timestamp"
+                  :timestamp="activity.dateTime"
                   color="#409EFF">
-                  {{activity.content}}
+                  {{activity.userID}}
                 </el-timeline-item>
               </el-timeline>
             </el-card>
@@ -146,15 +146,15 @@
             content: '<h1>123</h1>',
             hasCollect: true,
             commentItem: [{
-              src: require("../assets/head.jpg"),
-              user: 'YuanCZ',
+              profileUrl: require("../assets/head.jpg"),
+              userName: 'YuanCZ',
               content: '你用两个脑子思考？',
-              time: '2020-8-13'
+              dateTime: '2020-8-13'
             }, {
-              src: require("../assets/head.jpg"),
-              user: '宋友',
+              profileUrl: require("../assets/head.jpg"),
+              userName: '宋友',
               content: '你真幸运',
-              time: '2020-8-14'
+              dateTime: '2020-8-14'
               }],
             show3: false,
             Form: [{
@@ -166,14 +166,14 @@
               ]
             },
             activities: [{
-              content: 'wsy',
-              timestamp: '2020-04-15'
+              userID: 'wsy',
+              dateTime: '2020-04-15'
             }, {
-              content: '王奶糖',
-              timestamp: '2020-04-13'
+              userID: '王奶糖',
+              dateTime: '2020-04-13'
             }, {
-              content: '王咪咪',
-              timestamp: '2020-04-11'
+              userID: '王咪咪',
+              dateTime: '2020-04-11'
             }],
             offsetTop:0,
             offsetWidth:0,
@@ -207,22 +207,20 @@
           this.$router.go(-1)
         },
         EditDoc() {
-          this.axios.post("http://127.0.0.1:8081/doc" + this.$route.params.id, {
-            Editable: 1
+          var _this=this;
+          axios.post("http://127.0.0.1:8081/doc/isEditable/" + this.$route.params.id)
+          .then(function (response) {
+            var editable = response.data;
+            if(editable === true){
+
+            }
+            else if(editable === false){
+              _this.$message({
+                message: '文档目前正在被编辑，请稍后尝试',
+                type: 'error'
+              })
+            }
           })
-            .then(function (response) {
-              if(response.data.status === 200){
-                if(this.isTeam === false){
-                  this.$router.push('/change/' + this.$route.params.id)
-                }
-                else{
-                  this.$router.push('/changeTeam/' + this.$route.params.id)
-                }
-              }
-            })
-            .catch(function (error) { // 请求失败处理
-              console.log(error);
-            });
         },
         initHeight(){
           //兼容性，获取页面滚动距离
@@ -313,27 +311,9 @@
           axios.post("http://127.0.0.1:8081/comment/commentList/" + this.$route.params.id)
             .then(function (response) {
               console.log('commentList');
-              var list = response.data.data;
-              console.log(JSON.stringify(list));
-              _this.CommentNum = list.length;
-              while(_this.commentItem.length > 0)
-                  _this.commentItem.pop();
-              for(var i = 0; i < list.length; i ++){
-                _this.commentItem[i].content = list[i].content;
-                _this.commentItem[i].time = list[i].time;
-                //这里还要加一个获得头像src和获得
-                axios.post("http://127.0.0.1:8081/user/getName/" + list[i].userID)
-                  .then(function (response) {
-                    _this.commentItem[i].user = response.data
-                  })
-                axios.post("http://127.0.0.1:8081/user/getPro/" + list[i].userID)
-                  .then(function (response) {
-                    _this.commentItem[i].src = response.data
-                  })
-                  .catch(function (error) {
-                    console.log(error)
-                  })
-              }
+              var list = response.data;
+              _this.commentItem = list;
+              _this.CommentNum = _this.commentItem.length;
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -407,32 +387,18 @@
         getPri(){
           var _this=this;
           var userL=JSON.parse(sessionStorage.getItem("userL"))
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, QS.stringify(userL.userID))
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, userL.userID)
             .then(function (response) {
-              if(response.data.status === 200){
-                _this.EditP = response.data.data;
-                console.log('edit:' + response.data.data);
-              }
+                _this.EditP = response.data;
+                console.log('edit:' + response.data);
             })
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, {
-            params:{
-              userID: userL.userID
-            }
-          })
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, userL.userID)
             .then(function (response) {
-              if(response.data.status === 200){
-                _this.CommentP = response.data.data;
-              }
+                _this.CommentP = response.data;
             })
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, {
-            params:{
-              userID: userL.userID
-            }
-          })
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, userL.userID)
             .then(function (response) {
-              if(response.data.status === 200){
-                _this.ShareP = response.data.data;
-              }
+              _this.ShareP = response.data;
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -450,16 +416,11 @@
             });
         },
         getEdit(){
-          axios.post("http://127.0.0.1:8081/edit", {
-            docID: this.$route.params.id,
-          })
+          var _this=this;
+          axios.post("http://127.0.0.1:8081/edit/get/" + this.$route.params.id)
             .then(function (response) {
-              while(this.activities.length > 0)
-                this.activities.pop();
-              for(var i = 0; i < response.data.data.length; i ++){
-                this.activities[i].content = response.data.data[i].userName;
-                this.activities[i].timestamp = response.data.data[i].time;
-              }
+              var list = response.data;
+              _this.activities = list;
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -470,11 +431,12 @@
         this.getDoc();
         this.getCollect();
         this.getCommentList();
-        //this.getPri();
+        this.getPri();
         this.getCollectNum();
-        //this.getEdit();
+        this.getEdit();
         var userL=JSON.parse(sessionStorage.getItem("userL"))
         this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
+        this.$data.headSrc = userL.profileUrl;
       }
     }
 </script>
