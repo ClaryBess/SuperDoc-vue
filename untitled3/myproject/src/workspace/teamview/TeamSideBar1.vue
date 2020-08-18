@@ -38,11 +38,11 @@ export default {
   },
   methods: {
     itemClick1() {
-      this.$router.push("/team/1")
+      this.$router.push("/teamleader/1")
       console.log("团队信息")
     },
     itemClick2() {
-      this.$router.push("/team/teamdoc")
+      this.$router.push("/teamleader/teamdoc")
       console.log("团队文档")
     },
     itemClick3() {

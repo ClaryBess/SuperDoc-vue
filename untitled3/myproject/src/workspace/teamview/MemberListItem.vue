@@ -8,9 +8,9 @@
         <p>{{memberItem.name}}</p>
       </div>
       <slot name="deleteIcon">
-        <img class="smallimg2" src="@/assets/删除.svg" @click="deleteMem" />
+        <img class="smallimg1" src="@/assets/删除.svg" @click="deleteMem" />
       </slot>
-      <img class="smallimg1" src="@/assets/管理.svg" @click="manageAuth" />
+
     </div>
   </div>
 </template>

@@ -158,6 +158,7 @@ export default {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
       console.log(this.userL);
       this.userID=this.userL.userID;
+      //加入的团队列表
       axios.post("http://127.0.0.1:8081/#", this.userID)
         .then((res) => {
           console.log(res);

@@ -127,13 +127,13 @@ const routes = [
   },
   // 团队文档-组长
   {
-    path: '/team/teamdoc',
+    path: '/teamleader/teamdoc',
     name: 'teamdoc',
     component: TeamDoc
   },
   // 团队文档-成员
   {
-    path: '/team/teamdoc2',
+    path: '/teammember/teamdoc2',
     name: 'teamdoc2',
     component: TeamDoc2
   },
