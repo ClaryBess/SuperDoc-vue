@@ -91,14 +91,14 @@ export default {
       teams: [
         {
           id: '1',
-          title: '湍湍湍湍',
-          leader:'我',
+          teamName: '湍湍湍湍',
+          leaderName:'我',
           leaderID: '123'
         },
         {
           id: '2',
-          title: 'mmmmm',
-          leader:'美羊羊',
+          teamName: 'mmmmm',
+          leaderName:'美羊羊',
           leaderID: '456'
         },
       ],
@@ -162,7 +162,7 @@ export default {
       console.log(this.userL);
       this.userID=this.userL.userID;
       // 加入的团队列表
-      axios.post("http://127.0.0.1:8081/#", this.userID)
+      axios.post("http://127.0.0.1:8081/team/inTeams", this.userID)
         .then((res) => {
           console.log(res);
           if (res.data == "") {
