@@ -30,10 +30,10 @@ export default {
       itemClick() {
         var userL=JSON.parse(sessionStorage.getItem("userL"));
         if(this.teamsItem.leaderID === userL.userID){
-          this.$router.push('/teamleader/' + this.teamsItem.id)
+          this.$router.push('/teamleader/' + this.teamsItem.teamID)
         }
         else{
-          this.$router.push('/teammember/' + this.teamsItem.id)
+          this.$router.push('/teammember/' + this.teamsItem.teamID)
         }
       }
     }

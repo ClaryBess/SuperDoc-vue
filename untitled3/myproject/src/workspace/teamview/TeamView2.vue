@@ -146,6 +146,7 @@
     created() {
       //获取团队id
       this.id = this.$route.params.id;
+      sessionStorage.setItem('teamL', JSON.stringify(this.$route.params.id));
     },
   };
 </script>
