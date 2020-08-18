@@ -42,7 +42,7 @@ export default {
       console.log("团队信息")
     },
     itemClick2() {
-      this.$router.push("/teamleader/teamdoc")
+      this.$router.push("/teamleader/teamdoc/1")
       console.log("团队文档")
     },
     itemClick3() {

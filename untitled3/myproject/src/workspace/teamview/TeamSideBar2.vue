@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "TeamSideBar2",
   data() {
@@ -42,7 +44,7 @@ export default {
       console.log("团队信息")
     },
     itemClick2() {
-      this.$router.push("teamdoc2")
+      this.$router.push("teamdoc/2")
       console.log("团队文档")
     },
     itemClick4() {
@@ -63,6 +65,20 @@ export default {
           message: "已取消操作",
         });
       });
+
+      var _this=this;
+      axios.post("http://127.0.0.1:8081/team/quit/" + this.$route.params.id, this.memberItem.id)
+        .then(function (response) {
+          _this.$message({
+            message: '已删除成员',
+            type: 'success'
+          });
+          _this.reload();
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+
     }
   },
 };

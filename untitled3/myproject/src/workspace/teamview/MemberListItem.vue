@@ -51,9 +51,6 @@ export default {
           console.log(error);
         });
     },
-    manageAuth() {
-      alert("管理成员权限");
-    },
   },
 };
 </script>
