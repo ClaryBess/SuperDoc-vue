@@ -54,7 +54,6 @@
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
               <member-list2 :members="teamMembers"></member-list2>
-              <h2>{{id}}</h2>
             </div>
           </el-card>
         </div>

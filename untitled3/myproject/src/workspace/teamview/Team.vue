@@ -93,13 +93,13 @@ export default {
           id: '1',
           title: '湍湍湍湍',
           leader:'我',
-          member: ['喜羊羊','慢羊羊','灰太狼']
+          leaderID: '123'
         },
         {
           id: '2',
           title: 'mmmmm',
           leader:'美羊羊',
-          member: ['喜羊羊','慢羊羊','灰太狼']
+          leaderID: '456'
         },
       ],
       dialogTableVisible: false,
@@ -128,24 +128,22 @@ export default {
           var _this=this
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/#",{
-            UserID: userL.userID,
-            TeamName: _this.form.name,
-            TeamInfo: _this.form.info,
-            TeamName: _this.form.name,
+
+            userID: userL.userID,
+            teamName: _this.form.name,
+            teamInfo: _this.form.info
           })
             .then(function (response) {
-              // console.log(response.data.status)
               if(response.data.status === 200){
-                //alert("新建成功")
                 _this.$message({
                   message: '新建团队成功',
                   type: 'success'
-                })
-                _this.reload();
+                });
+                _this.$router.push('/teamleader/' + response.data.data);
               }
-              else if(response.data.status === 500){
+              else {
                 _this.$message({
-                  message: '表单错误',
+                  message: '创建失败',
                   type: 'error'
                 })
               }
