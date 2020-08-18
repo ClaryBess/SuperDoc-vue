@@ -16,7 +16,7 @@
         <el-button class="switch" style="margin-right: -5px" type="text" @click="toList">
           <i class="el-icon-s-unfold"></i>
         </el-button>
-        <delete-all class="switch"></delete-all>
+        <delete-all class="switch" :userID="userID"></delete-all>
 
         <h2 class="h2color">回收站</h2>
         <!-- <doc-list :docs="recycleDocs"></doc-list> -->
