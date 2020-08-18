@@ -103,12 +103,8 @@
               >
                 <div class="demo-drawer__content">
                   <el-form :model="formmember">
-                    <el-form-item label=" 请输入用户ID或者邮箱：" class="drawer-item-menber">
-                      <el-input placeholder="请输入内容" v-model="formmember.select" class="input-with-select">
-                        <el-select v-model="formmember.select" slot="prepend" placeholder="请选择" style="width: 110px">
-                          <el-option label="用户ID" value="xxxxxx"></el-option>
-                          <el-option label="用户邮箱" value="xx@xx.xx"></el-option>
-                        </el-select>
+                    <el-form-item label=" 请输入用户ID：" class="drawer-item-menber">
+                      <el-input placeholder="请输入ID" v-model="formmember.input3" class="input-with-select">
                         <el-button
                           slot="append"
                           type="primary"
@@ -201,7 +197,6 @@ export default {
       },
       formmember: {
         input3:'',
-        select: "",
       },
       timer: null,
     };
