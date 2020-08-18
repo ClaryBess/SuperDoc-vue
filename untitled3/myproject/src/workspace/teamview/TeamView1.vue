@@ -28,7 +28,6 @@
               placement="bottom"
               width="490"
               trigger="click"
-              :before-close="handleClose"
               :visible.sync="dialog"
               class="pop"
             >
@@ -97,7 +96,6 @@
                 placement="top"
                 width="500"
                 trigger="click"
-                :before-close="handleClose"
                 :visible.sync="dialog"
                 class="pop"
               >
@@ -359,6 +357,7 @@ export default {
           });
         });
     },
+
 /*    handleClose(done) {
       if (this.loading) {
         return;

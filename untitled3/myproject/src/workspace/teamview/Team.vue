@@ -130,8 +130,7 @@ export default {
           axios.post("http://127.0.0.1:8081/#",{
             UserID: userL.userID,
             TeamName: _this.form.name,
-            TeamInfo: _this.form.info,
-            TeamName: _this.form.name,
+            TeamInfo: _this.form.info
           })
             .then(function (response) {
               // console.log(response.data.status)

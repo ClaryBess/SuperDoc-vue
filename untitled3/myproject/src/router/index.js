@@ -104,13 +104,13 @@ const routes = [
   // },
   //用于测试创建者的团队界面
   {
-    path: '/teamleader/1',
+    path: '/teamleader/:id',
     name: 'teamview1',
     component: TeamView1
   },
   //用于测试成员的团队界面
   {
-    path: '/teammember/2',
+    path: '/teammember/:id',
     name: 'teamview2',
     component: TeamView2
   },
@@ -127,13 +127,13 @@ const routes = [
   },
   // 团队文档-组长
   {
-    path: '/teamleader/teamdoc/1',
+    path: '/teamleader/teamdoc/:id',
     name: 'teamdoc',
     component: TeamDoc
   },
   // 团队文档-成员
   {
-    path: '/teammember/teamdoc/2',
+    path: '/teammember/teamdoc/:id',
     name: 'teamdoc2',
     component: TeamDoc2
   },

@@ -41,11 +41,11 @@ export default {
   },
   methods: {
     itemClick1() {
-      this.$router.push("/teamleader/1")
+      this.$router.push("/teamleader/:id")
       console.log("团队信息")
     },
     itemClick2() {
-      this.$router.push("/teamleader/teamdoc/1")
+      this.$router.push("/teamleader/teamdoc/:id")
       console.log("团队文档")
     },
     itemClick3() {
@@ -67,7 +67,7 @@ export default {
               this.userID=this.userL.userID;
               var _this=this;
               axios
-                .post("http://127.0.0.1:8081/team/quit/", this.userID, this.$route.params.id)
+                .post("http://127.0.0.1:8081/team/disband", this.userID, this.$route.params.id)
                 .then((res) => {
                   console.log(res);
                 })
