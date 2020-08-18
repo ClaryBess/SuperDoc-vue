@@ -234,7 +234,7 @@
               title: this.docForm.title,
               content: this.docForm.doc,
               privilege: this.docForm.viewP*1000 + this.docForm.editP*100 + this.docForm.commentP*10 + this.docForm.shareP,
-              editable: 0
+              editable: 1
             })
               .then(function (response) {
                 // console.log(response.data.status)

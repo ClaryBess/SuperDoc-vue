@@ -98,7 +98,7 @@
                   :key="index"
                   :timestamp="activity.dateTime"
                   color="#409EFF">
-                  {{activity.userID}}
+                  {{activity.userName}}
                 </el-timeline-item>
               </el-timeline>
             </el-card>
@@ -166,13 +166,13 @@
               ]
             },
             activities: [{
-              userID: 'wsy',
+              userName: 'wsy',
               dateTime: '2020-04-15'
             }, {
-              userID: '王奶糖',
+              userName: '王奶糖',
               dateTime: '2020-04-13'
             }, {
-              userID: '王咪咪',
+              userName: '王咪咪',
               dateTime: '2020-04-11'
             }],
             offsetTop:0,
@@ -191,7 +191,7 @@
         // DOM异步更新 对未来更新后的视图进行操作 在更新后执行
         this.$nextTick(()=>{
           //获取到达页面顶端的值
-          var height = document.getElementById("fixedCard")
+          var height = document.getElementById("fixedCard");
           this.offsetTop = height.offsetTop+60;
           //获取宽度
           this.offsetWidth = height.offsetWidth;
@@ -211,8 +211,14 @@
           axios.post("http://127.0.0.1:8081/doc/isEditable/" + this.$route.params.id)
           .then(function (response) {
             var editable = response.data;
+            console.log(response.data);
             if(editable === true){
-
+              if(_this.isTeam === false){
+                _this.$router.push('/change/' + _this.$route.params.id);
+              }
+              else if(_this.isTeam === true){
+                _this.$router.push('/changeTeam/' + _this.$route.params.id);
+              }
             }
             else if(editable === false){
               _this.$message({
@@ -224,7 +230,7 @@
         },
         initHeight(){
           //兼容性，获取页面滚动距离
-          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
           //判断滚动距离是否大于元素到顶端距离
           this.fixed = scrollTop>this.offsetTop?true:false;
           //宽度赋值
@@ -244,8 +250,8 @@
           })
         },
         getCollect(){
-          var _this=this
-          var userL=JSON.parse(sessionStorage.getItem("userL"))
+          var _this=this;
+          var userL=JSON.parse(sessionStorage.getItem("userL"));
           axios.post("http://127.0.0.1:8081/collect/collected", {
             docID: this.$route.params.id,
             userID: userL.userID
@@ -263,8 +269,8 @@
             });
         },
         CancelCollect(){
-          var _this=this
-          var userL=JSON.parse(sessionStorage.getItem("userL"))
+          var _this=this;
+          var userL=JSON.parse(sessionStorage.getItem("userL"));
           axios.post("http://127.0.0.1:8081/collect/deleteCollect",{
             userID: userL.userID,
             docID: this.$route.params.id
@@ -276,7 +282,7 @@
                 _this.$message({
                   message: '取消收藏成功',
                   type: 'success'
-                })
+                });
                 _this.reload();
               }
             })
@@ -285,8 +291,8 @@
             })
         },
         addCollect(){
-          var _this=this
-          var userL=JSON.parse(sessionStorage.getItem("userL"))
+          var _this=this;
+          var userL=JSON.parse(sessionStorage.getItem("userL"));
           axios.post("http://127.0.0.1:8081/collect/insertCollect",{
             userID: userL.userID,
             docID: this.$route.params.id
@@ -298,7 +304,7 @@
                 _this.$message({
                   message: '收藏成功',
                   type: 'success'
-                })
+                });
                 _this.reload();
               }
             })
@@ -307,7 +313,7 @@
             })
         },
         getCommentList(){
-          var _this = this
+          var _this = this;
           axios.post("http://127.0.0.1:8081/comment/commentList/" + this.$route.params.id)
             .then(function (response) {
               console.log('commentList');
@@ -322,8 +328,8 @@
         onSubmit(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-              var _this=this
-              var userL=JSON.parse(sessionStorage.getItem("userL"))
+              var _this=this;
+              var userL=JSON.parse(sessionStorage.getItem("userL"));
               axios.post("http://127.0.0.1:8081/comment/add",{
                 userID: userL.userID,
                 docID: this.$route.params.id,
@@ -336,7 +342,7 @@
                     _this.$message({
                       message: '评论成功',
                       type: 'success'
-                    })
+                    });
                     _this.reload();
                   }
                   else if(response.data.status === 500){
@@ -386,19 +392,33 @@
         },
         getPri(){
           var _this=this;
-          var userL=JSON.parse(sessionStorage.getItem("userL"))
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, userL.userID)
+          var userL=JSON.parse(sessionStorage.getItem("userL"));
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriEdit/" + this.$route.params.id, JSON.stringify(userL.userID), {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
+            })
             .then(function (response) {
                 _this.EditP = response.data;
                 console.log('edit:' + response.data);
-            })
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, userL.userID)
+            });
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriComment/" + this.$route.params.id, JSON.stringify(userL.userID), {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
+          })
             .then(function (response) {
                 _this.CommentP = response.data;
-            })
-          this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, userL.userID)
+              console.log('comment:' + response.data);
+            });
+          this.axios.post("http://127.0.0.1:8081/doc/checkPriShare/" + this.$route.params.id, JSON.stringify(userL.userID), {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
+          })
             .then(function (response) {
               _this.ShareP = response.data;
+              console.log('share:' + response.data);
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
@@ -434,7 +454,7 @@
         this.getPri();
         this.getCollectNum();
         this.getEdit();
-        var userL=JSON.parse(sessionStorage.getItem("userL"))
+        var userL=JSON.parse(sessionStorage.getItem("userL"));
         this.$data.short_url = userL.userName + '给您分享了文档：《' + this.$data.title + '》，点击链接查看：' + window.location.href;
         this.$data.headSrc = userL.profileUrl;
       }

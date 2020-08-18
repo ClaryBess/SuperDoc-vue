@@ -33,7 +33,7 @@
                 </div>
                 <el-form-item class="button-row">
                   <el-button type="primary" @click="onSubmit('docForm')" >提交</el-button>
-                  <el-button style="margin-left: 30px">取消</el-button>
+                  <el-button style="margin-left: 30px" @click="cancelEdit">取消</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -174,6 +174,18 @@
         }
       },
       methods: {
+        beginEdit(){
+          var _this=this;
+          axios.post("http://127.0.0.1:8081/doc/beginEdit/" + this.$route.params.id)
+            .then(function (response) {
+              if(response.data.status === 200){
+                console.log('set editable to 0');
+              }
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
+        },
         onSubmit(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
@@ -201,7 +213,7 @@
                 title: this.docForm.title,
                 content: this.docForm.doc,
                 privilege: pri,
-                editable: 0
+                editable: 1
               })
                 .then(function (response) {
                   // console.log(response.data.status)
@@ -251,6 +263,15 @@
             .catch(function (error) { // 请求失败处理
               console.log(error);
             });
+        },
+        cancelEdit(){
+          var _this=this;
+          axios.post("http://127.0.0.1:8081/doc/beginEdit/" + this.$route.params.id)
+            .then(function (response) {
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
         }
       },
       mounted () {
@@ -270,6 +291,7 @@
       },
       created() {
         this.getDoc();
+        this.beginEdit();
       }
     }
 </script>
