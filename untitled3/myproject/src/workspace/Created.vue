@@ -20,12 +20,12 @@
 
         <h2 class="h2color">自己创建的文件</h2>
         <!-- <doc-list :docs="createdDocs"></doc-list> -->
-        <doc-list v-show="showList" 
-        :docs="Docs" 
+        <doc-list v-show="showList"
+        :docs="Docs"
         :currentview=3
         :userID="userID"
         ></doc-list>
-         <doc-list2 v-show="showMenu" 
+         <doc-list2 v-show="showMenu"
         :tems="Docs"
         :currentview=3
         :userID="userID"
