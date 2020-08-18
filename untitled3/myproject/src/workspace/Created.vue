@@ -32,6 +32,7 @@
         ></doc-list2>
         <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
           <div><img src="../assets/空.png" style=" width: 110px"></div>
+
         </div>
       </el-main>
       <right-bar></right-bar>
@@ -45,7 +46,7 @@ import SideBar from "./SideBar";
 import DocList from "./DocList";
 import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Created",
@@ -110,5 +111,6 @@ export default {
     margin-top:27px;
     margin-right: 30px;
   }
+
 
 </style>
