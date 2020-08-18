@@ -12,7 +12,6 @@
   "dependencies": {
     "animate.css": "^4.1.0",
     "animejs": "^3.2.0",
-    "axios": "^0.19.2",
     "element-ui": "^2.13.2",
     "qs": "^6.9.4",
     "slider-verification-code": "^1.0.5",
@@ -24,7 +23,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "axios": "^0.18.0",
+    "axios": "^0.19.2",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",
