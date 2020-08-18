@@ -28,38 +28,36 @@
               placement="bottom"
               width="490"
               trigger="click"
-              :visible.sync="dialog"
+              :visible.sync="dialog1"
               class="pop"
             >
-              <div class="demo-drawer__content">
-
-                <el-form :model="form">
+              <div class="demo-drawer__content" v-if="changeinfo">
+                <el-form :model="formInfo" ref="formInfo">
                   <el-form-item label=" 请修改团队简介：" class="drawer-item">
                     <el-input
                       type="textarea"
                       :rows="4"
                       style="margin-top: 10px"
-                      v-model="form.name"
+                      v-model="formInfo.info"
                       autocomplete="off"
                     ></el-input>
                   </el-form-item>
                 </el-form>
 
                 <div class="demo-drawer__footer">
-                  <el-button @click="cancelForm" style="margin-right: 30px">
-                    取 消
-                  </el-button>
+
                   <el-button
                     type="primary"
                     @click="handleClose"
                     :loading="loading"
+                    style="margin-left: 20%"
                   >
                     {{ loading ? '提交中 ...' : '确 定' }}
                   </el-button>
                 </div>
 
               </div>
-              <el-button style="float: right; padding: 3px 0" type="text" slot="reference">修改简介</el-button>
+              <el-button style="float: right; padding: 3px 0" type="text" slot="reference" @click="changeinfo=true">修改简介</el-button>
             </el-popover>
           </div>
 
@@ -96,7 +94,7 @@
                 placement="top"
                 width="500"
                 trigger="click"
-                :visible.sync="dialog"
+                :visible.sync="dialog2"
                 class="pop"
               >
                 <div class="demo-drawer__content">
@@ -157,10 +155,13 @@ export default {
     RightBar,
     MemberListItem
   },
+  inject: ["reload"],
   data() {
     return {
       select: "",
-      dialog: false,
+      dialog1: false,
+      dialog2: false,
+      changeinfo: false,
       loading: false,
       headUrl: require("@/assets/head.jpg"),
       // team的id
@@ -191,8 +192,8 @@ export default {
           name: "wzz",
         },
       ],
-      form: {
-        name: "",
+      formInfo: {
+        info: "",
       },
       formmember: {
         input3:'',
@@ -209,120 +210,13 @@ export default {
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
     },
-    submitForm(formName) {
-      var _this = this;
-      axios
-        .post("http://127.0.0.1:8081/team/1/update/info", {
-          userID: this.userL.userID,
-          name: this.form.name,
-        })
-        .then(function (response) {
-          // console.log(response.data.status)
-          if (response.data.status === 200) {
-            sessionStorage.setItem("userL", JSON.stringify(response.data.data));
-          } else {
-            _this.$message({
-              message: "修改失败",
-              type: "error",
-            });
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
 
     submitFormMember(formName) {
-      var _this = this;
-
-      axios
-        .post("http://127.0.0.1:8081/#", {
-          userID: this.userL.userID,
-          memberId: this.formmember.input3,
-        })
-        .then(function (response) {
-          // console.log(response.data.status)
-          if (response.data.status === 200) {
-            sessionStorage.setItem("userL", JSON.stringify(response.data.data));
-          } else {
-            _this.$message({
-              message: "修改失败",
-              type: "error",
-            });
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-
-    onSubmit(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          var _this=this
-          var userL=JSON.parse(sessionStorage.getItem("userL"))
-          axios.post("http://127.0.0.1:8081/comment/add",{
-            userID: userL.userID,
-            docID: this.$route.params.id,
-            content: this.Form.content
-          })
-            .then(function (response) {
-              // console.log(response.data.status)
-              if(response.data.status === 200){
-                //alert("新建文档成功")
-                _this.$message({
-                  message: '评论成功',
-                  type: 'success'
-                })
-                _this.reload();
-              }
-              else if(response.data.status === 500){
-                _this.$message({
-                  message: '该邮箱已注册，请更换一个',
-                  type: 'error'
-                })
-              }
-            })
-            .catch(function (error) {
-              console.log(error)
-            })
-        } else {
-          console.log('error submit!!');
-          return false;
-        }
-      });
-    },
-
-    deleteDoc() {
-      if (this.currentview == 1) {
-        console.log(this.userID);
-        let data = {
-          DocID: this.docsItem.docID,
-          UserID: this.userID,
-        };
-        // let data = {
-        //   DocID: 1,
-        //   UserID: 1,
-        // };
-        console.log(data);
-        axios
-          .post("http://127.0.0.1:8081/#", data)
-          .then((res) => {
-            var docL = res.data;
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    },
-
-    handleClose() {
       const h = this.$createElement;
       this.$msgbox({
         title: "提示",
         message: h("p", null, [
-          h("span", null, "此操作将删除该文件, 是否继续?"),
+          h("span", null, "确定修改团队简介吗?"),
         ]),
         showCancelButton: true,
         confirmButtonText: "确定",
@@ -332,7 +226,21 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              this.deleteDoc();
+              var _this = this;
+              var userL=JSON.parse(sessionStorage.getItem("userL"))
+              console.log(this.$route.params.id);
+              axios
+                .post("http://127.0.0.1:8081/#", {
+                  userId: userL.userID,
+                  teamId: this.$route.params.id,
+                  memberId: _this.formmember.input3
+                })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
@@ -347,40 +255,75 @@ export default {
         .then((action) => {
           this.$message({
             type: "info",
-            message: "已成功删除",
+            message: "已发送邀请",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消操作",
           });
         });
     },
 
-/*    handleClose(done) {
-      if (this.loading) {
-        return;
-      }
-      this.$confirm("确定提交吗？")
-        .then((_) => {
-          this.loading = true;
-          this.timer = setTimeout(() => {
-            done();
-            // 动画关闭需要一定的时间
+    handleClose() {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "确定修改团队简介吗?"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              this.loading = false;
-            }, 400);
-          }, 2000);
+              var _this = this;
+              var userL=JSON.parse(sessionStorage.getItem("userL"))
+              console.log(this.$route.params.id);
+              axios
+                .post("http://127.0.0.1:8081/#", {
+                  userId: userL.userID,
+                  teamId: this.$route.params.id,
+                  teamInfo: _this.formInfo.info
+              })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              done();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+                this.reload();
+              }, 300);
+            }, 1000);
+          } else {
+            done();
+          }
+        },
+      })
+        .then((action) => {
+          this.$message({
+            type: "info",
+            message: "已成功修改",
+          });
         })
-        .catch((_) => {});
-    },*/
-
-    cancelForm() {
-      this.loading = false;
-      this.dialog = false;
-      clearTimeout(this.timer);
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消操作",
+          });
+        });
     },
+
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
   },
 };
 </script>

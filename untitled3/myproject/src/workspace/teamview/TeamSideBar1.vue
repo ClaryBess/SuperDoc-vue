@@ -66,6 +66,8 @@ export default {
               this.userL = JSON.parse(sessionStorage.getItem("userL"));
               this.userID=this.userL.userID;
               var _this=this;
+              console.log(this.$route.params.id);
+              console.log(this.userID);
               axios
                 .post("http://127.0.0.1:8081/team/disband", this.userID, this.$route.params.id)
                 .then((res) => {
