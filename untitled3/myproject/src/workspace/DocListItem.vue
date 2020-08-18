@@ -21,7 +21,7 @@
 <script>
 // import img1 from "../assets/收藏.svg";
 // import img2 from "../assets/收藏 (1).svg";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "DocListItem",
@@ -171,7 +171,6 @@ export default {
           });
         });
     },
-
   },
 };
 </script>

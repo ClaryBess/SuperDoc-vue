@@ -16,15 +16,18 @@
         <el-button class="switch" style="margin-right: -5px" type="text" @click="toList">
           <i class="el-icon-s-unfold"></i>
         </el-button>
-        <delete-all class="switch"></delete-all>
+        <delete-all class="switch" :userID="userID"></delete-all>
 
         <h2 class="h2color">回收站</h2>
         <!-- <doc-list :docs="recycleDocs"></doc-list> -->
         <delete-list v-show="showList" :docs="Docs" :userID="userID"></delete-list>
         <menu-list v-show="showMenu" :menus="Docs" :userID="userID" style="width: 100%"></menu-list>
-        <div v-show="this.isNULL">
-          <h1>您还没有删除过的文档呢~~~</h1>
+
+        <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
+          <div><img src="../assets/空.png" style=" width: 110px"></div>
+
         </div>
+
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -101,7 +104,7 @@ export default {
 </script>
 <style scoped>
 .h2color {
-  color: #7093ff;
+  color: #3369e7;
 }
 .switch {
   width: 40px;
@@ -109,4 +112,5 @@ export default {
   margin-top: 35px;
   margin-right: 40px;
 }
+
 </style>
