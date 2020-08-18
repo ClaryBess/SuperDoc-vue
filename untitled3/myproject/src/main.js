@@ -10,7 +10,7 @@ import '../static/iconfont.css'
 import SliderVerificationCode from 'slider-verification-code';
 import 'slider-verification-code/lib/slider-verification-code.css';
 import VueParticles from 'vue-particles';
-import axios from "axios";
+import axios from 'axios';
 import Pin from "vue-pin";
 
 Vue.use(Pin);
@@ -18,12 +18,12 @@ Vue.use(ElementUI);
 Vue.use(SliderVerificationCode);
 Vue.use(VueParticles)
 Vue.config.productionTip = false;
-Vue.prototype.axios = axios;
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
+//Vue.prototype.axios = axios;
+//axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 axios.defaults.timeout=10000;
-// Vue.use(axios);
+Vue.use(axios);
 
-// axios.defaults.headers.post["Content-Type"]='application/json';n
+axios.defaults.headers.post["Content-Type"]='application/json';
 /* eslint-disable no-new */
 Vue.directive('pin',function(el, binding){
       var pinned = binding.value;
