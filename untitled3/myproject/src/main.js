@@ -11,7 +11,7 @@ import SliderVerificationCode from 'slider-verification-code';
 import 'slider-verification-code/lib/slider-verification-code.css';
 import VueParticles from 'vue-particles';
 import axios from 'axios';
-// import Pin from "vue-pin";
+// import Pin from 'vue-pin';
 
 // Vue.use(Pin);
 Vue.use(ElementUI);
