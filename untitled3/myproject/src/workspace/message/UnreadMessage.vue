@@ -14,8 +14,9 @@
         <h2 class="h2color">消息界面</h2>
         <!-- 获取的消息列表 -->
         <mes-list :mess="NowMess" :userID="userID"></mes-list>
-        <div v-show="this.isNULL" class="wu">
-          <h1>您还没有收到的消息呢~~~</h1>
+        <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
+          <div><img src="../../assets/空.png" style=" width: 110px"></div>
+
         </div>
       </el-main>
       <right-bar></right-bar>
