@@ -93,13 +93,13 @@ export default {
           id: '1',
           title: '湍湍湍湍',
           leader:'我',
-          member: ['喜羊羊','慢羊羊','灰太狼']
+          leaderID: '123'
         },
         {
           id: '2',
           title: 'mmmmm',
           leader:'美羊羊',
-          member: ['喜羊羊','慢羊羊','灰太狼']
+          leaderID: '456'
         },
       ],
       dialogTableVisible: false,
@@ -133,13 +133,11 @@ export default {
             teamInfo: _this.form.info
           })
             .then(function (response) {
-              // console.log(response.data.status)
               if(response.data.status === 200){
-                //alert("新建成功")
                 _this.$message({
                   message: '新建团队成功',
                   type: 'success'
-                })
+                });
                 _this.$router.push('/teamleader/' + response.data.data);
               }
               else {
