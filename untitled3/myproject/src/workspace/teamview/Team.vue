@@ -36,11 +36,7 @@
               </el-form-item>
 
               <el-form-item class="item" label=" 添加成员：" :label-width="formLabelWidth">
-                <el-input placeholder="请输入内容" v-model="form.select" class="input-with-select">
-                  <el-select class="formslct" v-model="form.select"  slot="prepend" placeholder="请选择">
-                    <el-option label="用户ID" value="xxxxxx"></el-option>
-                    <el-option label="用户邮箱" value="xx@xx.xx"></el-option>
-                  </el-select>
+                <el-input placeholder="请输入ID" v-model="form.input3" class="input-with-select">
                 </el-input>
               </el-form-item>
             </el-form>
@@ -114,7 +110,6 @@ export default {
         name: '',
         info: '',
         input3:'',
-        select: "",
       },
       rules: {
         name: [

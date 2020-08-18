@@ -8,7 +8,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <!-- <el-dropdown-item ><el-button type="text" @click="fav">收藏</el-button></el-dropdown-item> -->
-            <el-dropdown-item divided>
+            <el-dropdown-item>
               <el-button type="text" @click="open">删除</el-button>
             </el-dropdown-item>
           </el-dropdown-menu>
