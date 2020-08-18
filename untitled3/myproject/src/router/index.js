@@ -103,13 +103,13 @@ const routes = [
   // },
   //用于测试创建者的团队界面
   {
-    path: '/team/1',
+    path: '/teamleader/1',
     name: 'teamview1',
     component: TeamView1
   },
   //用于测试成员的团队界面
   {
-    path: '/team/2',
+    path: '/teammember/2',
     name: 'teamview2',
     component: TeamView2
   },
