@@ -82,7 +82,6 @@
               <MemberListItem :memberItem="teamMembers[0]">
                 <h2 slot="deleteIcon"></h2>
               </MemberListItem>
-              <h2>{{id}}</h2>
             </div>
           </el-card>
           <!-- Member -->
@@ -125,7 +124,6 @@
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
               <member-list :members="teamMembers"></member-list>
-              <h2>{{id}}</h2>
             </div>
           </el-card>
         </div>
