@@ -281,6 +281,7 @@
         console.log(this.$route.name);
         let _this = this
         window.onbeforeunload = function (e) {
+          _this.cancelEdit();
           if (_this.$route.name == 'change') {
             e = e || window.event;
             if (e) {
@@ -295,6 +296,9 @@
       created() {
         this.getDoc();
         this.beginEdit();
+      },
+      destroyed() {
+        this.cancelEdit();
       }
     }
 </script>
