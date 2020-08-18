@@ -59,7 +59,7 @@
           docForm: {
             title: "这里写旧标题",
             doc: "",
-            privilege: ['可查看','可编辑']
+            privilege: []
           },
           rule:{
             title: [
@@ -67,7 +67,7 @@
               { min: 1, max: 25, message: '标题长度在25字以内', trigger: ['blur','change']}
             ]
           },
-          ueConfig: {
+          ueConfig:{
             toolbars: [
               [
                 'source', // 源代码
@@ -114,7 +114,7 @@
                 'fontsize', // 字号
                 // 'paragraph', // 段落格式
                 'simpleupload', // 单图上传
-                'insertimage', // 多图上传
+                //'insertimage', // 多图上传
                 'edittable', // 表格属性
                 'edittd', // 单元格属性
                 // 'link', // 超链接
@@ -168,7 +168,7 @@
             initialFrameWidth: "100%",
             // 上传文件接口
             enableAutoSave: true,
-            autoHeightEnabled: false,
+            autoHeightEnabled:false,
             serverUrl: "http://127.0.0.1:8081"
           }
         }
@@ -231,18 +231,19 @@
                 var docL = JSON.parse(JSON.stringify(response.data.data));
                 _this.docForm.title = docL.title;
                 _this.docForm.doc = docL.content;
+                console.log('pri: '+(docL.privilege%1000)/100)
                 while(_this.docForm.privilege.length > 0)
                   _this.docForm.privilege.pop();
-                if(docL.privilege/1000 > 0){
+                if(docL.privilege/1000 > 0.5){
                   _this.docForm.privilege.push('可查看');
                 }
-                if((docL.privilege%1000)/100 > 0){
+                if((docL.privilege%1000)/100 > 0.5){
                   _this.docForm.privilege.push('可编辑');
                 }
-                if((docL.privilege%100)/10 > 0){
+                if((docL.privilege%100)/10 > 0.5){
                   _this.docForm.privilege.push('可评论');
                 }
-                if(docL.privilege%10 > 0){
+                if(docL.privilege%10 > 0.5){
                   _this.docForm.privilege.push('可分享');
                 }
               }
