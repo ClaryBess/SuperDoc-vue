@@ -128,7 +128,6 @@ export default {
           var _this=this
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/#",{
-
             userID: userL.userID,
             teamName: _this.form.name,
             teamInfo: _this.form.info
