@@ -206,13 +206,11 @@ export default {
     this.fetchUser();
   },
   methods: {
-
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
     },
     submitForm(formName) {
       var _this = this;
-
       axios
         .post("http://127.0.0.1:8081/#", {
           userID: this.userL.userID,
