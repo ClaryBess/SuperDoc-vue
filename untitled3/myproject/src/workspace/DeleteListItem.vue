@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "DeleteListItem",
@@ -35,13 +35,9 @@ export default {
   },
   methods: {
     itemClick() {
-      // let data = {
-      //   DocID: this.docsItem.docID,
-      //   UserID: this.UserID,
-      // };
       let data = {
-        DocID: 1,
-        UserID: 1,
+        DocID: this.docsItem.docID,
+        UserID: this.userID,
       };
       axios
         .post("http://127.0.0.1:8081/browse/insertBrowse", data)
@@ -69,13 +65,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.docsItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/delete", data)
@@ -126,13 +118,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.docsItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/recover", data)

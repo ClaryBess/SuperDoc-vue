@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 export default {
   name: "DocListItem2",
   inject:['reload'],
@@ -53,14 +53,10 @@ export default {
   },
   methods: {
     itemClick() {
-      // let data = {
-      //   DocID: this.docsItem.docID,
-      //   UserID: this.UserID,
-      // };
       let data = {
-        DocID: 1,
-        UserID: 1,
-      };
+          DocID: this.TemItem.docID,
+          UserID: this.userID,
+        };
       axios
         .post("http://127.0.0.1:8081/browse/insertBrowse", data)
         .then((res) => {
@@ -91,13 +87,9 @@ export default {
     // },
     dlt() {
       if (this.currentview == 1) {
-        // let data = {
-        //   DocID: this.docsItem.docID,
-        //   UserID: this.UserID,
-        // };
-        let data = {
-          DocID: 1,
-          UserID: 1,
+       let data = {
+          DocID: this.TemItem.docID,
+          UserID: this.userID,
         };
         console.log(data);
         axios
@@ -110,13 +102,9 @@ export default {
             console.log(err);
           });
       } else if (this.currentview == 2) {
-        // let data = {
-        //   DocID: this.docsItem.docID,
-        //   UserID: this.UserID,
-        // };
         let data = {
-          DocID: 1,
-          UserID: 1,
+          DocID: this.TemItem.docID,
+          UserID: this.userID,
         };
         console.log(data);
         axios
@@ -129,13 +117,9 @@ export default {
             console.log(err);
           });
       } else if (this.currentview == 3) {
-        // let data = {
-        //   DocID: this.docsItem.docID,
-        //   UserID: this.UserID,
-        // };
         let data = {
-          DocID: 1,
-          UserID: 1,
+          DocID: this.TemItem.docID,
+          UserID: this.userID,
         };
         console.log(data);
         axios

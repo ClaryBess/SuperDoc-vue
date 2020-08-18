@@ -18,7 +18,6 @@
         </el-button>
 
         <h2 class="h2color">最近浏览的文档</h2>
-        <!-- <doc-list :docs="Docs"></doc-list> -->
         <doc-list v-show="showList" 
         :docs="Docs" 
         :currentview=1
@@ -65,11 +64,6 @@ export default {
       isNULL:false
     };
   },
-  computed: {
-    // showDocs() {
-    //   return 浏览的文档列表
-    // }
-  },
 
   methods: {
     toMenu: function () {
@@ -82,8 +76,7 @@ export default {
     },
     fetchList() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      console.log(this.userL);
-      // this.userID=this.userL.userID;
+      this.userID=this.userL.userID;
       axios
         .post("http://127.0.0.1:8081/browse/getBrowse", this.userID)
         .then(res=>{

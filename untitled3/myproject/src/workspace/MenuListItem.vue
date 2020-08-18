@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "MenuListItem",
@@ -45,13 +45,9 @@ export default {
   },
   methods: {
     itemClick() {
-      // let data = {
-      //   DocID: this.docsItem.docID,
-      //   UserID: this.UserID,
-      // };
       let data = {
-        DocID: 1,
-        UserID: 1,
+        DocID: this.MenuItem.docID,
+        UserID: this.userID,
       };
       axios
         .post("http://127.0.0.1:8081/browse/insertBrowse", data)
@@ -62,7 +58,7 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$router.push("/detail/" + this.docsItem.docID);
+      this.$router.push("/detail/" + this.MenuItem.docID);
     },
     back() {
       const h = this.$createElement;
@@ -79,13 +75,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.MenuItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/recover", data)
@@ -135,13 +127,9 @@ export default {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
-              // let data = {
-              //   DocID: this.docsItem.docID,
-              //   UserID: this.UserID,
-              // };
               let data = {
-                DocID: 1,
-                UserID: 1,
+                DocID: this.MenuItem.docID,
+                UserID: this.userID,
               };
               axios
                 .post("http://127.0.0.1:8081/recycle/delete", data)
