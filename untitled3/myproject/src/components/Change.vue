@@ -266,8 +266,11 @@
         },
         cancelEdit(){
           var _this=this;
-          axios.post("http://127.0.0.1:8081/doc/beginEdit/" + this.$route.params.id)
+          axios.post("http://127.0.0.1:8081/doc/endEdit/" + this.$route.params.id)
             .then(function (response) {
+              if(response.data.status === 200){
+                _this.$router.go(-1)
+              }
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
