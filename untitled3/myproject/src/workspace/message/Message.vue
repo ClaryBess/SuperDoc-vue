@@ -13,6 +13,9 @@
         <h2 class="h2color">消息界面</h2>
         <!-- 获取的消息列表 -->
         <mes-list :mess="NowMess" :userID="userID"></mes-list>
+        <div v-show="this.isNULL" class="wu">
+          <h1>您还没有收到的消息呢~~~</h1>
+        </div>
       </el-main>
       <right-bar></right-bar>
     </el-container>
@@ -24,7 +27,7 @@ import NavBar from "@/components/NavBar";
 import RightBar from "../RightBar";
 import MesSideBar from "./MesSideBar";
 import MesList from "./MesList";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Message",
@@ -66,6 +69,7 @@ export default {
       NowMess: [],
       UnReadMess: [],
       userID: 1,
+      isNULL:false
     };
   },
   methods: {
@@ -112,5 +116,10 @@ export default {
 <style>
 .h2color {
   color: #3369e7;
+}
+.wu {
+  position: absolute;
+  left:250px;
+  height: 250px;
 }
 </style>

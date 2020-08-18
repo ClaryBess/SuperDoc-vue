@@ -30,7 +30,7 @@
         :currentview=3
         :userID="userID"
         ></doc-list2>
-        <div v-show="this.isNULL">
+        <div v-show="this.isNULL" class="wu">
           <h1>您还没有自己创建的文档呢~~~</h1>
         </div>
       </el-main>
@@ -45,7 +45,7 @@ import SideBar from "./SideBar";
 import DocList from "./DocList";
 import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Created",
@@ -110,5 +110,10 @@ export default {
     margin-top:27px;
     margin-right: 30px;
   }
+  .wu {
+  position: absolute;
+  left:250px;
+  height: 250px;
+}
 
 </style>

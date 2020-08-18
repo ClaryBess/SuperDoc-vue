@@ -18,17 +18,9 @@
         </el-button>
 
         <h2 class="h2color">最近浏览的文档</h2>
-        <doc-list v-show="showList" 
-        :docs="Docs" 
-        :currentview=1
-        :userID="userID"
-        ></doc-list>
-        <doc-list2 v-show="showMenu" 
-        :tems="Docs"
-        :currentview=1
-        :userID="userID"
-        ></doc-list2>
-        <div v-show="this.isNULL">
+        <doc-list v-show="showList" :docs="Docs" :currentview="1" :userID="userID"></doc-list>
+        <doc-list2 v-show="showMenu" :tems="Docs" :currentview="1" :userID="userID"></doc-list2>
+        <div v-show="this.isNULL" class="wu">
           <h1>您还没有浏览过的文档呢~~~</h1>
         </div>
       </el-main>
@@ -43,7 +35,7 @@ import SideBar from "./SideBar";
 import DocList from "./DocList";
 import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Recently",
@@ -58,10 +50,10 @@ export default {
     return {
       headUrl: require("../assets/head.jpg"),
       Docs: [],
-      userID:1,
+      userID: 1,
       showMenu: false,
       showList: true,
-      isNULL:false
+      isNULL: false,
     };
   },
 
@@ -76,23 +68,22 @@ export default {
     },
     fetchList() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      this.userID=this.userL.userID;
+      this.userID = this.userL.userID;
       axios
         .post("http://127.0.0.1:8081/browse/getBrowse", this.userID)
-        .then(res=>{
-          console.log(res)
-          if(res.data == ""){
-            this.isNULL=true;
-          }
-          else{
-            this.isNULL=false
+        .then((res) => {
+          console.log(res);
+          if (res.data == "") {
+            this.isNULL = true;
+          } else {
+            this.isNULL = false;
             var docL = res.data;
             var _this = this;
-            _this.Docs=docL;
+            _this.Docs = docL;
             console.log(_this.Docs);
           }
         })
-        .catch(err=> {
+        .catch((err) => {
           console.log(err);
         });
     },
@@ -105,12 +96,17 @@ export default {
 
 <style>
 .h2color {
-  color: #3369e7
+  color: #3369e7;
 }
 .switch {
   width: 40px;
   float: right;
   margin-top: 27px;
   margin-right: 30px;
+}
+.wu {
+  position: absolute;
+  left:250px;
+  height: 250px;
 }
 </style>

@@ -22,7 +22,7 @@
         <!-- <doc-list :docs="recycleDocs"></doc-list> -->
         <delete-list v-show="showList" :docs="Docs" :userID="userID"></delete-list>
         <menu-list v-show="showMenu" :menus="Docs" :userID="userID" style="width: 100%"></menu-list>
-        <div v-show="this.isNULL">
+        <div v-show="this.isNULL" class="wu">
           <h1>您还没有删除过的文档呢~~~</h1>
         </div>
       </el-main>
@@ -108,5 +108,10 @@ export default {
   float: right;
   margin-top: 35px;
   margin-right: 40px;
+}
+.wu {
+  position: absolute;
+  left:250px;
+  height: 250px;
 }
 </style>
