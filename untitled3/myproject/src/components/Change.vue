@@ -194,7 +194,7 @@
                 }
               }
               var userL=JSON.parse(sessionStorage.getItem("userL"))
-              axios.post("http://127.0.0.1:8081/doc",{
+              axios.post("http://127.0.0.1:8081/doc/edit",{
                 //权限是一个四位整数，0代表仅自己，1代表所有人，2代表仅团队；可查看、可编辑、可评论、可分享
                 docID: this.$route.params.id,
                 userID: userL.userID,
@@ -211,7 +211,7 @@
                       message: '编辑文档成功',
                       type: 'success'
                     })
-                    _this.$router.push('/detail/' + response.data.data)
+                    _this.$router.push('/detail/' + _this.$route.params.id)
                   }
                 })
                 .catch(function (error) {
