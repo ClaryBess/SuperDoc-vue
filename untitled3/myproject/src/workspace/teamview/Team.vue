@@ -128,10 +128,9 @@ export default {
           var _this=this
           var userL=JSON.parse(sessionStorage.getItem("userL"))
           axios.post("http://127.0.0.1:8081/#",{
-            UserID: userL.userID,
-            TeamName: _this.form.name,
-            TeamInfo: _this.form.info,
-            TeamName: _this.form.name,
+            userID: userL.userID,
+            teamName: _this.form.name,
+            teamInfo: _this.form.info
           })
             .then(function (response) {
               // console.log(response.data.status)
@@ -141,11 +140,11 @@ export default {
                   message: '新建团队成功',
                   type: 'success'
                 })
-                _this.reload();
+                _this.$router.push('/teamleader/' + response.data.data);
               }
-              else if(response.data.status === 500){
+              else {
                 _this.$message({
-                  message: '表单错误',
+                  message: '创建失败',
                   type: 'error'
                 })
               }
