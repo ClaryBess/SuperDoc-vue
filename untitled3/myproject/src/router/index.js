@@ -48,7 +48,7 @@ const routes = [
     component: Register3
   },
   {
-    path: '/edit',
+    path: '/edit/:template',
     name: 'edit',
     component: Edit
   },
@@ -148,7 +148,7 @@ const routes = [
     component: Change
   },
   {
-    path: '/editTeam/:tid',
+    path: '/editTeam/:tid/:template',
     name: 'editTeam',
     component: EditTeamDoc
   },

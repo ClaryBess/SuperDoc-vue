@@ -374,11 +374,6 @@
                 if(docL.isTeam === 1){
                   _this.isTeam = true;
                   _this.TeamName = docL.team;
-                  axios.post("http://127.0.0.1:8081/team/" + docL.team)
-                    .then(function (response) {
-                     var t = JSON.parse(JSON.stringify(response.data));
-                     _this.TeamName = t.teamName;
-                    })
                 }
                 else if(docL.isTeam === 0){
                   _this.isTeam = false;
@@ -388,6 +383,7 @@
                   .then(function (response) {
                       _this.Author = response.data;
                   })
+
               }
             })
             .catch(function (error) { // 请求失败处理

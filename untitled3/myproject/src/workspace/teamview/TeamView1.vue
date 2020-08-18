@@ -62,7 +62,7 @@
           </div>
 
           <div class="text item">
-            我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力。
+            {{ info }}
           </div>
         </el-card>
         <!-- 团队成员 -->
@@ -76,7 +76,7 @@
             </div>
             <div class="leader-item">
               <!-- <member-list :members="teamMembers.id=1"></member-list> -->
-              <MemberListItem :memberItem="teamMembers[0]">
+              <MemberListItem :memberItem="teamLeader">
                 <h2 slot="deleteIcon"></h2>
               </MemberListItem>
             </div>
@@ -89,7 +89,7 @@
                 <strong>成员</strong>
               </span>
               <!-- 添加成员 -->
-              <el-popover
+             <el-popover
                 placement="top"
                 width="500"
                 trigger="click"
@@ -114,7 +114,7 @@
                   添加成员
                 </el-button>
               </el-popover>
-
+            
             </div>
             <div class="member-item">
               <!-- :member=传入的团队成员 -->
@@ -141,7 +141,7 @@ import DocList from "../DocList";
 import MemberList from "./MemberList";
 import RightBar from "../RightBar";
 import MemberListItem from "./MemberListItem";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "TeamView1",
@@ -156,6 +156,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      info:'',
       select: "",
       dialog1: false,
       dialog2: false,
@@ -164,32 +165,11 @@ export default {
       headUrl: require("@/assets/head.jpg"),
       // team的id
       id: null,
-      teamMembers: [
-        {
-          id: "1",
-          name: "xxy",
-        },
-        {
-          id: "2",
-          name: "ljm",
-        },
-        {
-          id: "3",
-          name: "wsyshhshhshh",
-        },
-        {
-          id: "4",
-          name: "zbn",
-        },
-        {
-          id: "5",
-          name: "lzy",
-        },
-        {
-          id: "6",
-          name: "wzz",
-        },
-      ],
+      teamLeader: {
+        profileUrl: require("@/assets/head.jpg"),
+        userName: 'xxy'
+      },
+      teamMembers: [],
       formInfo: {
         info: "",
       },
@@ -203,12 +183,26 @@ export default {
     //获取团队id
     this.id = this.$route.params.id;
     this.fetchUser();
+    sessionStorage.setItem('teamL', JSON.stringify(this.$route.params.id));
+    this.fetchInfo();
+    this.fetchLeader();
+    this.fetchMember();
   },
   methods: {
     fetchUser() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
     },
-
+    fetchInfo(){
+      var _this = this;
+      axios.post("http://127.0.0.1:8081/team/getInfo/" + this.$route.params.id)
+        .then(function (response) {
+          var content = response.data;
+          _this.info = content;
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+    },
     submitFormMember(formName) {
       const h = this.$createElement;
       this.$msgbox({
@@ -263,7 +257,19 @@ export default {
           });
         });
     },
-
+    fetchLeader(){
+      var _this = this;
+      axios.post("http://127.0.0.1:8081/team/getUser/" + this.$route.params.id)
+        .then(function (response) {
+          var content = JSON.parse(JSON.stringify(response.data));
+          console.log(JSON.stringify(response.data));
+          _this.teamLeader.userName = content.userName;
+          _this.teamLeader.profileUrl = content.profileUrl;
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+    },
     handleClose() {
       const h = this.$createElement;
       this.$msgbox({
@@ -283,13 +289,11 @@ export default {
               var userL=JSON.parse(sessionStorage.getItem("userL"))
               console.log(this.$route.params.id);
               axios
-                .post("http://127.0.0.1:8081/#", {
-                  userId: userL.userID,
-                  teamId: this.$route.params.id,
-                  teamInfo: _this.formInfo.info
-              })
+                .post("http://127.0.0.1:8081/team/updateInfo/" + this.$route.params.id, _this.formInfo.info)
                 .then((res) => {
-                  console.log(res);
+                  if(res.data.status === 200){
+                    console.log(_this.formInfo.info);
+                  }
                 })
                 .catch((err) => {
                   console.log(err);
@@ -318,9 +322,20 @@ export default {
           });
         });
     },
-
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    fetchMember(){
+      var _this = this;
+      axios.post("http://127.0.0.1:8081/team/getMember/" + this.$route.params.id)
+        .then(function (response) {
+          var memberL = response.data;
+          _this.teamMembers = memberL;
+          console.log(response)
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
     }
   },
 };
