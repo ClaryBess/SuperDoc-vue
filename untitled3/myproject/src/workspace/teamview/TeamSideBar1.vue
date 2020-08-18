@@ -24,8 +24,11 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "TeamSideBar1",
+  inject: ["reload"],
   data() {
     return {
     };
@@ -46,15 +49,46 @@ export default {
       console.log("团队文档")
     },
     itemClick3() {
-      this.$confirm("确定解散该团队吗?", "提示", {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "提示",
+        message: h("p", null, [
+          h("span", null, "确定解散团队吗"),
+        ]),
+        showCancelButton: true,
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              this.userL = JSON.parse(sessionStorage.getItem("userL"));
+              this.userID=this.userL.userID;
+              var _this=this;
+              axios
+                .post("http://127.0.0.1:8081/team/quit/", this.userID, this.$route.params.id)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              done();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+                this.reload();
+              }, 300);
+            }, 1000);
+          } else {
+            done();
+          }
+        },
       })
-        .then(() => {
+        .then((action) => {
           this.$message({
-            type: "success",
-            message: "解散成功!",
+            type: "info",
+            message: "已成功解散",
           });
         })
         .catch(() => {

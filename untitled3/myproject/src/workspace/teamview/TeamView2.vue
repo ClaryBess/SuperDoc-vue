@@ -63,7 +63,7 @@
       <right-bar></right-bar>
     </el-container>
     <!-- 回到顶部 -->
-    <el-backtop right="80"></el-backtop>
+    <el-backtop></el-backtop>
   </el-container>
 </template>
 
