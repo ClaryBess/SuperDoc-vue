@@ -89,7 +89,11 @@
                 <strong>成员</strong>
               </span>
               <!-- 添加成员 -->
+
              <!-- <el-popover
+=======
+             <el-popover
+>>>>>>> b6b689c6a099796f24ea2e9d34a19346c3a5069e
                 placement="top"
                 width="500"
                 trigger="click"
@@ -114,7 +118,9 @@
                   添加成员
                 </el-button>
               </el-popover>
+<<<<<<< HEAD
              -->
+
             </div>
             <div class="member-item">
               <!-- :member=传入的团队成员 -->
@@ -141,7 +147,7 @@ import DocList from "../DocList";
 import MemberList from "./MemberList";
 import RightBar from "../RightBar";
 import MemberListItem from "./MemberListItem";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "TeamView1",
@@ -169,6 +175,7 @@ export default {
         profileUrl: require("@/assets/head.jpg"),
         userName: 'xxy'
       },
+
       teamMembers: [
         {
           profileUrl: require("@/assets/head.jpg"),
@@ -195,6 +202,8 @@ export default {
           userName: "wzz",
         },
       ],
+
+     // teamMembers: [],
       formInfo: {
         info: "",
       },
@@ -356,6 +365,7 @@ export default {
         .then(function (response) {
           var memberL = response.data;
           _this.teamMembers = memberL;
+          console.log(response)
         })
         .catch(function (error) { // 请求失败处理
           console.log(error);

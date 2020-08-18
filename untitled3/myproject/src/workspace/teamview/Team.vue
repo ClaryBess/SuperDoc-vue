@@ -161,6 +161,7 @@ export default {
         }
       });
     },
+
     fetchList() {
       var userL = JSON.parse(sessionStorage.getItem("userL"));
       var _this = this;

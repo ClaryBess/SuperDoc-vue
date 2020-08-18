@@ -97,7 +97,7 @@ export default {
   position: relative;
   padding-left: 8px;
   padding-top: 10px;
-  padding-top: 10px;
+  padding-bottom: 12px;
   padding-right: 11px;
   overflow: hidden;
   text-align: center;
