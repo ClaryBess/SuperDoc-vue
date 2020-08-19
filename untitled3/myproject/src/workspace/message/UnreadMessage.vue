@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div>
-        <NavBar></NavBar>
+        <NavBar :headSrc="headUrl"></NavBar>
       </div>
     </el-header>
     <el-container>

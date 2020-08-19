@@ -69,6 +69,7 @@ export default {
     };
   },
   methods: {
+
     toMenu: function () {
       this.showMenu = true;
       this.showList = false;

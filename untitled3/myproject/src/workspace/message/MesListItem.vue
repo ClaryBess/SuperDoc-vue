@@ -29,50 +29,81 @@ export default {
         return {};
       },
     },
+    //当前用户id
+    userID: {
+      type: Number,
+      default: 0,
+    },
   },
   methods: {
-    open() {
-      if (this.mesItem.type == 1) {
-        this.$confirm("是否要加入此团队?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "拒绝",
-          type: "warning",
+    setRead() {
+      let data = {
+        NewsID: this.mesItem.newsID,
+        UserID: this.userID,
+      };
+      console.log(data);
+      axios
+        .post("/news/readNews", data)
+        .then((res) => {
+          console.log(res);
         })
-          .then(() => {
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    itemClick() {
+      // 将是否已读设置为已读
+      this.setRead();
+      if (this.mesItem.type == 1) {
+        const h = this.$createElement;
+        this.$msgbox({
+          title: "提示",
+          message: h("p", null, [h("span", null, "是否要同意申请?")]),
+          showCancelButton: true,
+          confirmButtonText: "同意",
+          cancelButtonText: "拒绝",
+          beforeClose: (action, instance, done) => {
+            if (action === "confirm") {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = "执行中...";
+              setTimeout(() => {
+                // 同意申请后的将申请者加入团队的接口操作
+                console.log(this.mesItem.content)
+                axios
+                  .post("/news/admitApply", this.mesItem.content)
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+                this.reload();
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                  this.reload();
+                }, 300);
+              }, 1000);
+            } else {
+              done();
+            }
+          },
+        })
+          .then((action) => {
             this.$message({
-              type: "success",
-              message: "已成功加入此团队!",
+              type: "info",
+              message: "已同意申请",
             });
-            // 加入团队的接口操作
-            // let data = {
-            //   DocID: this.docsItem.docID,
-            //   UserID: this.userID,
-            // };
-            // axios
-            //   .post("/collect/deleteCollect", data)
-            //   .then((res) => {
-            //     console.log(res);
-            //   })
-            //   .catch((err) => {
-            //     console.log(err);
-            //   });
-            // this.reload();
           })
           .catch(() => {
             this.$message({
               type: "info",
-              message: "已拒绝加入此团队",
+              message: "已拒绝申请",
             });
           });
-      } else {
-        setTimeout(() => {
-          this.reload();
-        }, 300);
       }
     },
-    itemClick() {
-      // 将是否已读设置为已读
-      this.open();
+    setRead() {
       let data = {
         NewsID: this.mesItem.newsID,
         UserID: this.userID,
