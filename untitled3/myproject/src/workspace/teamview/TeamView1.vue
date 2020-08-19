@@ -356,11 +356,10 @@ export default {
     },
     fetchMember(){
       var _this = this;
-      axios.post("http://127.0.0.1:8081/team/getMember/" + this.$route.params.id)
+      axios.post("/team/getMember/" + this.$route.params.id)
         .then(function (response) {
           var memberL = response.data;
           _this.teamMembers = memberL;
-          console.log(response)
         })
         .catch(function (error) { // 请求失败处理
           console.log(error);

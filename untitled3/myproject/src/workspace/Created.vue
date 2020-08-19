@@ -58,7 +58,7 @@ export default {
       userID:1,
       showMenu:false,
       showList:true,
-      isNULL:false
+      isNULL:true
     };
   },
   methods:{
@@ -72,12 +72,10 @@ export default {
     },
     fetchList() {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
-      console.log(this.userL);
       this.userID=this.userL.userID;
       axios
-        .post("http://127.0.0.1:8081/created/getDocument", this.userID)
+        .post("/created/getDocument", this.userID)
         .then(res=>{
-          console.log(res)
           if(res.data == ""){
             this.isNULL=true;
           }
@@ -86,7 +84,6 @@ export default {
             var docL = res.data;
             var _this = this;
             _this.Docs=docL;
-            console.log(_this.Docs);
           }
         })
         .catch(err=> {

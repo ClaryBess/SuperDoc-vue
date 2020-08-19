@@ -44,7 +44,7 @@ import SideBar from "./SideBar";
 import DocList from "./DocList";
 import DocList2 from "./DocList2";
 import RightBar from "./RightBar";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Recently",
@@ -62,7 +62,7 @@ export default {
       userID: 1,
       showMenu: false,
       showList: true,
-      isNULL: false,
+      isNULL: true,
     };
   },
 
@@ -79,7 +79,7 @@ export default {
       this.userL = JSON.parse(sessionStorage.getItem("userL"));
       this.userID = this.userL.userID;
       axios
-        .post("http://127.0.0.1:8081/browse/getBrowse", this.userID)
+        .post("/browse/getBrowse", this.userID)
         .then((res) => {
           console.log(res);
           if (res.data == "") {

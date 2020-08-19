@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "DeleteAll",
@@ -32,7 +32,7 @@ export default {
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
               axios
-                .post("http://127.0.0.1:8081/recycle/deleteAll", this.userID)
+                .post("/recycle/deleteAll", this.userID)
                 .then((res) => {
                   console.log(res);
                 })

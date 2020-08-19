@@ -20,6 +20,7 @@ Vue.use(VueParticles)
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
 axios.defaults.timeout=10000;
+axios.defaults.baseURL="http://127.0.0.1:8081"
 // Vue.use(axios);
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 // axios.defaults.headers.post["Content-Type"]='application/json';

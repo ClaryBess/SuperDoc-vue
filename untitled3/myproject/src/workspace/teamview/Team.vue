@@ -64,7 +64,7 @@ import NavBar from "@/components/NavBar";
 import SideBar from "../SideBar";
 import TeamsList from "./TeamsList";
 import RightBar from "../RightBar";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Team",
@@ -114,7 +114,7 @@ export default {
         ]
       },
       formLabelWidth: '120px',
-      isNULL: false,
+      isNULL: true,
     };
   },
   created() {
@@ -128,7 +128,7 @@ export default {
         if (valid) {
           var _this=this
           var userL=JSON.parse(sessionStorage.getItem("userL"))
-          axios.post("http://127.0.0.1:8081/team/addTeam",{
+          axios.post("/team/addTeam",{
             userID: userL.userID,
             teamName: this.form.name,
             teamInfo: this.form.info,
@@ -166,7 +166,7 @@ export default {
       var userL = JSON.parse(sessionStorage.getItem("userL"));
       var _this = this;
       // 加入的团队列表
-      axios.post("http://127.0.0.1:8081/team/inTeams", userL.userID)
+      axios.post("/team/inTeams", userL.userID)
         .then((res) => {
           if (res.data == "") {
             _this.isNULL = true;
