@@ -3,7 +3,9 @@
     <el-row class="tac">
       <el-col>
         <div style="font-size: 14px;margin-top: 25px;margin-bottom: 30px">
-          <span style="font-size: 19px"><strong>团队界面</strong></span>
+          <span style="font-size: 19px">
+            <strong>团队界面</strong>
+          </span>
           <el-divider direction="vertical"></el-divider>
           <span>成员</span>
         </div>
@@ -24,38 +26,35 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "TeamSideBar2",
   inject: ["reload"],
   data() {
-    return {
-    };
+    return {};
   },
   props: {
     currentindex: {
       type: String,
-      default: '1'
-    }
+      default: "1",
+    },
   },
   methods: {
     itemClick1() {
-      this.$router.push("/teammember/2")
-      console.log("团队信息")
+      this.$router.push("/teammember/2");
+      console.log("团队信息");
     },
     itemClick2() {
-      this.$router.push("/teammember/teamdoc/2")
-      console.log("团队文档")
+      this.$router.push("/teammember/teamdoc/2");
+      console.log("团队文档");
     },
 
     itemClick3() {
       const h = this.$createElement;
       this.$msgbox({
         title: "提示",
-        message: h("p", null, [
-          h("span", null, "确定退出团队吗"),
-        ]),
+        message: h("p", null, [h("span", null, "确定退出团队吗")]),
         showCancelButton: true,
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -65,17 +64,14 @@ export default {
             instance.confirmButtonText = "执行中...";
             setTimeout(() => {
               this.userL = JSON.parse(sessionStorage.getItem("userL"));
-              this.userID=this.userL.userID;
-              var _this=this;
+              this.userID = this.userL.userID;
+              var _this = this;
               console.log(this.$route.params.id);
               console.log(this.userID);
               axios
                 .post("/team/quit/", this.userID, this.$route.params.id)
                 .then((res) => {
                   console.log(res);
-                  if(response.data.status === 200){
-                    _this.$router.push('/team')
-                  }
                 })
                 .catch((err) => {
                   console.log(err);
@@ -83,8 +79,10 @@ export default {
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
-                this.$router.push("/team")
-                // this.reload();
+                // if(response.data.status === 200){
+                //   _this.$router.push('/team')
+                // }
+                this.$router.push("/team");
               }, 300);
             }, 1000);
           } else {
@@ -105,7 +103,6 @@ export default {
           });
         });
     },
-
   },
 };
 </script>
