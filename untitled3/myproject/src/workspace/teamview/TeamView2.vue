@@ -24,7 +24,7 @@
             </span>
           </div>
           <div class="text item">
-            我们是非常专业的团队。美羊羊走中路的话输出不够，线上游走也来不及赶快，还是选欧阳修好，但是比起欧阳娜娜又有些许不足，要不还是选欧阳靖吧至少经济能压上还可以为羊村发展尽尽力.
+            {{info}}
           </div>
         </el-card>
         <!-- 团队成员 -->
@@ -86,68 +86,92 @@
     },
     data() {
       return {
+        info:'这里是团队简介。',
         headUrl: require("@/assets/head.jpg"),
         // team的id
         id: null,
-        Docs: [
-          {
-            id: "1",
-            title: "第111",
-          },
-          {
-            id: "2",
-            title: "第二个hhhhh文档",
-          },
-          {
-            id: "3",
-            title: "第三个文dashdkjlashdjkl档",
-          },
-          {
-            id: "4",
-            title: "四少时诵诗书所所所所所所所所所所所所所所所",
-          },
-          {
-            id: "5",
-            title: "第五wwuwuwuwuwwwwwwwwwwwwww个文档",
-          },
-          {
-            id: "6",
-            title: "第六",
-          },
-        ],
+        teamLeader: {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: 'xxy'
+        },
         teamMembers: [
           {
-            id: "1",
-            name: "xxy",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "xxy",
           },
           {
-            id: "2",
-            name: "ljm",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "ljm",
           },
           {
-            id: "3",
-            name: "wsyshhshhshh",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "wsyshhshhshh",
           },
           {
-            id: "4",
-            name: "zbn",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "zbn",
           },
           {
-            id: "5",
-            name: "lzy",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "lzy",
           },
           {
-            id: "6",
-            name: "wzz",
+            profileUrl: require("@/assets/head.jpg"),
+            userName: "wzz",
           },
         ],
       };
     },
     created() {
-      //获取团队id
-      this.id = this.$route.params.id;
+      //获取团队id   this.id = this.$route.params.id;
+      this.fetchUser();
       sessionStorage.setItem('teamL', JSON.stringify(this.$route.params.id));
+      this.fetchInfo();
+      this.fetchLeader();
+      this.fetchMember();
     },
+    methods:{
+      fetchUser() {
+        this.userL = JSON.parse(sessionStorage.getItem("userL"));
+      },
+      fetchInfo(){
+        var _this = this;
+        axios.post("http://127.0.0.1:8081/team/getInfo/" + this.$route.params.id)
+          .then(function (response) {
+            var content = response.data;
+            _this.info = content;
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
+      fetchLeader(){
+        var _this = this;
+        axios.post("http://127.0.0.1:8081/team/getUser/" + this.$route.params.id)
+          .then(function (response) {
+            var content = JSON.parse(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data));
+            _this.teamLeader.userName = content.userName;
+            _this.teamLeader.profileUrl = content.profileUrl;
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
+      fetchMember(){
+        var _this = this;
+        axios.post("http://127.0.0.1:8081/team/getMember/" + this.$route.params.id)
+          .then(function (response) {
+            var memberL = response.data;
+            _this.teamMembers = memberL;
+            console.log("memberrrr");
+            console.log(response)
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      }
+    }
   };
 </script>
 

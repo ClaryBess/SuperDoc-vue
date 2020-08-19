@@ -3,9 +3,9 @@
     <div class="docs-item" @click="itemClick" >
       <!-- 展示图片为成员头像 -->
       <!-- <img class="docimg" :src="memberItem.url" @click="itemClick"> -->
-      <img class="docimg" src="@/assets/head.jpg" />
+      <img class="docimg" :src='memberItem.profileUrl'  @click="itemClick" />
       <div class="docs-info">
-        <p>{{memberItem.name}}</p>
+        <p>{{memberItem.userName}}</p>
       </div>
     </div>
   </div>
@@ -23,7 +23,9 @@ export default {
     memberItem: {
       type: Object,
       default() {
-        return {};
+        return {
+          profileUrl: require("@/assets/head.jpg"),
+        };
       },
     },
   },
@@ -80,7 +82,7 @@ export default {
   position: relative;
   padding-left: 8px;
   padding-top: 10px;
-  padding-top: 10px;
+  padding-bottom: 12px;
   padding-right: 11px;
   overflow: hidden;
   text-align: center;

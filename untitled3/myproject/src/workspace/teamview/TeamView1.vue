@@ -89,7 +89,11 @@
                 <strong>成员</strong>
               </span>
               <!-- 添加成员 -->
+
+             <!-- <el-popover
+=======
              <el-popover
+>>>>>>> b6b689c6a099796f24ea2e9d34a19346c3a5069e
                 placement="top"
                 width="500"
                 trigger="click"
@@ -114,7 +118,9 @@
                   添加成员
                 </el-button>
               </el-popover>
-            
+<<<<<<< HEAD
+             -->
+
             </div>
             <div class="member-item">
               <!-- :member=传入的团队成员 -->
@@ -169,7 +175,35 @@ export default {
         profileUrl: require("@/assets/head.jpg"),
         userName: 'xxy'
       },
-      teamMembers: [],
+
+      teamMembers: [
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "xxy",
+        },
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "ljm",
+        },
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "wsyshhshhshh",
+        },
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "zbn",
+        },
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "lzy",
+        },
+        {
+          profileUrl: require("@/assets/head.jpg"),
+          userName: "wzz",
+        },
+      ],
+
+     // teamMembers: [],
       formInfo: {
         info: "",
       },
