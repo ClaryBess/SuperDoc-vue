@@ -16,7 +16,7 @@
               <div slot="header" class="clearfix">
                 <p>
                   <strong>个人空间</strong>
-                  <el-button class="btn" type="text" @click="submitForm('ruleForm')">
+                  <el-button class="btn" type="text" @click="toEdit()">
                     <i class="el-icon-edit-outline"></i>
                     修改信息
                   </el-button>
@@ -42,7 +42,7 @@
                 </el-form-item>
 
                 <el-form-item label="生日" prop="birth">
-                  <span>{{userL.birthday}}</span>
+                  <span>{{userL.birthday.toString().substring(0,10)}}</span>
                 </el-form-item>
 
               </div>
@@ -60,13 +60,23 @@
   export default {
     name: "Homepage",
     components: {NavBar},
+    data() {
+      return {
+        ruleForm: {
+
+          birth: "",
+
+        },
+      }
+    },
     methods: {
-      submitForm(formName) {
+      toEdit() {
             this.$router.push('HomepageEdit')
       },
       fetchUser(){
         this.userL=JSON.parse(sessionStorage.getItem("userL"))
         this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+        console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
       }
     },
     created() {

@@ -38,7 +38,7 @@
                     class="upload-demo"
                     action="http://localhost:8081/user/save"
                     multiple
-                    limit="1"
+                    :limit="ruleForm.number"
                     list-type="picture-card"
                     :file-list="ruleForm.fileList"
                     :before-upload="beforeAvatarUpload"
@@ -82,7 +82,10 @@
                   <el-date-picker
                     v-model="ruleForm.birth"
                     type="date"
-                    placeholder="选择日期"></el-date-picker>
+                    placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd">
+                  </el-date-picker>
                 </el-form-item>
               </div>
             </el-card>
@@ -162,6 +165,7 @@ export default {
     };
     return {
       ruleForm: {
+        number:1,
         profile: "",
         pass: "",
         checkPass: "",
@@ -187,8 +191,12 @@ export default {
       this.$router.push("homepage");
     },
 
-    fetchUser() {
-      this.userL = JSON.parse(sessionStorage.getItem("userL"));
+    fetchUser(){
+      this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      this.ruleForm.fileList[0].url="http://localhost:8081/"+this.userL.profileUrl;
+      this.ruleForm.sex=this.userL.gender;
+      this.ruleForm.birth=this.userL.birthday.toString().substring(0,10);
+      // console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
     },
     submitForm(formName) {
       var _this = this;
