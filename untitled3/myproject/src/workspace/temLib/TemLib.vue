@@ -59,6 +59,11 @@ export default {
           title: '推荐信',
           picUrl: require("@/assets/推荐信.png")
         },
+        {
+          id: '6',
+          title: '个人简历',
+          picUrl: require("@/assets/个人简历.png")
+        }
       ]
     };
   },

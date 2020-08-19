@@ -4,7 +4,7 @@
         <img class="teamsimg" src="@/assets/团队.svg" @click="itemClick">
         <div class="teams-info" @click="itemClick">
           <span>团队名称：{{teamsItem.teamName}}</span>
-          <span>团队ID：{{teamsItem.teamID}} </span>
+          <span class="endid">团队ID：{{teamsItem.teamID}} </span>
           <span class="end">创建者：{{teamsItem.leaderName}} </span>
         </div>
       </div>
@@ -73,6 +73,12 @@ export default {
   }
   .teams-info span {
     margin-right: 40px;
+  }
+  .endid{
+    position: absolute;
+    right: 170px;
+    overflow: hidden;
+    text-align: left;
   }
   .end{
     position: absolute;
