@@ -28,6 +28,7 @@ import ChangeTeamDoc from "../components/ChangeTeamDoc";
 import Message from "../workspace/message/Message";
 import UnreadMessage from "../workspace/message/UnreadMessage";
 import NavBarOrigin from "../components/NavBarOrigin";
+import NavBar from "../components/NavBar";
 
 Vue.use(VueRouter)
 
@@ -161,6 +162,11 @@ const routes = [
     path:'/nav',
     name:'nav',
     component: NavBarOrigin
+  },
+  {
+    path:'/navLogin',
+    name:'navLogin',
+    component: NavBar
   }
 ]
 const router = new VueRouter({
