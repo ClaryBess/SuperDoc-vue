@@ -3,8 +3,9 @@
       <div class="teams-item">
         <img class="teamsimg" src="@/assets/团队.svg" @click="itemClick">
         <div class="teams-info" @click="itemClick">
-          <p>团队名称：{{teamsItem.teamName}}</p>
-          <p>创建者：{{teamsItem.leaderName}} </p>
+          <span>团队名称：{{teamsItem.teamName}}</span>
+          <span>团队ID：{{teamsItem.teamID}} </span>
+          <span class="end">创建者：{{teamsItem.leaderName}} </span>
         </div>
       </div>
   </div>
@@ -58,12 +59,24 @@ export default {
     padding: 10px;
   }
   .teams-info {
+    display: flex;
     font-size: 16px;
     position: relative;
     padding-left: 0;
     padding-top: 4px;
     padding-bottom: 4px;
-    padding-right: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+  }
+  .teams-info span {
+    margin-right: 40px;
+  }
+  .end{
+    position: absolute;
+    right: 0px;
     overflow: hidden;
     text-align: left;
   }
