@@ -1,4 +1,4 @@
-// 这是登录后导航栏组件，通过属性headSrc来更换头像
+// 这是登录后导航栏组件
 <template>
   <div id="root" class="tabBar">
     <router-link to="/" ><img class="logo" src="../assets/nav-logo.png"  alt=""/></router-link>
@@ -25,7 +25,7 @@
       <ul class="rightNav">
         <li class="dropdown">
           <router-link to="/homepage">
-              <img :src='headSrc' class="userhead" />
+              <img :src='this.profileUrl' class="userhead" />
           </router-link>
         </li>
         <li>
@@ -46,7 +46,9 @@
       inject: ["reload"],
       data() {
         return {
-          headSrc: "http://localhost:8081/file/9ef7d8c0-6754-4222-bb27-8316eed5d8eb.png",
+          profileUrl: "",
+
+         // headSrc: require("../assets/head.jpg"),
           itemList: [
             {
             title: '我的工作台',
@@ -144,11 +146,12 @@
 
           }
         },
-          fetchUser(){
-            this.userL=JSON.parse(sessionStorage.getItem("userL"))
-            this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
-            console.log(this.userL)
-          }
+        fetchUser(){
+          this.userL=JSON.parse(sessionStorage.getItem("userL"))
+          this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+          console.log(this.userL)
+          console.log(this.profileUrl)
+        }
         },
         created() {
           this.fetchUser()
