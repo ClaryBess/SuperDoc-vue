@@ -152,7 +152,8 @@
   .search, .searchLong {
     height: 38px;
     background-color: #eee;
-    margin: auto 0;
+    margin-left:50px;
+    margin-top:8px;
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
@@ -161,10 +162,10 @@
     transition-delay: 0.5s;
     -webkit-transition-delay: 0.5s;
     -webkit-transition: width 0.5s;
-    width: 220px;
+    width: 540px;
   }
   .search {
-    width: 160px;
+    width: 500px;
   }
   .search i,.searchLong i {
     display: block;
