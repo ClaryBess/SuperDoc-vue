@@ -46,7 +46,7 @@
       inject: ["reload"],
       data() {
         return {
-          headSrc: require("../assets/head.jpg"),
+          headSrc: "http://localhost:8081/file/9ef7d8c0-6754-4222-bb27-8316eed5d8eb.png",
           itemList: [
             {
             title: '我的工作台',
@@ -71,80 +71,88 @@
           this.search = 'search'
         },
         getM:function () {
-          if(this.searchID == ''){
+          if (this.searchID == '') {
             console.log("空")
             this.$message("请输入团队ID");
           } else {
-              console.log("id为："+ this.searchID);
-              const h = this.$createElement;
-              this.$msgbox({
-                title: "提示",
-                message: h("p", null, [
-                  h("span", null, "确定加入团队 (id:" + this.searchID + ") 吗？"),
-                ]),
-                showCancelButton: true,
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                beforeClose: (action, instance, done) => {
-                  if (action === "confirm") {
-                    instance.confirmButtonLoading = true;
-                    instance.confirmButtonText = "执行中...";
-                    setTimeout(() => {
-                      var _this = this;
-                      var userL=JSON.parse(sessionStorage.getItem("userL"));
-                      console.log("搜索的团队:"+_this.searchID);
-                      console.log("当前用户:"+userL.userID);
-                   axios
-                     // ↓不对劲
-                        .post("http://127.0.0.1:8081/news/apply/"+this.searchID,  userL.userID)
-                        .then((res) => {
-                          if(res.data.status === 200){
-                            _this.isID = true;
-                            console.log(res);
-                          }
-                        })
-                        .catch((err) => {
-                          _this.isID = false;
-                          console.log(err);
-                          console.log("没有团队哇");
-                          console.log("搜索的团队:"+_this.searchID);
-                          console.log("当前用户:"+userL.userID);
-                          console.log(_this.isID);
-                          this.$message({
-                            type: "erro",
-                            message: "团队ID不存在",
-                          });
-
+            console.log("id为：" + this.searchID);
+            const h = this.$createElement;
+            this.$msgbox({
+              title: "提示",
+              message: h("p", null, [
+                h("span", null, "确定加入团队 (id:" + this.searchID + ") 吗？"),
+              ]),
+              showCancelButton: true,
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              beforeClose: (action, instance, done) => {
+                if (action === "confirm") {
+                  instance.confirmButtonLoading = true;
+                  instance.confirmButtonText = "执行中...";
+                  setTimeout(() => {
+                    var _this = this;
+                    var userL = JSON.parse(sessionStorage.getItem("userL"));
+                    console.log("搜索的团队:" + _this.searchID);
+                    console.log("当前用户:" + userL.userID);
+                    axios
+                      // ↓不对劲
+                      .post("http://127.0.0.1:8081/news/apply/" + this.searchID, userL.userID)
+                      .then((res) => {
+                        if (res.data.status === 200) {
+                          _this.isID = true;
+                          console.log(res);
+                        }
+                      })
+                      .catch((err) => {
+                        _this.isID = false;
+                        console.log(err);
+                        console.log("没有团队哇");
+                        console.log("搜索的团队:" + _this.searchID);
+                        console.log("当前用户:" + userL.userID);
+                        console.log(_this.isID);
+                        this.$message({
+                          type: "erro",
+                          message: "团队ID不存在",
                         });
-                      done();
-                      setTimeout(() => {
-                        instance.confirmButtonLoading = false;
-                        this.reload();
-                      }, 300);
-                    }, 1000);
-                  } else {
+
+                      });
                     done();
-                  }
-                },
-              })
-                .then((action) => {
-                  if(this.isID == true){
-                    this.$message({
-                      type: "info",
-                      message: "已发送申请",
-                    });
-                  }
-                })
-                .catch(() => {
+                    setTimeout(() => {
+                      instance.confirmButtonLoading = false;
+                      this.reload();
+                    }, 300);
+                  }, 1000);
+                } else {
+                  done();
+                }
+              },
+            })
+              .then((action) => {
+                if (this.isID == true) {
                   this.$message({
                     type: "info",
-                    message: "已取消操作",
+                    message: "已发送申请",
                   });
+                }
+              })
+              .catch(() => {
+                this.$message({
+                  type: "info",
+                  message: "已取消操作",
                 });
+              });
 
           }
         },
-      }
+          fetchUser(){
+            this.userL=JSON.parse(sessionStorage.getItem("userL"))
+            this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+            console.log(this.userL)
+          }
+        },
+        created() {
+          this.fetchUser()
+        }
     }
 </script>
 

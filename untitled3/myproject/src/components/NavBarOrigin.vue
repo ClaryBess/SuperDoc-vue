@@ -79,7 +79,7 @@
             if(response.data.status === 200){
               //alert("恭喜你，登录成功")
                 _this.$message({
-                message: '恭喜你，登录成功'+JSON.stringify(response.data.data),
+                message: '恭喜你，登录成功',
                 type: 'success'
               })
               sessionStorage.setItem('userL', JSON.stringify(response.data.data))

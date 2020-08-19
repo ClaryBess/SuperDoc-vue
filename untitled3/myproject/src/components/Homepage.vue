@@ -26,7 +26,7 @@
               <div class="card-main">
 
                 <el-form-item label="头像" prop="profile">
-                  <el-avatar style="margin-left: 5px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                  <el-avatar style="margin-left: 5px" :src="profileUrl"></el-avatar>
                 </el-form-item>
 
                 <el-form-item  label="用户名" prop="username">
@@ -66,6 +66,7 @@
       },
       fetchUser(){
         this.userL=JSON.parse(sessionStorage.getItem("userL"))
+        this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
       }
     },
     created() {

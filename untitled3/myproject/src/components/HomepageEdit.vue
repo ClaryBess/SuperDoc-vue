@@ -36,7 +36,7 @@
                 <el-form-item label="头像" prop="fileList[0]">
                   <el-upload
                     class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action="http://localhost:8081/user/save"
                     multiple
                     limit="1"
                     list-type="picture-card"
@@ -44,9 +44,10 @@
                     :before-upload="beforeAvatarUpload"
                     :on-remove="handleRemove"
                     :on-exceed="handleExceed"
+                    :on-success="uploadSuccess"
                   >
                     <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传 jpg/png 文件，且不超过 1MB</div>
+                    <div slot="tip" class="el-upload__tip">只能上传 jpg/png 文件，且不超过 500kb</div>
                   </el-upload>
                 </el-form-item>
 
@@ -78,7 +79,10 @@
                 </el-form-item>
 
                 <el-form-item label="生日" prop="birth">
-                  <el-date-picker v-model="ruleForm.birth" type="date" placeholder="选择日期"></el-date-picker>
+                  <el-date-picker
+                    v-model="ruleForm.birth"
+                    type="date"
+                    placeholder="选择日期"></el-date-picker>
                 </el-form-item>
               </div>
             </el-card>
@@ -161,13 +165,12 @@ export default {
         profile: "",
         pass: "",
         checkPass: "",
-        sex: "男",
+        sex: "",
         birth: "",
         fileList: [
           {
             name: "默认头像.png",
-            url:
-              "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
+            url:'http://localhost:8081/file/03b0d39583f48206768a7534e55bcpng.png',
           },
         ],
       },
@@ -190,7 +193,9 @@ export default {
     submitForm(formName) {
       var _this = this;
       console.log(this.picture_url);
-
+      if (this.picture_url==null || this.picture_url==undefined){
+        this.picture_url="/file/03b0d39583f48206768a7534e55bcpng.png";
+      }
       axios
         .post("http://127.0.0.1:8081/user/edit", {
           userID: this.userL.userID,
@@ -216,6 +221,11 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+
+    uploadSuccess(response, file, fileList){
+      this.picture_url = response.picture_url;
+
     },
 
     resetForm(formName) {
@@ -246,6 +256,7 @@ export default {
   },
   created() {
     this.fetchUser();
+    this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
   },
 };
 </script>

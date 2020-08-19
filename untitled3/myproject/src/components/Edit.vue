@@ -225,10 +225,10 @@
       },
       getContent(){
         var _this = this;
-        axios.post("http://127.0.0.1:8081/template/" + this.$route.params.template)
+        console.log(this.$route.params.template);
+        axios.post("http://127.0.0.1:8081/template/getContent/" + this.$route.params.template)
           .then(function (response) {
-            var content = response.data;
-            _this.docForm.doc = content
+            _this.docForm.doc = response.data
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
