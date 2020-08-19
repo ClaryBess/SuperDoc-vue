@@ -26,6 +26,7 @@
         <li class="dropdown">
           <router-link to="/homepage">
               <img :src='this.profileUrl' class="userhead" />
+             <!--<img :src=headSrc class="userhead" />-->
           </router-link>
         </li>
         <li>
@@ -48,7 +49,7 @@
         return {
           profileUrl: "",
 
-         // headSrc: require("../assets/head.jpg"),
+        // headSrc: require("../assets/head.jpg"),
           itemList: [
             {
             title: '我的工作台',
@@ -97,12 +98,10 @@
                     console.log("搜索的团队:" + _this.searchID);
                     console.log("当前用户:" + userL.userID);
                     axios
-                      // ↓不对劲
-                      .post("http://127.0.0.1:8081/news/apply/" + this.searchID, userL.userID)
-                      .then((res) => {
-                        if (res.data.status === 200) {
-                          _this.isID = true;
-                          console.log(res);
+                      .post("http://127.0.0.1:8081/news/apply/"+this.searchID,  userL.userID,{
+                        //   .post("/news/apply/"+this.searchID,  userL.userID,{
+                        headers: {
+                          'Content-Type': 'application/json;charset=UTF-8'
                         }
                       })
                       .catch((err) => {
