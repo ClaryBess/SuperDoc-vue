@@ -71,9 +71,7 @@ export default {
               axios
                 .post("/team/delete/" + this.$route.params.id)
                 .then(function (response) {
-                  if(response.data.status === 200){
-                    _this.$router.push('/team')
-                  }
+                  console.log(response);
                 })
                 .catch((err) => {
                   console.log(err);
@@ -81,7 +79,11 @@ export default {
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
-                this.reload();
+                // if(response.data.status === 200){
+                //   _this.$router.push('/team')
+                // }
+                this.$router.push("/team");
+                // this.reload();
               }, 300);
             }, 1000);
           } else {
