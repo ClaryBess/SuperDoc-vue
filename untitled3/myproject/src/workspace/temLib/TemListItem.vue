@@ -48,7 +48,6 @@
 
   .goods-item img {
     width: 240px;
-    border-radius: 20px;
     padding: 5px;
     margin-top: 8px;
   }

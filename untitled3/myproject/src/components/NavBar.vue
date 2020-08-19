@@ -17,9 +17,10 @@
     </ul>
 
     <div :class="search">
-      <a href="#"><i class="iconfont iconsearch"></i></a>
-      <input type="text" class="searchInput" placeholder="搜索我的文档" @focus="inputFocus" @blur="inputBlur" />
+      <a @click="getM"><i class="iconfont iconsearch"></i></a>
+      <input @keyup.enter="getM" type="text" class="searchInput" v-model="searchID" placeholder="搜索团队ID" @focus="inputFocus" @blur="inputBlur" />
     </div>
+<!--    <span>{{this.searchID}}</span>-->
     <div class="right">
       <ul class="rightNav">
         <li class="dropdown">
@@ -41,21 +42,25 @@
 
 <script>
     export default {
-        name: "NavBar",
+      name: "NavBar",
+      inject: ["reload"],
       data() {
         return {
           headSrc: require("../assets/head.jpg"),
-          itemList: [{
+          itemList: [
+            {
             title: '我的工作台',
             subItemList: []
           },
-            {
-              title: '消息',
-              subItemList: []
-            }
+          {
+            title: '消息',
+            subItemList: []
+          }
           ],
           userList: [],
-          search:'search'
+          search:'search',
+          searchID:'',
+          isID : false,
         }
       },
       methods: {
@@ -64,12 +69,127 @@
         },
         inputBlur: function() {
           this.search = 'search'
-        }
+        },
+        getM:function () {
+          if(this.searchID == ''){
+            console.log("空")
+            this.$message("请输入团队ID");
+          } else {
+              console.log("id为："+ this.searchID);
+              const h = this.$createElement;
+              this.$msgbox({
+                title: "提示",
+                message: h("p", null, [
+                  h("span", null, "确定加入团队 (id:" + this.searchID + ") 吗？"),
+                ]),
+                showCancelButton: true,
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                beforeClose: (action, instance, done) => {
+                  if (action === "confirm") {
+                    instance.confirmButtonLoading = true;
+                    instance.confirmButtonText = "执行中...";
+                    setTimeout(() => {
+                      var _this = this;
+                      console.log(_this.searchID);
+                      var userL=JSON.parse(sessionStorage.getItem("userL"))
+                      console.log(userL.userID);
+                   axios
+                        .post("http://127.0.0.1:8081/#",{
+                          userId: userL.userID,
+                          teamId: _this.searchID,
+                        })
+                        .then((res) => {
+                          if(res.data.status === 200){
+                            _this.isID = true;
+                            console.log(res);
+                          }
+                        })
+                        .catch((err) => {
+                          _this.isID = false;
+                          console.log(err);
+                          console.log("没有团队哇");
+                          console.log(_this.isID);
+                          this.$message({
+                            type: "erro",
+                            message: "团队ID不存在",
+                          });
+                          return;
+                        });
+                      done();
+                      setTimeout(() => {
+                        instance.confirmButtonLoading = false;
+                        this.reload();
+                      }, 300);
+                    }, 1000);
+                  } else {
+                    done();
+                  }
+                },
+              })
+                .then((action) => {
+                  if(this.isID == true){
+                    this.$message({
+                      type: "info",
+                      message: "已发送申请",
+                    });
+                  }
+                })
+                .catch(() => {
+                  this.$message({
+                    type: "info",
+                    message: "已取消操作",
+                  });
+                });
+
+          }
+        },
       }
     }
 </script>
 
 <style scoped>
+  .search, .searchLong {
+    height: 38px;
+    background-color: #eee;
+    margin: auto 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    border-radius: 38px;
+    transition: width 0.5s;
+    transition-delay: 0.5s;
+    -webkit-transition-delay: 0.5s;
+    -webkit-transition: width 0.5s;
+    width: 220px;
+  }
+  .search {
+    width: 160px;
+  }
+  .search i,.searchLong i {
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: rgb(156, 149, 149);
+  }
+  .searchLong i {
+    text-align: center;
+    border-radius: 15px;
+    color: #fff;
+    margin-right: 5px;
+    line-height: 30px;
+    background-color: #969696;
+  }
+  .searchInput {
+    width: 100%;
+    height: 38px;
+    padding-left: 15px;
+    background: none;
+    border: 0px;
+    outline: none;
+    font-size: 15px;
+  }
   .LoginForm{
     margin: 0 auto;
     width: 80%;
@@ -84,31 +204,25 @@
     display: flex;
     z-index: 9999;
   }
-
   .logo {
     height: 56px;
   }
-
   li {
     list-style: none;
   }
-
   a {
     text-decoration: none;
     display: block;
   }
-
   .nav {
     width: 225px;
     margin-left: 100px;
   }
-
   .nav li {
     width: 65px;
     height: 56px;
     float: left;
   }
-
   .nav>li>a {
     width: 65px;
     line-height: 56px;
@@ -116,11 +230,9 @@
     text-align: center;
     font-size: 17px;
   }
-
   .nav li:hover {
     background-color: #f5f5f5;
   }
-
   .subNav {
     height: 350px;
     width: 180px;
@@ -128,22 +240,17 @@
     border: #eeeeee solid 1px;
     background-color: #ffffff;
     box-shadow: 0 2px 2px #eeeeee;
-
   }
-
   .subNav li:first-child {
     margin-top: 7px;
   }
-
   .subNav li {
     height: 48px;
     width: 180px;
   }
-
   .nav>li:last-child:hover .subNav {
     visibility: visible;
   }
-
   .subNav li a {
     width: 180px;
     height: 48px;
@@ -151,64 +258,12 @@
     line-height: 48px;
     color: #333333;
   }
-
   .subNav li span,
   .subNav li i {
     margin-left: 15px;
   }
-
   .subNav li a:hover {
     background-color: #f5f5f5;
-  }
-
-  .search,
-  .searchLong {
-    height: 38px;
-    background-color: #eee;
-    margin: auto 0;
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-    border-radius: 38px;
-    transition: width 0.5s;
-    transition-delay: 0.5s;
-    -webkit-transition-delay: 0.5s;
-    -webkit-transition: width 0.5s;
-  }
-
-  .search {
-    width: 160px;
-  }
-
-  .searchLong {
-    width: 220px;
-  }
-
-  .search i,.searchLong i {
-    display: block;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    color: rgb(156, 149, 149);
-  }
-
-  .searchLong i {
-    text-align: center;
-    border-radius: 15px;
-    color: #fff;
-    margin-right: 5px;
-    line-height: 30px;
-    background-color: #969696;
-  }
-
-  .searchInput {
-    width: 100%;
-    height: 38px;
-    padding-left: 15px;
-    background: none;
-    border: 0px;
-    outline: none;
-    font-size: 15px;
   }
 
   ::-webkit-input-placeholder {
