@@ -55,6 +55,7 @@
               <!-- <member-list :members="teamMembers"></member-list> -->
               <member-list2 :members="teamMembers"></member-list2>
             </div>
+            <div class="text item" v-show="this.kong"> 暂无团队成员 </div>
           </el-card>
         </div>
       </el-main>
@@ -90,12 +91,13 @@
         headUrl: require("@/assets/head.jpg"),
         // team的id
         id: null,
+        kong: true,
         teamLeader: {
           profileUrl: require("@/assets/head.jpg"),
           userName: 'xxy'
         },
         teamMembers: [
-          {
+          /*{
             profileUrl: require("@/assets/head.jpg"),
             userName: "xxy",
           },
@@ -118,7 +120,7 @@
           {
             profileUrl: require("@/assets/head.jpg"),
             userName: "wzz",
-          },
+          },*/
         ],
       };
     },
@@ -162,10 +164,15 @@
         var _this = this;
         axios.post("http://127.0.0.1:8081/team/getMember/" + this.$route.params.id)
           .then(function (response) {
-            var memberL = response.data;
-            _this.teamMembers = memberL;
-            console.log("memberrrr");
-            console.log(response)
+            if(response.data == ""){
+              _this.kong = true;
+            } else {
+              _this.kong = false;
+              var memberL = response.data;
+              _this.teamMembers = memberL;
+              console.log("memberrrr");
+              console.log(response)
+            }
           })
           .catch(function (error) { // 请求失败处理
             console.log(error);
