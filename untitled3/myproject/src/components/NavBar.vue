@@ -91,14 +91,12 @@
                     instance.confirmButtonText = "执行中...";
                     setTimeout(() => {
                       var _this = this;
-                      console.log(_this.searchID);
-                      var userL=JSON.parse(sessionStorage.getItem("userL"))
-                      console.log(userL.userID);
+                      var userL=JSON.parse(sessionStorage.getItem("userL"));
+                      console.log("搜索的团队:"+_this.searchID);
+                      console.log("当前用户:"+userL.userID);
                    axios
-                        .post("http://127.0.0.1:8081/#",{
-                          userId: userL.userID,
-                          teamId: _this.searchID,
-                        })
+                     // ↓不对劲
+                        .post("http://127.0.0.1:8081/news/apply/"+this.searchID,  userL.userID)
                         .then((res) => {
                           if(res.data.status === 200){
                             _this.isID = true;
@@ -109,12 +107,14 @@
                           _this.isID = false;
                           console.log(err);
                           console.log("没有团队哇");
+                          console.log("搜索的团队:"+_this.searchID);
+                          console.log("当前用户:"+userL.userID);
                           console.log(_this.isID);
                           this.$message({
                             type: "erro",
                             message: "团队ID不存在",
                           });
-                          return;
+
                         });
                       done();
                       setTimeout(() => {
