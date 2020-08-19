@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "TeamSideBar1",
@@ -69,7 +69,7 @@ export default {
               console.log(this.$route.params.id);
               console.log(this.userID);
               axios
-                .post("http://127.0.0.1:8081/team/delete/" + this.$route.params.id)
+                .post("/team/delete/" + this.$route.params.id)
                 .then(function (response) {
                   if(response.data.status === 200){
                     _this.$router.push('/team')

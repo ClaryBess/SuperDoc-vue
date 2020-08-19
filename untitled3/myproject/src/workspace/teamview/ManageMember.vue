@@ -50,6 +50,6 @@ export default {
 
 <style>
 .h2color {
-  color: #7093ff;
+  color: #3369e7;
 }
 </style>

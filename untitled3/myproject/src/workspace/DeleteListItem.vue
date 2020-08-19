@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "DeleteListItem",
@@ -40,7 +40,7 @@ export default {
         UserID: this.userID,
       };
       axios
-        .post("http://127.0.0.1:8081/browse/insertBrowse", data)
+        .post("/browse/insertBrowse", data)
         .then((res) => {
           var docL = res.data;
           console.log(res);
@@ -70,7 +70,7 @@ export default {
                 UserID: this.userID,
               };
               axios
-                .post("http://127.0.0.1:8081/recycle/delete", data)
+                .post("/recycle/delete", data)
                 .then((res) => {
                   var docL = res.data;
                   console.log(res);
@@ -122,7 +122,7 @@ export default {
                 UserID: this.userID,
               };
               axios
-                .post("http://127.0.0.1:8081/recycle/recover", data)
+                .post("/recycle/recover", data)
                 .then((res) => {
                   var docL = res.data;
                   console.log(res);

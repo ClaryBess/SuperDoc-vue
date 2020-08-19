@@ -11,7 +11,7 @@
         <mes-side-bar currentindex="1"></mes-side-bar>
       </el-aside>
       <el-main style="width: 80%">
-        <h2 class="h2color">消息界面</h2>
+        <h2 class="h2color">全部消息</h2>
         <!-- 获取的消息列表 -->
         <mes-list :mess="NowMess" :userID="userID"></mes-list>
         <div style="margin-left: 41%; margin-top: 8%" v-show="this.isNULL">
@@ -29,7 +29,7 @@ import NavBar from "@/components/NavBar";
 import RightBar from "../RightBar";
 import MesSideBar from "./MesSideBar";
 import MesList from "./MesList";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Message",
@@ -42,7 +42,7 @@ export default {
       NowMess: [],
       // UnReadMess: [],
       userID: 1,
-      isNULL: false,
+      isNULL: true,
     };
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
       this.userID = this.userL.userID;
       axios
         //  获取消息
-        .post("http://127.0.0.1:8081/news/getNews", this.userID)
+        .post("/news/getNews", this.userID)
         .then((res) => {
           console.log(this.data);
           if (res.data == "") {

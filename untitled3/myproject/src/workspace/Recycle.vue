@@ -41,7 +41,7 @@ import DeleteList from "./DeleteList";
 import RightBar from "./RightBar";
 import DeleteAll from "./DeleteAll";
 import MenuList from "./MenuList";
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "Recycle",
@@ -60,7 +60,7 @@ export default {
       userID: 1,
       showMenu: false,
       showList: true,
-      isNULL: false,
+      isNULL: true,
     };
   },
 
@@ -79,9 +79,8 @@ export default {
       console.log(this.userL);
       this.userID=this.userL.userID;
       axios
-        .post("http://127.0.0.1:8081/recycle/getRecycle", this.userID)
+        .post("/recycle/getRecycle", this.userID)
         .then((res) => {
-          console.log(res);
           if (res.data == "") {
             this.isNULL = true;
           } else {
@@ -89,7 +88,6 @@ export default {
             var docL = res.data;
             var _this = this;
             _this.Docs = docL;
-            console.log(_this.Docs);
           }
         })
         .catch((err) => {

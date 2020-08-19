@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "MesListItem",
@@ -67,7 +67,7 @@ export default {
       };
       console.log(data);
       axios
-        .post("http://127.0.0.1:8081/news/readNews", data)
+        .post("/news/readNews", data)
         .then((res) => {
           console.log(res);
         })
@@ -95,7 +95,7 @@ export default {
                 UserID: this.userID,
               };
               axios
-                .post("http://127.0.0.1:8081//news/deleteNews", data)
+                .post("/news/deleteNews", data)
                 .then((res) => {
                   console.log(res);
                 })

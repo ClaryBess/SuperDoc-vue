@@ -14,7 +14,7 @@
           <el-menu-item index="2" @click="itemClick2">
             <span slot="title">团队文档</span>
           </el-menu-item>
-          <el-menu-item index="4" @click="itemClick4">
+          <el-menu-item index="3" @click="itemClick3">
             <span slot="title">退出团队</span>
           </el-menu-item>
         </el-menu>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   name: "TeamSideBar2",
@@ -49,7 +49,7 @@ export default {
       console.log("团队文档")
     },
 
-    itemClick4() {
+    itemClick3() {
       const h = this.$createElement;
       this.$msgbox({
         title: "提示",
@@ -68,7 +68,7 @@ export default {
               this.userID=this.userL.userID;
               var _this=this;
               axios
-                .post("http://127.0.0.1:8081/team/quit/", this.userID, this.$route.params.id)
+                .post("/team/quit/", this.userID, this.$route.params.id)
                 .then((res) => {
                   console.log(res);
                 })
@@ -78,7 +78,8 @@ export default {
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
-                this.reload();
+                this.$router.push("/team")
+                // this.reload();
               }, 300);
             }, 1000);
           } else {

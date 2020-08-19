@@ -6,8 +6,9 @@
       :key="item.docID"
       :currentview="currentview"
       :userID="userID"
+      :teamID="teamID"
     >
-    <p slot="dropdown"></p>
+      <p slot="dropdown"></p>
     </doc-list-item2>
   </div>
 </template>
@@ -35,6 +36,11 @@ export default {
     },
     //当前用户id
     userID: {
+      type: Number,
+      default: 0,
+    },
+    //当前团队id
+    teamID: {
       type: Number,
       default: 0,
     },

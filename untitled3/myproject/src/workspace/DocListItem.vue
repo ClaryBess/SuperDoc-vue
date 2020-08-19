@@ -21,7 +21,7 @@
 <script>
 // import img1 from "../assets/收藏.svg";
 // import img2 from "../assets/收藏 (1).svg";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "DocListItem",
@@ -47,6 +47,11 @@ export default {
       type: Number,
       default: 0,
     },
+    //当前团队id
+    teamID: {
+      type: Number,
+      default: 0,
+    },
   },
   // computed: {
   //   collectedurl: function () {
@@ -64,7 +69,7 @@ export default {
         UserID: this.userID,
       };
       axios
-        .post("http://127.0.0.1:8081/browse/insertBrowse", data)
+        .post("/browse/insertBrowse", data)
         .then((res) => {
           var docL = res.data;
           console.log(res);
@@ -80,20 +85,14 @@ export default {
 
     deleteDoc() {
       if (this.currentview == 1) {
-        console.log(this.userID);
         let data = {
           DocID: this.docsItem.docID,
           UserID: this.userID,
         };
-        // let data = {
-        //   DocID: 1,
-        //   UserID: 1,
-        // };
-        console.log(data);
         axios
-          .post("http://127.0.0.1:8081/browse/deleteBrowse", data)
+          .post("/browse/deleteBrowse", data)
           .then((res) => {
-            var docL = res.data;
+            console.log(res)
           })
           .catch((err) => {
             console.log(err);
@@ -104,9 +103,9 @@ export default {
           UserID: this.userID,
         };
         axios
-          .post("http://127.0.0.1:8081/collect/deleteCollect", data)
+          .post("/collect/deleteCollect", data)
           .then((res) => {
-            var docL = res.data;
+            console.log(res)
           })
           .catch((err) => {
             console.log(err);
@@ -117,9 +116,19 @@ export default {
           UserID: this.userID,
         };
         axios
-          .post("http://127.0.0.1:8081/created/deleteDocument", data)
+          .post("/created/deleteDocument", data)
           .then((res) => {
-            var docL = res.data;
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (this.currentview == 4) {
+        //创建者团队文档
+        axios
+          .post("/team/deleteDoc/"+this.teamID, this.docsItem.docID)
+          .then((res) => {
+            console.log(res)
           })
           .catch((err) => {
             console.log(err);
