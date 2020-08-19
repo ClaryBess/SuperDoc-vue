@@ -36,4 +36,5 @@ export default {
 </script>
 
 <style>
+  /*@import "assets/fonts/fontStyle.css";*/
 </style>
