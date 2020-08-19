@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <el-header>
       <div>
-        <NavBar :headSrc="headUrl"></NavBar>
+        <NavBar></NavBar>
       </div>
     </el-header>
     <!-- 内容 -->
