@@ -95,8 +95,8 @@
                       console.log("搜索的团队:"+_this.searchID);
                       console.log("当前用户:"+userL.userID);
                    axios
-                     // ↓不对劲
                         .post("http://127.0.0.1:8081/news/apply/"+this.searchID,  userL.userID,{
+                     //   .post("/news/apply/"+this.searchID,  userL.userID,{
                         headers: {
                           'Content-Type': 'application/json;charset=UTF-8'
                         }
@@ -105,20 +105,23 @@
                           if((res.data.status === 200) ){
                             _this.isID = true;
                             console.log(res);
+                            this.$message({
+                              type: "info",
+                              message: "已发送申请",
+                            });
                           }
                         })
                         .catch((err) => {
                           _this.isID = false;
-                          // console.log(err);
+                          console.log(err);
                           console.log("没有团队哇");
-                          console.log("搜索的团队:"+_this.searchID);
-                          console.log("当前用户:"+userL.userID);
+                          // console.log("搜索的团队:"+_this.searchID);
+                          // console.log("当前用户:"+userL.userID);
                           console.log(_this.isID);
                           this.$message({
                             type: "erro",
-                            message: "你加入成功了小子",
+                            message: "该团队ID不存在",
                           });
-
                         });
                       done();
                       setTimeout(() => {
