@@ -31,6 +31,8 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      // team的id
+      id: null,
     };
   },
   props: {
@@ -39,13 +41,33 @@ export default {
       default: '1'
     }
   },
+  created() {
+    //获取团队id
+    this.id = this.$route.params.id;
+  },
   methods: {
     itemClick1() {
       this.$router.push("/teamleader/" + this.$route.params.id)
+      // this.$router.push(
+      //   {
+      //     name:'teamview1',
+      //     params:{
+      //       id:this.id
+      //     }
+      //   }
+      // );
       console.log("团队信息")
     },
     itemClick2() {
       this.$router.push("/teamleader/teamdoc/"  + this.$route.params.id)
+      // this.$router.push(
+      //   {
+      //     name:'teamdoc',
+      //     params:{
+      //       id:this.id
+      //     }
+      //   }
+      // );
       console.log("团队文档")
     },
     itemClick3() {

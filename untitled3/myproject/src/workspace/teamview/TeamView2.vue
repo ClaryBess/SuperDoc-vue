@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <el-header>
       <div>
-        <nav-bar :headSrc="headUrl">
+        <nav-bar >
         </nav-bar>
       </div>
     </el-header>

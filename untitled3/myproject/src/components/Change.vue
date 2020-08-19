@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header>
-        <NavBar :headSrc="headUrl" style="z-index: 9999"></NavBar>
+        <NavBar style="z-index: 9999"></NavBar>
       </el-header>
       <el-main>
         <el-card class="main-body">

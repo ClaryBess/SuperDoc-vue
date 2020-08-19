@@ -3,7 +3,7 @@
   <el-container>
     <el-header>
       <div>
-        <nav-bar :headSrc="headUrl"></nav-bar>
+        <nav-bar></nav-bar>
       </div>
     </el-header>
     <el-container>
@@ -69,6 +69,7 @@ export default {
     };
   },
   methods: {
+
     toMenu: function () {
       this.showMenu = true;
       this.showList = false;

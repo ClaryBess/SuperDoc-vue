@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div>
-        <NavBar :headSrc="headUrl"></NavBar>
+        <NavBar></NavBar>
       </div>
     </el-header>
     <el-container>
@@ -29,7 +29,7 @@ export default {
   components: { NavBar,TeamSideBar1,MemberList },
   data() {
     return{
-      teamMembers:[ 
+      teamMembers:[
         {
           id: "1",
           name: "xxy",

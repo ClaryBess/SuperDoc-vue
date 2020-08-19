@@ -4,7 +4,7 @@
     <el-header >
       <!-- 导航栏 -->
       <div  v-if="hasLogin">
-        <NavBar :headSrc="headUrl">
+        <NavBar >
         </NavBar>
       </div>
       <div v-else>

@@ -32,9 +32,25 @@ export default {
         var userL=JSON.parse(sessionStorage.getItem("userL"));
         if(this.teamsItem.leaderID === userL.userID){
           this.$router.push('/teamleader/' + this.teamsItem.teamID)
+          // this.$router.push(
+          //   {
+          //     name:'teamview1',
+          //     params:{
+          //       id:this.teamsItem.teamID
+          //     }
+          //   }
+          // )
         }
         else{
           this.$router.push('/teammember/' + this.teamsItem.teamID)
+          // this.$router.push(
+          //   {
+          //     name:'teamview2',
+          //     params:{
+          //       id:this.teamsItem.teamID
+          //     }
+          //   }
+          // )
         }
       }
     }

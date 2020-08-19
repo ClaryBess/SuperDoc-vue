@@ -103,12 +103,24 @@ const routes = [
     name: 'teamview1',
     component: TeamView1
   },
-  //用于测试成员的团队界面
   {
     path: '/teammember/:id',
     name: 'teamview2',
     component: TeamView2
   },
+  // {
+  //   path: '/teamleader',
+  //   name: 'teamview1',
+  //   props:true,
+  //   component: TeamView1
+  // },
+  //
+  // {
+  //   path: '/teammember',
+  //   name: 'teamview2',
+  //   props:true,
+  //   component: TeamView2
+  // },
   { // 首页
     path: '/',
     name: 'welcome',
@@ -132,6 +144,21 @@ const routes = [
     name: 'teamdoc2',
     component: TeamDoc2
   },
+
+  // 团队文档-组长
+  // {
+  //   path: '/teamleader/teamdoc',
+  //   name: 'teamdoc',
+  //   prop:true,
+  //   component: TeamDoc
+  // },
+  // // 团队文档-成员
+  // {
+  //   path: '/teammember/teamdoc',
+  //   name: 'teamdoc2',
+  //   prop:true,
+  //   component: TeamDoc2
+  // },
   //消息页面
   {
     path: '/message',

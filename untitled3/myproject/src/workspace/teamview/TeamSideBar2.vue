@@ -32,7 +32,10 @@ export default {
   name: "TeamSideBar2",
   inject: ["reload"],
   data() {
-    return {};
+    return {
+      // team的id
+      id: null,
+    };
   },
   props: {
     currentindex: {
@@ -40,13 +43,33 @@ export default {
       default: "1",
     },
   },
+  created() {
+    //获取团队id
+    this.id = this.$route.params.id;
+  },
   methods: {
     itemClick1() {
-      this.$router.push("/teammember/2");
+      this.$router.push("/teammember/"+ this.$route.params.id);
+      // this.$router.push(
+      //   {
+      //     name:'teamview2',
+      //     params:{
+      //       id:this.id
+      //     }
+      //   }
+      // );
       console.log("团队信息");
     },
     itemClick2() {
-      this.$router.push("/teammember/teamdoc/2");
+      this.$router.push("/teammember/teamdoc/"+ this.$route.params.id);
+      // this.$router.push(
+      //   {
+      //     name:'teamdoc',
+      //     params:{
+      //       id:this.id
+      //     }
+      //   }
+      // );
       console.log("团队文档");
     },
 

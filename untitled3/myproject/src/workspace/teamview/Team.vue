@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <el-header>
       <div>
-        <NavBar :headSrc="headUrl"></NavBar>
+        <NavBar></NavBar>
       </div>
     </el-header>
     <!-- 内容 -->
@@ -144,6 +144,14 @@ export default {
                 var team = JSON.parse(JSON.stringify(response.data.data));
                 console.log(JSON.stringify(response.data.data));
                 _this.$router.push('/teamleader/' + team.teamID);
+                // _this.$router.push(
+                //   {
+                //     name:'teamview1',
+                //     params:{
+                //       id:team.teamID
+                //     }
+                //   }
+                // );
               }
               else {
                 _this.$message({
