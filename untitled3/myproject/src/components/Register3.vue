@@ -29,11 +29,11 @@
             <img src="../assets/ok.png" alt="">
             <h3> 注册成功</h3>
             <el-row >
-              <router-link to="/Homepage" class="write">
+              <div class="write" @click="toHome">
                 <el-button class="btn" round>
                   跳转个人主页
                 </el-button>
-              </router-link>
+              </div>
             </el-row>
           </div>
         </el-main>
@@ -67,6 +67,10 @@
         } else {
           return '#3369e7';
         }
+      },
+      toHome(){
+        var userL = JSON.parse(sessionStorage.getItem("userL"));
+        this.$router.push('/homepage/' + userL.userID);
       }
     }
   }

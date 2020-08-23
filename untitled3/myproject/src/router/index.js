@@ -54,12 +54,12 @@ const routes = [
     component: Edit
   },
   { //个人空间
-    path: '/homepage',
+    path: '/homepage/:id',
     name: 'homepage',
     component: Homepage
   },
   { //修改个人空间
-    path: '/homepageedit',
+    path: '/homepageedit/:id',
     name: 'homepageedit',
     component: HomepageEdit
   },
@@ -95,6 +95,11 @@ const routes = [
   },
   {
     path: '/detail/:id',
+    name: 'view',
+    component: View
+  },
+  {
+    path: '/detail',
     name: 'view',
     component: View
   },

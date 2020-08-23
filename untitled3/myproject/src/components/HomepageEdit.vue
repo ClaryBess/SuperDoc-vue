@@ -36,7 +36,7 @@
                 <el-form-item label="头像" prop="fileList[0]">
                   <el-upload
                     class="upload-demo"
-                    action="http://localhost:8081/user/save"
+                    action="http://175.24.74.107:8081/user/save"
                     multiple
                     :limit="ruleForm.number"
                     list-type="picture-card"
@@ -164,6 +164,7 @@ export default {
       }
     };
     return {
+      iduser:'',
       ruleForm: {
         number:1,
         profile: "",
@@ -174,7 +175,7 @@ export default {
         fileList: [
           {
             name: "默认头像.png",
-            url:'http://localhost:8081/file/03b0d39583f48206768a7534e55bcpng.png',
+            url:'http://175.24.74.107:8080/file/03b0d39583f48206768a7534e55bcpng.png',
           },
         ],
       },
@@ -188,37 +189,49 @@ export default {
   },
   methods: {
     itemClick() {
-      this.$router.push("homepage");
+      this.$router.push("/homepage/"+this.$route.params.id);
     },
-
     fetchUser(){
-      this.userL=JSON.parse(sessionStorage.getItem("userL"))
-      this.ruleForm.fileList[0].url="http://localhost:8081/"+this.userL.profileUrl;
-      this.ruleForm.sex=this.userL.gender;
-      this.ruleForm.birth=this.userL.birthday.toString().substring(0,10);
+      var _this = this;
+      axios.post("http://175.24.74.107:8081/user/getUser",this.$route.params.id)
+        .then(function (response) {
+          console.log("看这里！！！！！")
+          console.log(response.data)
+          var content = response.data;
+          _this.iduser=content.userID;
+          _this.ruleForm.sex = content.gender;
+          var tmp1 = content.birthday.toString().substring(0,9);
+          var tmp2 = parseInt(content.birthday.toString().substring(9,10))+1;
+          _this.ruleForm.birth = tmp1+tmp2;
+          _this.ruleForm.fileList[0].url = "http://175.24.74.107:8080"+content.profileUrl;
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
       // console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
     },
     submitForm(formName) {
       var _this = this;
-      console.log(this.picture_url);
-      if (this.picture_url==null || this.picture_url==undefined){
-        this.picture_url="/file/03b0d39583f48206768a7534e55bcpng.png";
+      console.log("啊啊啊啊图片" + this.picture_url);
+      if (this.picture_url == null || this.picture_url == undefined) {
+        this.picture_url = "/file/03b0d39583f48206768a7534e55bcpng.png";
       }
-      axios
-        .post("http://127.0.0.1:8081/user/edit", {
-          userID: this.userL.userID,
-          userName: this.ruleForm.username,
-          email: this.ruleForm.email,
-          password: this.ruleForm.pass,
-          birthday: this.ruleForm.birth,
-          gender: this.ruleForm.sex,
-          profileUrl: this.picture_url, //图片地址
-        })
+      ;
+      console.log("花园宝宝" + this.$route.params.id);
+      axios.post("/user/edit", {
+        userID: this.$route.params.id,
+        userName: this.ruleForm.username,
+        email: this.ruleForm.email,
+        password: this.ruleForm.pass,
+        birthday: this.ruleForm.birth,
+        gender: this.ruleForm.sex,
+        profileUrl: this.picture_url, //图片地址
+      })
         .then(function (response) {
           // console.log(response.data.status)
           if (response.data.status === 200) {
             sessionStorage.setItem("userL", JSON.stringify(response.data.data));
-            _this.$router.push("Homepage");
+            _this.$router.push("/homepage/" + _this.$route.params.id);
           } else {
             _this.$message({
               message: "修改失败",
@@ -228,7 +241,7 @@ export default {
         })
         .catch(function (error) {
           console.log(error);
-        });
+        })
     },
 
     uploadSuccess(response, file, fileList){
@@ -264,7 +277,7 @@ export default {
   },
   created() {
     this.fetchUser();
-    this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+    // this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
   },
 };
 </script>

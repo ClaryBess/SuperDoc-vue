@@ -6,7 +6,7 @@
       :key="item.docID"
       :currentview="currentview"
       :userID="userID"
-      :teamId="teamID"
+      :teamID="teamID"
     ></doc-list-item>
   </div>
 </template>

@@ -77,7 +77,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$router.push("/detail/" + this.docsItem.docID);
+      // this.$router.push("/detail/" + this.docsItem.docID);
+      this.$router.push({
+        path: "/detail",
+        query: {
+          key: this.$Base64.encode(
+            JSON.stringify({
+              id: this.docsItem.docID,
+            })
+          ),
+        },
+      });
     },
     // collectDoc() {
     //   this.docsItem.isCollected = !this.docsItem.isCollected;
@@ -92,7 +102,7 @@ export default {
         axios
           .post("/browse/deleteBrowse", data)
           .then((res) => {
-            console.log(res)
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -105,7 +115,7 @@ export default {
         axios
           .post("/collect/deleteCollect", data)
           .then((res) => {
-            console.log(res)
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -118,7 +128,7 @@ export default {
         axios
           .post("/created/deleteDocument", data)
           .then((res) => {
-            console.log(res)
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);
@@ -126,9 +136,10 @@ export default {
       } else if (this.currentview == 4) {
         //创建者团队文档
         axios
-          .post("/team/deleteDoc/"+this.teamID, this.docsItem.docID)
+          .post("/team/deleteDoc/" + this.teamID, this.docsItem.docID)
           .then((res) => {
-            console.log(res)
+            console.log(this.teamID)
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);

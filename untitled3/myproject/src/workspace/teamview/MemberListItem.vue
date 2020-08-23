@@ -3,7 +3,7 @@
     <div class="docs-item">
       <!-- 展示图片为成员头像 -->
       <!-- <img class="docimg" :src="memberItem.url" @click="itemClick"> -->
-      <img class="docimg" :src='memberItem.profileUrl' @click="itemClick" />
+      <img class="docimg" :src="'http://175.24.74.107:8080'+memberItem.profileUrl" @click="itemClick" />
       <div class="docs-info" @click="itemClick">
         <p>{{memberItem.userName}}</p>
       </div>
@@ -34,12 +34,21 @@ export default {
   },
   methods: {
     itemClick() {
-      // 点击成员进入成员个人页面
-      this.$router.push("/homepage");
+      var _this=this;
+      axios.post("/user/getUserByName", this.memberItem.userName)
+        .then(function (response) {
+          console.log("对了");
+          console.log(response.data.userID);
+          _this.$router.push("/homepage/"+response.data.userID);
+        })
+        .catch(function (error) { // 请求失败处理
+          console.log(error);
+        });
+
     },
     deleteMem() {
       var _this=this;
-      axios.post("http://127.0.0.1:8081/team/quit/" + this.$route.params.id, this.memberItem.userName)
+      axios.post("/team/quit/" + this.$route.params.id, this.memberItem.userName)
         .then(function (response) {
           _this.$message({
             message: '已删除成员',

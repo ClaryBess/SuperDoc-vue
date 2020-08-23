@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "MenuListItem",
@@ -41,6 +41,11 @@ export default {
       default() {
         return {};
       },
+    },
+    //当前用户id
+    userID: {
+      type: Number,
+      default: 0,
     },
   },
   methods: {
@@ -58,7 +63,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$router.push("/detail/" + this.MenuItem.docID);
+      // this.$router.push("/detail/" + this.MenuItem.docID);
+      this.$router.push({
+        path: "/detail",
+        query: {
+          key: this.$Base64.encode(
+            JSON.stringify({
+              id: this.MenuItem.docID,
+            })
+          ),
+        },
+      });
     },
     back() {
       const h = this.$createElement;

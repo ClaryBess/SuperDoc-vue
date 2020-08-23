@@ -39,7 +39,7 @@
             <div class="leader-item">
               <!-- :member=传入的团队成员 -->
               <!-- <member-list :members="teamMembers"></member-list> -->
-              <MemberListItem2 :memberItem="teamMembers[0]"><h2 slot="deleteIcon"></h2></MemberListItem2>
+              <MemberListItem2 :memberItem="teamLeader"><h2 slot="deleteIcon"></h2></MemberListItem2>
             </div>
           </el-card>
 
@@ -138,7 +138,7 @@
       },
       fetchInfo(){
         var _this = this;
-        axios.post("http://127.0.0.1:8081/team/getInfo/" + this.$route.params.id)
+        axios.post("/team/getInfo/" + this.$route.params.id)
           .then(function (response) {
             var content = response.data;
             _this.info = content;
@@ -149,7 +149,7 @@
       },
       fetchLeader(){
         var _this = this;
-        axios.post("http://127.0.0.1:8081/team/getUser/" + this.$route.params.id)
+        axios.post("/team/getUser/" + this.$route.params.id)
           .then(function (response) {
             var content = JSON.parse(JSON.stringify(response.data));
             console.log(JSON.stringify(response.data));
@@ -162,7 +162,7 @@
       },
       fetchMember(){
         var _this = this;
-        axios.post("http://127.0.0.1:8081/team/getMember/" + this.$route.params.id)
+        axios.post("/team/getMember/" + this.$route.params.id)
           .then(function (response) {
             if(response.data == ""){
               _this.kong = true;

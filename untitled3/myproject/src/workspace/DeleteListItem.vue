@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "DeleteListItem",
@@ -48,7 +48,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$router.push("/detail/" + this.docsItem.docID);
+      // this.$router.push("/detail/" + this.docsItem.docID);
+      this.$router.push({
+        path: "/detail",
+        query: {
+          key: this.$Base64.encode(
+            JSON.stringify({
+              id: this.docsItem.docID,
+            })
+          ),
+        },
+      });
     },
     deleteDoc() {
       const h = this.$createElement;

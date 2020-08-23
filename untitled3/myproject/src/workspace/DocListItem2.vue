@@ -72,7 +72,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-      this.$router.push("/detail/" + this.TemItem.docID);
+      // this.$router.push("/detail/" + this.TemItem.docID);
+      this.$router.push({
+        path: "/detail",
+        query: {
+          key: this.$Base64.encode(
+            JSON.stringify({
+              id: this.TemItem.docID,
+            })
+          ),
+        },
+      });
     },
     // fav() {
     //   this.$confirm('此操作将收藏该文件, 是否继续?', '提示', {
@@ -134,9 +144,9 @@ export default {
       } else if (this.currentview == 4) {
         //创建者团队文档
         axios
-          .post("/team/deleteDoc/"+this.teamID, this.docsItem.docID)
+          .post("/team/deleteDoc/" + this.teamID, this.docsItem.docID)
           .then((res) => {
-            console.log(res)
+            console.log(res);
           })
           .catch((err) => {
             console.log(err);

@@ -9,14 +9,14 @@
     <div class="main">
       <el-main>
         <div class="info">
-          <el-form :model="ruleForm"label-width="100px" class="demo-ruleForm">
+          <el-form :model="ruleForm" label-width="100px" class="demo-ruleForm">
 
             <el-card class="box-card" >
               <!-- 卡片头部 -->
               <div slot="header" class="clearfix">
                 <p>
                   <strong>个人空间</strong>
-                  <el-button class="btn" type="text" @click="toEdit()">
+                  <el-button v-if="gai" class="btn" type="text" @click="toEdit()">
                     <i class="el-icon-edit-outline"></i>
                     修改信息
                   </el-button>
@@ -30,19 +30,19 @@
                 </el-form-item>
 
                 <el-form-item  label="用户名" prop="username">
-                  <span>{{userL.userName}}</span>
+                  <span>{{ruleForm.username}}</span>
                 </el-form-item>
 
                 <el-form-item label="邮箱" prop="email">
-                  <span>{{userL.email}}</span>
+                  <span>{{ruleForm.email}}</span>
                 </el-form-item>
 
                 <el-form-item label="性别" prop="sex">
-                  <span>{{userL.gender}}</span>
+                  <span>{{ruleForm.gender}}</span>
                 </el-form-item>
 
                 <el-form-item label="生日" prop="birth">
-                  <span>{{userL.birthday.toString().substring(0,10)}}</span>
+                  <span>{{ruleForm.birthday}}</span>
                 </el-form-item>
 
               </div>
@@ -57,31 +57,74 @@
 
 <script>
   import NavBar from "./NavBar";
+  import axios from "axios";
+
   export default {
     name: "Homepage",
+    inject:["reload"],
     components: {NavBar},
+
+    inject: ["reload"],
     data() {
       return {
+        gai:false,
+        iduser:'',
         ruleForm: {
-
-          birth: "",
-
+          profileUrl:'',
+          userName:'',
+          email:'',
+          gender:'',
+          birthday:'',
         },
       }
     },
-    methods: {
-      toEdit() {
-            this.$router.push('HomepageEdit')
-      },
-      fetchUser(){
-        this.userL=JSON.parse(sessionStorage.getItem("userL"))
-        this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
-        console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
-      }
-    },
     created() {
-      this.fetchUser()
-    }
+      this.iduser = this.$route.params.id;
+      console.log("ididididididididididididididid是"+this.$route.params.id);
+      // this.fetchUser();
+      this.fetchPage();
+      this.showGai();
+    },
+    methods: {
+      showGai(){
+        var userL=JSON.parse(sessionStorage.getItem("userL"))
+        console.log(userL.userID)
+        console.log("雷霆嘎巴"+this.iduser);
+        if(userL.userID == this.iduser){
+          this.gai = true;
+          console.log("有缘人");
+        } else {
+          console.log("再见");
+        }
+      },
+      fetchPage(){
+        var _this = this;
+        axios.post("/user/getUser",this.$route.params.id)
+          .then(function (response) {
+            console.log("看这里！！！！！")
+            console.log(response.data)
+            var content = response.data;
+            _this.ruleForm.username = content.userName;
+            _this.ruleForm.email = content.email;
+            _this.ruleForm.gender = content.gender;
+            var tmp1 = content.birthday.toString().substring(0,9);
+            var tmp2 = parseInt(content.birthday.toString().substring(9,10))+1;
+            _this.ruleForm.birthday = tmp1+tmp2;
+            _this.profileUrl = "http://175.24.74.107:8080/file/head.jpg";
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
+      toEdit() {
+        this.$router.push('/homepageedit/'+this.$route.params.id);
+      },
+      // fetchUser(){
+      //   this.userL=JSON.parse(sessionStorage.getItem("userL"))
+      //   this.profileUrl="http://localhost:8081/"+this.userL.profileUrl;
+      //   console.log("看这里！！！"+this.userL.birthday.toString().substring(0,10));
+      // }
+    },
   }
 </script>
 
@@ -111,7 +154,7 @@
   }
 
   .demo-ruleForm {
-   margin-left: 17%;
+    margin-left: 17%;
   }
 
   .clearfix:before,

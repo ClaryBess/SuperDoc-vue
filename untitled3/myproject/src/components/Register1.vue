@@ -162,11 +162,10 @@
             return '#409eff';
           }
         },
-
         submitForm(formName) {
           var _this=this
           console.log(axios);
-          axios.post("http://127.0.0.1:8081/user/regisiter",{
+          axios.post("/user/regisiter",{
             password:this.ruleForm.pass,
             userName:this.ruleForm.username,
             email:this.ruleForm.email
@@ -199,7 +198,6 @@
               console.log(error)
             })
         },
-
         resetForm(formName) {
           this.$refs[formName].resetFields();
         }

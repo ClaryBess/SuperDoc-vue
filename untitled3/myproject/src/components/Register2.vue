@@ -30,7 +30,7 @@
               <el-form-item label="头像" prop="profile">
                 <el-upload
                   class="upload-demo"
-                  action="http://localhost:8081/user/save"
+                  action="http://175.24.74.107:8081/user/save"
                   multiple
                   limit="1"
                   list-type="picture-card"
@@ -110,7 +110,7 @@
           fileList: [
             {
               name: '默认头像.png',
-              url: 'http://localhost:8081/file/03b0d39583f48206768a7534e55bcpng.png'
+              url: 'http://175.24.74.107:8080/file/03b0d39583f48206768a7534e55bcpng.png'
             }
           ]
         },
@@ -142,7 +142,7 @@
         if (this.picture_url==null || this.picture_url==undefined){
           this.picture_url="/file/03b0d39583f48206768a7534e55bcpng.png";
         }
-        axios.post("http://127.0.0.1:8081/user/register2",{
+        axios.post("/user/register2",{
           userID:this.userL.userID,
           userName:this.userL.username,
           email:this.userL.email,

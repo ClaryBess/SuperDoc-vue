@@ -54,7 +54,7 @@ export default {
       this.userID = this.userL.userID;
       axios
         //  获取消息
-        .post("http://127.0.0.1:8081/news/getNews", this.userID)
+        .post("/news/getNews", this.userID)
         .then((res) => {
           this.NowMess = res.data.filter(this.checkRead);
           console.log(this.NowMess);

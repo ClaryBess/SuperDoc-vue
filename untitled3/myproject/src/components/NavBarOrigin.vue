@@ -48,6 +48,7 @@
   import axios from "axios";
   export default {
     name: "NavBarOrigin",
+    inject: ['reload'],
     data() {
       return {
         search:'search',
@@ -70,7 +71,7 @@
       loginForm(formName){
         var _this=this
         //axios 需要 import,下面form 对象要与上面view 填写的一样
-        axios.post("http://127.0.0.1:8081/user/login",{
+        axios.post("/user/login",{
           userName:this.form.userName,
           password:this.form.password,
         })
@@ -84,7 +85,12 @@
               })
               sessionStorage.setItem('userL', JSON.stringify(response.data.data))
               sessionStorage.setItem('teamL', null);
-              _this.$router.push('WorkSpace')
+              if(_this.$route.name === 'welcome'){
+                _this.$router.push('WorkSpace');
+              }
+              else{
+                _this.reload();
+              }
             }else {
               _this.$message({
                 message: '用户名或密码输入错误！',
